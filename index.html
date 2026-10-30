@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#F8F4EA">
+  <meta name="description" content="SMathHacks 2027: Bits & Bites. A student hackathon for curious minds. Build, experiment, and share what you make.">
+  <title>SMathHacks 2027 | Bits & Bites</title>
+  <link rel="icon" type="image/svg+xml" href="assets/logo/smathhacks-full-color.svg">
+  <link rel="stylesheet" href="hillside.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="site-header">
+    <a class="brand" href="#top" aria-label="SMathHacks 2027 home"><img src="assets/logo/smathhacks-full-color.svg" alt="SMathHacks 2027, Bits and Bites" width="1772" height="884"></a>
+    <nav aria-label="Primary navigation"><a href="#about">About</a><a href="#details">Details</a><a href="#schedule">Schedule</a><a href="#faq">FAQ</a><a class="nav-roomy" href="#sponsors">Sponsors</a></nav>
+    <div class="header-status" data-register="header"><a href="#updates">Registration soon</a></div>
+  </header>
+
+  <!-- The page is one tall hillside. hillside.js draws the art and places each copy block in its own
+       clearing; the footer hangs on the notice board where the path ends. -->
+  <div class="world">
+  <svg class="world-art" id="world-art" aria-hidden="true"></svg>
+  <main id="main">
+
+    <section class="copy hero-copy" id="top" data-copy="hero" aria-labelledby="event-title">
+      <p class="eyebrow">A student hackathon</p>
+      <h1 class="sr-only" id="event-title">SMathHacks 2027: Bits &amp; Bites</h1>
+      <img class="hero-logo" src="assets/logo/smathhacks-full-color.svg" alt="" width="1772" height="884">
+      <p class="hero-line">Build, experiment,<br>and share what you make.</p>
+      <p class="event-timing"><span>2027</span><span data-fact="dates">Date to be announced</span></p>
+      <div class="hero-actions">
+        <a class="primary-link" href="#about">Follow the path <span aria-hidden="true">↓</span></a>
+        <div class="registration-state" data-register="hero">Registration details coming soon</div>
+      </div>
+      <button class="motion-toggle" type="button" aria-pressed="false" hidden>Pause motion</button>
+    </section>
+
+    <section class="copy" id="about" data-copy="bit" aria-labelledby="about-title">
+      <p class="eyebrow">Bit’s growing corner</p>
+      <h2 id="about-title">Bring your curiosity.</h2>
+      <p>Start with a question. Try something unfamiliar. SMathHacks is a student hackathon where ideas become experiments, and experiments become something you can share.</p>
+      <div class="character-note"><h3>Bit, the aspirational apple</h3><p>Helpful and technically minded. Always thinking about how technology can help food and agriculture.</p></div>
+      <button class="scene-control" type="button" data-action="water" aria-pressed="false">Water Bit’s seedling <span aria-hidden="true">↗</span></button>
+    </section>
+
+    <section class="copy" id="workshop" data-copy="amp" aria-labelledby="amp-title">
+      <p class="eyebrow">Amp’s workshop terrace</p>
+      <h2 id="amp-title">Ideas you can hold.</h2>
+      <p>A circuit, a tool, a little trial and error. Amp, the daring dragonfruit, loves tinkering with hardware and turning a thought into something tangible.</p>
+      <p>Start small. Connect the pieces. See what happens when you flip the switch.</p>
+      <button class="scene-control" type="button" data-action="power" aria-pressed="false">Power up the breadboard <span aria-hidden="true">↗</span></button>
+    </section>
+
+    <section class="copy" id="play" data-copy="bite" aria-labelledby="bite-title">
+      <p class="eyebrow">Bite’s play patch</p>
+      <h2 id="bite-title">Make room for play.</h2>
+      <p>Functional, silly, or a bit of both. Bite, the curious cupcake, makes games and playful projects that start with “what if?”</p>
+      <p>A sketch is a start. A test drive is an experiment. Even the smallest one can take you somewhere unexpected.</p>
+      <button class="scene-control" type="button" data-action="drive">Test-drive the rover <span aria-hidden="true">↗</span></button>
+    </section>
+
+    <section class="copy info-copy" id="details" data-copy="details" aria-labelledby="details-title">
+      <p class="eyebrow">The clearing</p>
+      <h2 id="details-title">Plan your visit.</h2>
+      <p>We’re putting the pieces together. Confirmed details will live right here.</p>
+      <dl class="facts">
+        <div><dt>Date</dt><dd data-fact="dates">To be announced</dd></div>
+        <div><dt>Venue</dt><dd data-fact="venue">To be announced</dd></div>
+        <div><dt>Eligibility</dt><dd data-fact="eligibility">To be announced</dd></div>
+        <div><dt>Cost</dt><dd data-fact="cost">To be announced</dd></div>
+        <div><dt>Applications</dt><dd data-application-status>Registration details coming soon</dd></div>
+      </dl>
+      <div class="info-lower">
+        <div id="schedule" aria-labelledby="schedule-title">
+          <h3 id="schedule-title">The schedule</h3>
+          <p id="schedule-status">Still in the making. We’ll share the schedule when it’s confirmed.</p>
+          <ol class="schedule-list" id="schedule-list" hidden></ol>
+        </div>
+        <div id="faq" class="faq" aria-labelledby="faq-title">
+          <h3 id="faq-title">A few useful answers.</h3>
+          <details><summary>What is a hackathon?</summary><p>A hackathon is an event where people come together to explore ideas and build projects. A project might be software, hardware, a game, or an experiment that helps you learn something new.</p></details>
+          <details><summary>When can I apply?</summary><p data-application-answer>Registration details will be shared when they’re confirmed.</p></details>
+          <details><summary>Who can attend?</summary><p data-eligibility-answer>SMathHacks is a student hackathon. Specific eligibility requirements will be announced.</p></details>
+          <details><summary>What should I bring?</summary><p>We’ll share a practical packing list alongside the confirmed venue and schedule.</p></details>
+          <details><summary>Do I need to bring a team?</summary><p>Team formation and project guidelines will be shared with the registration details.</p></details>
+        </div>
+      </div>
+    </section>
+
+    <section class="copy sponsors-copy" id="sponsors" data-copy="sponsors" aria-labelledby="sponsors-title">
+      <p class="eyebrow">The supply shed</p>
+      <h2 id="sponsors-title">Help stock the workbench.</h2>
+      <p>Sponsors help provide the space, supplies, and snacks that let students turn an idea into something real.</p>
+      <p id="sponsor-status">Our sponsors will be announced here.</p>
+      <!-- Empty slots until real sponsors are listed in event-config.json, which replaces them. -->
+      <div id="sponsor-list" class="sponsor-list is-placeholder" aria-hidden="true">
+        <div class="sponsor-tier"><ul><li><span class="sponsor slot big">Your logo here</span></li><li><span class="sponsor slot big">Your logo here</span></li><li><span class="sponsor slot big">Your logo here</span></li></ul></div>
+        <div class="sponsor-tier"><ul><li><span class="sponsor slot">Logo</span></li><li><span class="sponsor slot">Logo</span></li><li><span class="sponsor slot">Logo</span></li><li><span class="sponsor slot">Logo</span></li></ul></div>
+      </div>
+      <p class="sponsor-ask" data-sponsor-ask>Interested in sponsoring SMathHacks? Contact details are coming soon.</p>
+    </section>
+
+    <section class="copy finale-copy" id="updates" data-copy="finale" aria-labelledby="finale-title">
+      <h2 id="finale-title">Make something together.</h2>
+      <p>One question. A few curious minds. A whole lot of possibility.</p>
+      <div class="final-action" data-register="final"><p class="registration-state"><strong>See you in 2027.</strong> Registration details are on their way.</p></div>
+      <button class="scene-control" type="button" data-action="invent" aria-pressed="false">Switch on the invention <span aria-hidden="true">↗</span></button>
+    </section>
+
+    <span class="sr-only" role="status" id="scene-status"></span>
+  </main>
+
+  <!-- The notice board at the end of the path, left blank for sponsor logos. -->
+  <footer class="site-footer" data-copy="footer"></footer>
+  </div>
+
+  <script type="module" src="event.js"></script>
+  <script type="module" src="hillside.js"></script>
+</body>
+</html>

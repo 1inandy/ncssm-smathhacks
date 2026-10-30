@@ -1,0 +1,27 @@
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editors
+.vscode/
+.idea/
+*.swp
+*~
+
+# Local tool config
+.claude/
+
+# Dependencies / tooling, if ever added
+node_modules/
+__pycache__/
+*.pyc
+.env
+.env.*
+*.log
+
+# Design sources and working files live outside the repo
+*.ai
+*.psd
+*.docx
+*.zip

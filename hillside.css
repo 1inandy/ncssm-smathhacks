@@ -1,0 +1,169 @@
+@font-face{font-family:'Bricolage Grotesque';src:url('assets/fonts/bricolage-grotesque-600.ttf') format('truetype');font-weight:600;font-display:swap}
+@font-face{font-family:'DM Sans';src:url('assets/fonts/dm-sans-400.ttf') format('truetype');font-weight:400;font-display:swap}
+@font-face{font-family:'DM Sans';src:url('assets/fonts/dm-sans-500.ttf') format('truetype');font-weight:500;font-display:swap}
+@font-face{font-family:'DM Sans';src:url('assets/fonts/dm-sans-600.ttf') format('truetype');font-weight:600;font-display:swap}
+
+:root{--forest:#386641;--leaf:#6A994E;--lime:#A7C957;--cream:#F8F4EA;--ground:#F2E8D2;--peach:#E5C0AE;--ink:#652713;--sky-top:#A7D3E8;--sky-horizon:#EDF3E8;--rule:#38664135}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:#566f45;color:var(--forest);font-family:'DM Sans',sans-serif;font-size:17px;line-height:1.6}
+h1,h2,h3,p{margin:0}
+h2,h3{font-family:'Bricolage Grotesque',sans-serif;font-weight:600;letter-spacing:-.02em}
+h2{font-size:clamp(32px,3.2vw,46px);line-height:1.1;margin-bottom:18px}
+h3{font-size:20px;line-height:1.25}
+p+p{margin-top:14px}
+a{color:inherit}
+.sr-only{position:absolute;width:1px;height:1px;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap}
+.skip-link{position:fixed;z-index:200;top:8px;left:16px;padding:12px 20px;background:var(--forest);color:var(--cream);transform:translateY(-160%)}
+.skip-link:focus{transform:none}
+a:focus-visible,button:focus-visible{outline:3px solid var(--forest);outline-offset:5px}
+.eyebrow{font-size:12px;font-weight:600;letter-spacing:.09em;text-transform:uppercase;margin-bottom:16px}
+
+/* The header is a signboard hung over the world on two cords, drawn in the clearings' cream and ink. */
+.site-header{position:fixed;top:14px;left:50%;transform:translateX(-50%);width:min(1120px,calc(100% - 32px));height:64px;padding:6px 10px 6px 18px;display:flex;align-items:center;gap:28px;z-index:70;background:var(--cream);border:2.5px solid var(--ink);border-radius:20px 15px 22px 14px;box-shadow:0 4px 0 #6527131f;transition:box-shadow .3s ease}
+.site-header::before,.site-header::after{content:'';position:absolute;bottom:100%;width:2.5px;height:16px;background:var(--ink)}
+.site-header::before{left:14%}
+.site-header::after{right:14%}
+.site-header.is-scrolled{box-shadow:0 6px 0 #65271326,0 10px 24px #22331a24}
+.brand{width:104px;flex:none}
+.brand img{display:block;width:100%;height:auto}
+.site-header nav{display:flex;gap:28px;margin:auto}
+.site-header nav a{min-height:44px;display:flex;align-items:center;text-decoration:none;font-size:14px;font-weight:500}
+.header-status{font-size:13px;font-weight:500}
+
+/* The world: art fills it; copy blocks are placed in world units by hillside.js. */
+.world{position:relative;overflow:hidden;min-height:100vh;background:var(--sky-horizon)}
+.world-art{position:absolute;inset:0 auto auto 0;display:block}
+.copy{position:absolute;z-index:2}
+.world:not(.is-laid-out) .copy{position:relative;margin:0 auto;padding:110px 24px 40px;max-width:560px}
+/* Scene buttons only make sense when the hillside is drawn. */
+.world:not(.is-laid-out) [data-action]{display:none}
+[id]{scroll-margin-top:130px}
+
+.hero-logo{display:block;width:min(360px,100%);height:auto;margin:0 0 20px -4px}
+.hero-line{font-size:clamp(21px,1.8vw,26px);line-height:1.35;letter-spacing:-.02em;font-weight:500}
+.event-timing{display:flex;gap:14px;margin-top:16px;font-size:14px}
+.event-timing>span:first-child{font-weight:600;padding-right:14px;border-right:1px solid var(--rule)}
+.hero-actions{display:flex;align-items:center;flex-wrap:wrap;gap:12px 20px;margin-top:22px}
+.primary-link{display:inline-flex;align-items:center;gap:28px;min-height:48px;background:var(--forest);color:var(--cream);padding:10px 22px;border-radius:6px;font-size:15px;font-weight:500;text-decoration:none;transition:transform .2s cubic-bezier(.3,.7,.4,1),background .2s ease}
+.primary-link:hover{background:#294d30;transform:translateY(-2px)}
+/* Once a real action exists (Register / Get updates), it becomes the primary button. */
+.hero-actions:has(.action-link) .primary-link{background:transparent;color:var(--forest);box-shadow:inset 0 0 0 1.5px var(--forest)}
+.hero-actions:has(.action-link) .primary-link:hover{background:#3866411a}
+.registration-state{font-size:13px}
+.action-link{display:inline-flex;align-items:center;min-height:44px;padding:8px 18px;border-radius:6px;background:var(--forest);color:var(--cream);font-size:14px;font-weight:500;text-decoration:none}
+.header-status .action-link{min-height:38px;padding:6px 14px;font-size:13px}
+.header-status>a:not(.action-link){min-height:44px;display:flex;align-items:center;text-decoration:none}
+.motion-toggle{margin-top:18px;min-height:44px;padding:6px 14px;border:1px solid var(--rule);border-radius:6px;background:#f8f4eacc;color:var(--forest);font:500 12px 'DM Sans',sans-serif;cursor:pointer}
+.schedule-list{margin:0;padding:0;list-style:none}
+.schedule-list li{display:flex;gap:14px;padding:8px 0;border-bottom:1px solid var(--rule)}
+.updates-form{margin:18px auto 0;max-width:420px;text-align:left;font-size:14px}
+.updates-row{display:flex;gap:10px;margin-top:6px}
+.updates-row input{flex:1;min-width:0;min-height:46px;padding:8px 12px;border:1.5px solid var(--forest);border-radius:6px;background:var(--cream);font:inherit}
+.updates-row .scene-control{margin-top:0}
+.form-status{margin-top:8px;min-height:1.4em}
+
+.copy>p:not(.eyebrow){max-width:46ch}
+.character-note{margin-top:20px;padding-left:16px;border-left:3px solid var(--lime)}
+.character-note p{font-size:15px;margin-top:4px}
+.scene-control{margin-top:22px;display:inline-flex;align-items:center;gap:22px;min-height:46px;padding:9px 18px;border:1.5px solid var(--forest);border-radius:6px;background:transparent;color:var(--forest);font:500 15px 'DM Sans',sans-serif;cursor:pointer;transition:background .2s ease,color .2s ease}
+.scene-control:hover,.scene-control[aria-pressed=true]{background:var(--forest);color:var(--cream)}
+
+.facts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px 32px;margin:26px 0 0;padding:22px 0;border-block:1px solid var(--rule)}
+.facts dt{font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;opacity:.75}
+.facts dd{margin:2px 0 0;font-size:16px}
+.info-lower{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.6fr);gap:40px;margin-top:26px}
+.info-lower h3{margin-bottom:10px}
+.faq details{border-bottom:1px solid var(--rule)}
+.faq summary{min-height:48px;display:flex;align-items:center;justify-content:space-between;gap:16px;cursor:pointer;list-style:none;font-weight:500}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::after{content:'+';font-size:22px;line-height:1;transition:transform .25s cubic-bezier(.3,.7,.4,1)}
+.faq details[open] summary::after{transform:rotate(45deg)}
+.faq details p{padding:0 0 16px;font-size:15px}
+.sponsor-list{margin-top:22px;display:grid;gap:22px}
+/* Empty slots, drawn as chalk outlines on the clearing so they read as space waiting to be filled. */
+.sponsor.slot{min-width:128px;min-height:64px;background:transparent;border:2px dashed #65271366;box-shadow:none;color:#38664199;font-size:13px;font-weight:500}
+.sponsor.slot.big{min-width:170px;min-height:84px;font-size:14px}
+.sponsor-tier h3{font-size:13px;font-family:'DM Sans',sans-serif;font-weight:600;letter-spacing:.08em;text-transform:uppercase;opacity:.75;margin-bottom:10px}
+.sponsor-tier ul{margin:0;padding:0;list-style:none;display:flex;flex-wrap:wrap;gap:12px}
+.sponsor{display:flex;align-items:center;justify-content:center;min-width:150px;min-height:72px;padding:12px 20px;background:var(--cream);border:2px solid var(--ink);border-radius:14px 10px 15px 9px;box-shadow:0 3px 0 #6527131f;font-weight:600;text-decoration:none;transition:transform .2s cubic-bezier(.3,.7,.4,1)}
+a.sponsor:hover{transform:translateY(-2px)}
+.sponsor img{display:block;max-width:150px;max-height:48px;width:auto;height:auto}
+.sponsor-ask{margin-top:20px;display:flex;align-items:center;flex-wrap:wrap;gap:10px 16px}
+.finale-copy{text-align:center}
+.finale-copy h2,.finale-copy>p{margin-inline:auto}
+.finale-copy .registration-state{margin-top:16px;font-size:14px}
+
+.site-footer{display:flex;align-items:center;gap:24px;flex-wrap:wrap;padding:28px clamp(16px,5vw,80px);background:var(--cream);border-top:2.5px solid var(--ink);color:var(--forest);font-size:14px}
+.site-footer img{width:110px;height:auto}
+.site-footer a{margin-left:auto;min-height:44px;display:flex;align-items:center;font-weight:500}
+/* Laid out, the footer is the notice board at the end of the path. */
+.world.is-laid-out .site-footer{position:absolute;z-index:2;padding:0;background:none;border:0;gap:28px;flex-wrap:nowrap}
+.world.is-laid-out .site-footer img{width:150px}
+.world.is-laid-out .site-footer:empty{min-height:220px}
+.world.is-laid-out .site-footer p{font-size:15px;line-height:1.45}
+
+/* Scene state lives on the svg root, so it survives re-layout. */
+.led{opacity:0;transition:opacity .4s ease}
+.is-powered .led{opacity:1;animation:pulse 1.6s ease-in-out infinite alternate}
+.is-powered .led:nth-of-type(2){animation-delay:.3s}
+.is-powered .led:nth-of-type(3){animation-delay:.6s}
+@keyframes pulse{from{filter:brightness(1)}to{filter:brightness(1.35)}}
+.rover-body{transition:none}
+.is-driving .rover-body{animation:drive 3.2s cubic-bezier(.45,.05,.4,1)}
+@keyframes drive{0%{transform:translateX(0)}45%,55%{transform:translateX(var(--drive))}100%{transform:translateX(0)}}
+.lamp{fill:#CDD993;transition:fill .35s ease}
+.is-invented .lamp{fill:#F6D86B}
+.is-invented .lamp-2{transition-delay:.35s}
+.is-invented .lamp-3{transition-delay:.7s}
+.glow{opacity:0;transition:opacity .5s ease 1s}
+.is-invented .glow{opacity:.55}
+.dial{transform-box:fill-box;transform-origin:50% 50%;transition:transform .9s cubic-bezier(.34,1.4,.5,1)}
+.is-invented .dial{transform:rotate(110deg)}
+
+/* Ambient life: few, slow, rooted. */
+.sway{transform-box:fill-box;transform-origin:50% 100%;animation:sway 5.5s ease-in-out infinite alternate}
+.sway.slow{animation-duration:8s}
+.drift{animation:drift 26s ease-in-out infinite alternate}
+@keyframes sway{from{transform:rotate(-2.5deg)}to{transform:rotate(2.5deg)}}
+@keyframes drift{from{transform:translateX(-14px)}to{transform:translateX(14px)}}
+
+.sprout{transform-box:fill-box;transform-origin:50% 100%;transform:scale(.55);transition:transform 1.4s cubic-bezier(.34,1.4,.5,1) .5s}
+.is-watered .sprout{transform:scale(1)}
+.drop{opacity:0}
+.is-watering .drop{animation:drop .9s cubic-bezier(.5,0,.9,.6) 2}
+.is-watering .drop:nth-child(2){animation-delay:.25s}
+.is-watering .drop:nth-child(3){animation-delay:.5s}
+@keyframes drop{0%{opacity:0;transform:translateY(0)}15%{opacity:1}85%{opacity:1}100%{opacity:0;transform:translateY(var(--fall))}}
+
+@media (max-width:759px){
+  body{font-size:16px}
+  .site-header{top:8px;width:calc(100% - 16px);height:56px;gap:12px;padding:4px 8px 4px 12px}
+  .site-header::before,.site-header::after{height:8px}
+  .world.is-laid-out .site-footer{flex-direction:column;text-align:center;gap:10px}
+  .world.is-laid-out .site-footer a{margin:0}
+  .brand{width:78px}
+  .site-header nav{gap:14px}
+  .site-header nav a{font-size:13px}
+  .facts{grid-template-columns:1fr 1fr}
+  .info-lower{grid-template-columns:1fr;gap:28px}
+  .header-status{display:none}
+  .hero-logo{width:min(280px,100%)}
+  [id]{scroll-margin-top:76px}
+}
+/* Five links don't fit beside the logo on a narrow phone; the path still leads to the sponsors. */
+@media (max-width:439px){.site-header nav .nav-roomy{display:none}}
+@media (max-width:759px){
+  .is-placeholder .sponsor-tier ul{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+  .is-placeholder .sponsor-tier:first-child ul{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .sponsor.slot,.sponsor.slot.big{min-width:0;min-height:54px;padding:8px;text-align:center;font-size:12px}
+  .sponsor.slot.big{min-height:72px}
+}
+.motion-paused .sway,.motion-paused .drift,.motion-paused .led{animation-play-state:paused}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  .sway,.drift{animation:none}
+  .sprout{transition:none}
+  .is-watering .drop,.is-powered .led,.is-driving .rover-body{animation:none}
+  .lamp,.glow,.dial{transition:none}
+}
