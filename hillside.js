@@ -7,7 +7,7 @@ const A = 'assets/mvp/', P = A + 'props/', E = A + 'environment/', H_ = 'assets/
 const ART = {
   cloudLong: [E + 'atmosphere/cloud-long.webp', 1000, 181], cloudPuff: [E + 'atmosphere/cloud-puff.webp', 1000, 358], cloudWisp: [E + 'atmosphere/cloud-wisp.webp', 1000, 159],
   tower: [E + 'atmosphere/morganton-water-tower.webp', 587, 1000],
-  watts: [H_ + 'watts.webp', 640, 394], barn: [H_ + 'morganton-barn.webp', 700, 345], sphere: [H_ + 'sphere-monument.webp', 420, 425], tetra: [H_ + 'tetragranny.webp', 420, 411],
+  watts: [H_ + 'watts.webp', 640, 394], barn: [H_ + 'morganton-barn.webp', 700, 345], sphere: [H_ + 'sphere-monument.webp', 420, 394], tetra: [H_ + 'tetragranny.webp', 420, 411],
   gate: [H_ + 'fruit-circuit-gate.webp', 420, 345], pinwheel: [H_ + 'pixel-pinwheel.webp', 388, 420], pump: [H_ + 'drip-irrigation-pump.webp', 420, 373],
   crate: [H_ + 'harvest-crate.webp', 420, 238], solar: [H_ + 'leaf-solar-charger.webp', 420, 407], drawers: [H_ + 'component-drawers.webp', 420, 371],
   spool: [H_ + 'vine-cable-spool.webp', 420, 249], breadboard: [H_ + 'toast-breadboard.webp', 420, 331], battery: [H_ + 'bubble-tea-battery.webp', 405, 420],
@@ -89,27 +89,35 @@ const LAYOUTS = {
         { on: 'desk', a: 'controller', dx: -80, w: 105 }, { on: 'desk', a: 'printer', dx: 70, w: 92 },
         { a: 'bite', x: 1265, w: 195, ground: 3505 }, { a: 'rover', x: 820, w: 120, ground: 3622, id: 'rover', drive: 420 } ] },
 
-      { id: 'quiet', strip: 'middle-hill-left', crest: 3900, span: 1.2, pathW: 120, via: [[600, 3950], [700, 4040]], items: [
-        { a: 'compost', x: 1230, w: 130, sink: 34 }, { a: 'crate', x: 190, w: 130, sink: 40 } ] },
-      { id: 'info', strip: 'near-bank', crest: 4030, span: 1.3, pathW: 130,
-        clearing: { copy: 'details', x: 200, y: 4140, w: 1040, h: 648, in: .5, out: .5 }, items: [
-        { a: 'printer', x: 1340, w: 120, ground: 4330 }, { a: 'plant', x: -150, top: 4380, h: 420 } ] },
+      { id: 'fieldBack', strip: 'middle-hill-left', crest: 3900, span: 1.2, pathW: 114, via: [[600, 3950], [760, 4060]], items: [
+        { a: 'pinwheel', x: 1240, w: 80, sink: 22, cls: 'sway slow' } ] },
+      { id: 'field', strip: 'near-bank', crest: 4050, span: 1.25, pathW: 116, via: [[900, 4150]],
+        clearing: { copy: 'data', x: 800, y: 4250, w: 500, h: 400, in: .2, out: .5 }, items: [
+        { a: 'bed', kind: 'trodden', x: 360, ground: 4300, w: 560, h: 90 },
+        { a: 'crate', x: 170, w: 150, ground: 4300 }, { a: 'compost', x: 360, w: 150, ground: 4300 },
+        { a: 'printer', x: 545, w: 125, ground: 4295 } ] },
 
-      { id: 'shedBack', strip: 'middle-hill-left', crest: 5080, span: 1.2, pathW: 135, via: [[700, 5120]], items: [
+      { id: 'quiet', strip: 'middle-hill-left', crest: 4900, span: 1.2, pathW: 120, via: [[600, 4950], [700, 5040]], items: [
+        { a: 'solar', x: 1230, w: 115, sink: 30 }, { a: 'spool', x: 190, w: 125, sink: 34 } ] },
+      { id: 'info', strip: 'near-bank', crest: 5030, span: 1.3, pathW: 130,
+        clearing: { copy: 'details', x: 200, y: 5140, w: 1040, h: 648, in: .5, out: .5 }, items: [
+        { a: 'printer', x: 1340, w: 120, ground: 5330 }, { a: 'plant', x: -150, top: 5380, h: 420 } ] },
+
+      { id: 'shedBack', strip: 'middle-hill-left', crest: 6080, span: 1.2, pathW: 135, via: [[700, 6120]], items: [
         { a: 'solar', x: 1230, w: 110, sink: 30 }, { a: 'spool', x: 200, w: 120, sink: 34 } ] },
-      { id: 'shed', strip: 'near-bank', crest: 5210, span: 1.3, pathW: 140,
-        clearing: { copy: 'sponsors', x: 420, y: 5330, w: 600, h: 300, in: .5, out: .5 }, items: [
-        { a: 'drawers', x: 140, w: 120, ground: 5470 }, { a: 'battery', x: 1300, w: 70, ground: 5440 }, { a: 'crate', x: 1310, w: 130, ground: 5600 } ] },
+      { id: 'shed', strip: 'near-bank', crest: 6210, span: 1.3, pathW: 140,
+        clearing: { copy: 'sponsors', x: 420, y: 6330, w: 600, h: 300, in: .5, out: .5 }, items: [
+        { a: 'drawers', x: 140, w: 120, ground: 6470 }, { a: 'battery', x: 1300, w: 70, ground: 6440 }, { a: 'crate', x: 1310, w: 130, ground: 6600 } ] },
 
-      { id: 'gatherBack', strip: 'middle-hill-right', crest: 5800, span: 1.2, pathW: 140, via: [[720, 5830]], items: [
+      { id: 'gatherBack', strip: 'middle-hill-right', crest: 6800, span: 1.2, pathW: 140, via: [[720, 6830]], items: [
         { a: 'crate', x: 250, w: 140, sink: 40 }, { a: 'pinwheel', x: 1190, w: 84, sink: 24, cls: 'sway slow' } ] },
-      { id: 'gather', strip: 'near-bank', crest: 5930, span: 1.3, flip: true, pathW: 150,
-        clearing: { copy: 'finale', x: 430, y: 6250, w: 580, h: 202, in: .5, out: .5 }, items: [
-        { a: 'bed', kind: 'trodden', x: 740, ground: 6160, w: 1020, h: 110 },
-        { a: 'bench', x: 720, w: 400, ground: 6150, id: 'table' }, { on: 'table', a: 'invention', dx: 0, w: 200 },
-        { a: 'bit', x: 440, w: 170, ground: 6180 }, { a: 'amp', x: 1000, w: 178, ground: 6190 }, { a: 'bite', x: 1185, w: 165, ground: 6175 } ] },
+      { id: 'gather', strip: 'near-bank', crest: 6930, span: 1.3, flip: true, pathW: 150,
+        clearing: { copy: 'finale', x: 430, y: 7250, w: 580, h: 202, in: .5, out: .5 }, items: [
+        { a: 'bed', kind: 'trodden', x: 740, ground: 7160, w: 1020, h: 110 },
+        { a: 'bench', x: 720, w: 400, ground: 7150, id: 'table' }, { on: 'table', a: 'invention', dx: 0, w: 200 },
+        { a: 'bit', x: 440, w: 170, ground: 7180 }, { a: 'amp', x: 1000, w: 178, ground: 7190 }, { a: 'bite', x: 1185, w: 165, ground: 7175 } ] },
 
-      { id: 'end', strip: 'front-bank', crest: 6610, span: 1.3, pathW: 160, sign: { copy: 'footer', x: 400, w: 640, ground: 6890 }, items: [] },
+      { id: 'end', strip: 'front-bank', crest: 7610, span: 1.3, pathW: 160, sign: { copy: 'footer', x: 400, w: 640, ground: 7890 }, items: [] },
     ],
   },
   tall: {
@@ -146,26 +154,33 @@ const LAYOUTS = {
         { a: 'desk', x: 455, w: 230, sink: 70, id: 'desk' }, { on: 'desk', a: 'controller', dx: -45, w: 74 },
         { a: 'bite', x: 190, w: 140, sink: 80 }, { a: 'rover', x: 90, w: 90, ground: 3958, id: 'rover', drive: 360 } ] },
 
-      { id: 'quiet', strip: 'middle-hill-left', crest: 4820, span: 2, pathW: 100, via: [[260, 4860], [300, 4940]], items: [
-        { a: 'notice', x: 90, w: 130, sink: 36 }, { a: 'compost', x: 500, w: 92, sink: 24 } ] },
-      { id: 'info', strip: 'near-bank', crest: 4960, span: 2.1, pathW: 110,
-        clearing: { copy: 'details', x: 40, y: 5070, w: 520, h: 1280, in: .5, out: .5 }, items: [] },
+      { id: 'fieldBack', strip: 'middle-hill-left', crest: 4820, span: 2, pathW: 94, via: [[300, 4870], [330, 4960]], items: [
+        { a: 'pinwheel', x: 520, w: 56, sink: 14, cls: 'sway slow' } ] },
+      { id: 'field', strip: 'near-bank', crest: 4960, span: 2.1, pathW: 96, via: [[320, 5060]],
+        clearing: { copy: 'data', x: 50, y: 5180, w: 500, h: 560, in: .55, out: .5 }, items: [
+        { a: 'bed', kind: 'trodden', x: 150, sink: 56, w: 270, h: 56 },
+        { a: 'crate', x: 85, w: 105, sink: 30 }, { a: 'compost', x: 200, w: 95, sink: 34 }, { a: 'printer', x: 505, w: 90, sink: 30 } ] },
 
-      { id: 'shedBack', strip: 'middle-hill-left', crest: 6520, span: 2, pathW: 115, via: [[300, 6560]], items: [
+      { id: 'quiet', strip: 'middle-hill-left', crest: 5940, span: 2, pathW: 100, via: [[260, 5980], [300, 6060]], items: [
+        { a: 'notice', x: 90, w: 130, sink: 36 }, { a: 'solar', x: 500, w: 80, sink: 22 } ] },
+      { id: 'info', strip: 'near-bank', crest: 6080, span: 2.1, pathW: 110,
+        clearing: { copy: 'details', x: 40, y: 6190, w: 520, h: 1280, in: .5, out: .5 }, items: [] },
+
+      { id: 'shedBack', strip: 'middle-hill-left', crest: 7640, span: 2, pathW: 115, via: [[300, 7680]], items: [
         { a: 'spool', x: 90, w: 90, sink: 26 }, { a: 'solar', x: 520, w: 80, sink: 22 } ] },
-      { id: 'shed', strip: 'near-bank', crest: 6640, span: 2.1, pathW: 120, via: [[300, 6700]],
-        clearing: { copy: 'sponsors', x: 50, y: 6800, w: 500, h: 520, in: .5, out: .5 }, items: [
-        { a: 'drawers', x: 90, w: 86, ground: 6760 }, { a: 'battery', x: 520, w: 50, ground: 6750 } ] },
+      { id: 'shed', strip: 'near-bank', crest: 7760, span: 2.1, pathW: 120, via: [[300, 7820]],
+        clearing: { copy: 'sponsors', x: 50, y: 7920, w: 500, h: 520, in: .5, out: .5 }, items: [
+        { a: 'drawers', x: 90, w: 86, ground: 7880 }, { a: 'battery', x: 520, w: 50, ground: 7870 } ] },
 
-      { id: 'gatherBack', strip: 'middle-hill-right', crest: 7420, span: 2, pathW: 120, via: [[300, 7460]], items: [
+      { id: 'gatherBack', strip: 'middle-hill-right', crest: 8540, span: 2, pathW: 120, via: [[300, 8580]], items: [
         { a: 'crate', x: 90, w: 100, sink: 30 } ] },
-      { id: 'gather', strip: 'near-bank', crest: 7540, span: 2.1, flip: true, pathW: 130,
-        clearing: { copy: 'finale', x: 50, y: 7860, w: 500, h: 410, in: .5, out: .5 }, items: [
-        { a: 'bed', kind: 'trodden', x: 300, ground: 7750, w: 590, h: 70 },
-        { a: 'bench', x: 300, w: 270, ground: 7730, id: 'table' }, { on: 'table', a: 'invention', dx: 0, w: 145 },
-        { a: 'bit', x: 85, w: 118, ground: 7750 }, { a: 'amp', x: 515, w: 120, ground: 7760 }, { a: 'bite', x: 300, w: 104, ground: 7810 } ] },
+      { id: 'gather', strip: 'near-bank', crest: 8660, span: 2.1, flip: true, pathW: 130,
+        clearing: { copy: 'finale', x: 50, y: 8980, w: 500, h: 410, in: .5, out: .5 }, items: [
+        { a: 'bed', kind: 'trodden', x: 300, ground: 8870, w: 590, h: 70 },
+        { a: 'bench', x: 300, w: 270, ground: 8850, id: 'table' }, { on: 'table', a: 'invention', dx: 0, w: 145 },
+        { a: 'bit', x: 85, w: 118, ground: 8870 }, { a: 'amp', x: 515, w: 120, ground: 8880 }, { a: 'bite', x: 300, w: 104, ground: 8930 } ] },
 
-      { id: 'end', strip: 'front-bank', crest: 8460, span: 2.1, pathW: 140, sign: { copy: 'footer', x: 50, w: 500, ground: 8860 }, items: [] },
+      { id: 'end', strip: 'front-bank', crest: 9580, span: 2.1, pathW: 140, sign: { copy: 'footer', x: 50, w: 500, ground: 9980 }, items: [] },
     ],
   },
 };
@@ -505,30 +520,13 @@ function updateDepth() {
 const header = document.querySelector('.site-header');
 addEventListener('scroll', () => { if (!ticking) { ticking = true; requestAnimationFrame(updateDepth); } }, { passive: true });
 
-// Pause control for the ambient loops and depth: starts paused when the OS asks for reduced motion.
-const motionButton = document.querySelector('.motion-toggle');
-let paused = null;
-const motionOff = () => paused ?? reduceMotion.matches;
+// Ambient loops and depth stop when the OS asks for reduced motion.
+const motionOff = () => reduceMotion.matches;
 function syncMotion() {
-  const off = motionOff();
-  document.documentElement.classList.toggle('motion-paused', off);
-  motionButton.setAttribute('aria-pressed', off);
-  motionButton.textContent = off ? 'Play motion' : 'Pause motion';
+  document.documentElement.classList.toggle('motion-paused', motionOff());
   updateDepth();
 }
-motionButton.addEventListener('click', () => { paused = !motionOff(); syncMotion(); });
 reduceMotion.addEventListener('change', syncMotion);
-
-// Interactions. State is kept as classes on the svg root, so it survives every re-layout.
-const status = document.getElementById('scene-status');
-const replay = (cls, ms) => { svg.classList.remove(cls); void svg.getBoundingClientRect(); svg.classList.add(cls); setTimeout(() => svg.classList.remove(cls), ms); };
-const ACTIONS = {
-  water: btn => { svg.classList.add('is-watered'); replay('is-watering', 2400); btn.setAttribute('aria-pressed', 'true'); return 'Bit waters the seedling. It sprouts.'; },
-  power: btn => { const on = svg.classList.toggle('is-powered'); btn.setAttribute('aria-pressed', on); return on ? 'Amp’s breadboard lights up.' : 'The breadboard is switched off.'; },
-  drive: () => { replay('is-driving', 3300); return 'Bite’s snack rover drives down the test lane and back.'; },
-  invent: btn => { const on = svg.classList.toggle('is-invented'); btn.setAttribute('aria-pressed', on); return on ? 'Three little lights. One shared idea.' : 'The invention is switched off.'; },
-};
-document.querySelectorAll('[data-action]').forEach(btn => btn.addEventListener('click', () => { status.textContent = ACTIONS[btn.dataset.action](btn); }));
 
 // Re-lay out on resize, and whenever a copy block changes height (an FAQ opens, text zoom, fonts load).
 let pending;
@@ -555,4 +553,4 @@ const watch = new ResizeObserver(entries => {
 });
 document.querySelectorAll('[data-copy]').forEach(el => watch.observe(el));
 safeRender();
-if (world.classList.contains('is-laid-out')) { motionButton.hidden = false; syncMotion(); }
+if (world.classList.contains('is-laid-out')) syncMotion();

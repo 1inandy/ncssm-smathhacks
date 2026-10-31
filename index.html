@@ -13,7 +13,7 @@
   <a class="skip-link" href="#main">Skip to content</a>
   <header class="site-header">
     <a class="brand" href="#top" aria-label="SMathHacks 2027 home"><img src="assets/logo/smathhacks-full-color.svg" alt="SMathHacks 2027, Bits and Bites" width="1772" height="884"></a>
-    <nav aria-label="Primary navigation"><a href="#about">About</a><a href="#details">Details</a><a href="#schedule">Schedule</a><a href="#faq">FAQ</a><a class="nav-roomy" href="#sponsors">Sponsors</a></nav>
+    <nav aria-label="Primary navigation"><a href="#tracks">Tracks</a><a href="#details">Details</a><a href="#schedule">Schedule</a><a href="#faq">FAQ</a><a class="nav-roomy" href="#sponsors">Sponsors</a></nav>
     <div class="header-status" data-register="header"><a href="#updates">Registration soon</a></div>
   </header>
 
@@ -24,40 +24,62 @@
   <main id="main">
 
     <section class="copy hero-copy" id="top" data-copy="hero" aria-labelledby="event-title">
-      <p class="eyebrow">A student hackathon</p>
+      <p class="eyebrow">A 36-hour hackathon for students, by students</p>
       <h1 class="sr-only" id="event-title">SMathHacks 2027: Bits &amp; Bites</h1>
       <img class="hero-logo" src="assets/logo/smathhacks-full-color.svg" alt="" width="1772" height="884">
       <p class="hero-line">Build, experiment,<br>and share what you make.</p>
-      <p class="event-timing"><span>2027</span><span data-fact="dates">Date to be announced</span></p>
+      <p class="event-timing" data-fact="dates">March 13–14, 2027</p>
       <div class="hero-actions">
-        <a class="primary-link" href="#about">Follow the path <span aria-hidden="true">↓</span></a>
         <div class="registration-state" data-register="hero">Registration details coming soon</div>
       </div>
-      <button class="motion-toggle" type="button" aria-pressed="false" hidden>Pause motion</button>
     </section>
 
-    <section class="copy" id="about" data-copy="bit" aria-labelledby="about-title">
-      <p class="eyebrow">Bit’s growing corner</p>
-      <h2 id="about-title">Bring your curiosity.</h2>
-      <p>Start with a question. Try something unfamiliar. SMathHacks is a student hackathon where ideas become experiments, and experiments become something you can share.</p>
-      <div class="character-note"><h3>Bit, the aspirational apple</h3><p>Helpful and technically minded. Always thinking about how technology can help food and agriculture.</p></div>
-      <button class="scene-control" type="button" data-action="water" aria-pressed="false">Water Bit’s seedling <span aria-hidden="true">↗</span></button>
+    <section class="copy" id="tracks" data-copy="bit" aria-labelledby="ai-title">
+      <p class="eyebrow">Track 1 · Bit’s growing corner</p>
+      <h2 id="ai-title">AI &amp; Machine Learning</h2>
+      <p>For projects where a model learns from data to make a prediction, classification, recommendation, or other decision. Projects might use computer vision, natural language processing, forecasting, or another machine-learning method. The model should be doing meaningful work in the final project, not added as an extra feature.</p>
+      <h3 class="examples-title">Example projects</h3>
+      <ul class="track-examples">
+        <li>A vision model that measures untouched food on cafeteria trays to reveal recurring waste patterns</li>
+        <li>Predict likely harvest timing using planting dates, weather conditions, and growing degree days</li>
+        <li>Recommend ingredient swaps based on what an ingredient actually does in a recipe, such as binding, acidity, moisture, or leavening</li>
+      </ul>
     </section>
 
-    <section class="copy" id="workshop" data-copy="amp" aria-labelledby="amp-title">
-      <p class="eyebrow">Amp’s workshop terrace</p>
-      <h2 id="amp-title">Ideas you can hold.</h2>
-      <p>A circuit, a tool, a little trial and error. Amp, the daring dragonfruit, loves tinkering with hardware and turning a thought into something tangible.</p>
-      <p>Start small. Connect the pieces. See what happens when you flip the switch.</p>
-      <button class="scene-control" type="button" data-action="power" aria-pressed="false">Power up the breadboard <span aria-hidden="true">↗</span></button>
+    <section class="copy" id="hardware" data-copy="amp" aria-labelledby="amp-title">
+      <p class="eyebrow">Track 2 · Amp’s workshop terrace</p>
+      <h2 id="amp-title">Hardware</h2>
+      <p>Solve a food or agriculture problem with a physical device. Teams might use Arduino or Raspberry Pi boards, sensors, motors, cameras, or other electronic and mechanical components. The device should be the center of the project, even if it also connects to a dashboard or uses a model behind the scenes. Kitchen tools, farm systems, storage, and transportation projects can all fit here.</p>
+      <h3 class="examples-title">Example projects</h3>
+      <ul class="track-examples">
+        <li>A fruit-ripeness tester</li>
+        <li>A produce box that automatically vents itself when temperature and humidity raise the risk of spoilage</li>
+        <li>A sensor probe that signals when a compost pile needs water, airflow, or turning</li>
+      </ul>
     </section>
 
-    <section class="copy" id="play" data-copy="bite" aria-labelledby="bite-title">
-      <p class="eyebrow">Bite’s play patch</p>
-      <h2 id="bite-title">Make room for play.</h2>
-      <p>Functional, silly, or a bit of both. Bite, the curious cupcake, makes games and playful projects that start with “what if?”</p>
-      <p>A sketch is a start. A test drive is an experiment. Even the smallest one can take you somewhere unexpected.</p>
-      <button class="scene-control" type="button" data-action="drive">Test-drive the rover <span aria-hidden="true">↗</span></button>
+    <section class="copy" id="game-design" data-copy="bite" aria-labelledby="bite-title">
+      <p class="eyebrow">Track 3 · Bite’s play patch</p>
+      <h2 id="bite-title">Game Design</h2>
+      <p>For projects where the main experience is a game. Build around food, farming, sustainability, nutrition, access, or culture, but let gameplay drive the project rather than a webpage with points attached. Focus on the choices a player makes based on the rules of the world, and what changes as the game unfolds. Browser, mobile, multiplayer, and simulation games all fit here.</p>
+      <h3 class="examples-title">Example projects</h3>
+      <ul class="track-examples">
+        <li>A season-by-season strategy game where crop rotation changes soil, pest pressure, and profit</li>
+        <li>A restaurant puzzle where players turn a shrinking pantry into dishes before ingredients spoil</li>
+        <li>A multiplayer supply-chain game where farms, stores, and shoppers react to shortages and surprise events</li>
+      </ul>
+    </section>
+
+    <section class="copy" id="data-science" data-copy="data" aria-labelledby="data-title">
+      <p class="eyebrow">Track 4 · The harvest ledger</p>
+      <h2 id="data-title">Data Science</h2>
+      <p>Use food or agriculture data to uncover patterns and turn them into something useful. The focus is on understanding what the data shows rather than predicting a new outcome. If the main feature predicts or classifies new inputs, it belongs in AI &amp; Machine Learning.</p>
+      <h3 class="examples-title">Example projects</h3>
+      <ul class="track-examples">
+        <li>Map which cafeteria foods are most commonly left behind and when food waste spikes during lunch</li>
+        <li>Compare price, water use, emissions, and seasonality across possible ingredient substitutions</li>
+        <li>Visualize how distance, refrigeration, and time add cost between a farm and the grocery-store shelf</li>
+      </ul>
     </section>
 
     <section class="copy info-copy" id="details" data-copy="details" aria-labelledby="details-title">
@@ -65,7 +87,7 @@
       <h2 id="details-title">Plan your visit.</h2>
       <p>We’re putting the pieces together. Confirmed details will live right here.</p>
       <dl class="facts">
-        <div><dt>Date</dt><dd data-fact="dates">To be announced</dd></div>
+        <div><dt>Date</dt><dd data-fact="dates">March 13–14, 2027</dd></div>
         <div><dt>Venue</dt><dd data-fact="venue">To be announced</dd></div>
         <div><dt>Eligibility</dt><dd data-fact="eligibility">To be announced</dd></div>
         <div><dt>Cost</dt><dd data-fact="cost">To be announced</dd></div>
@@ -105,10 +127,8 @@
       <h2 id="finale-title">Make something together.</h2>
       <p>One question. A few curious minds. A whole lot of possibility.</p>
       <div class="final-action" data-register="final"><p class="registration-state"><strong>See you in 2027.</strong> Registration details are on their way.</p></div>
-      <button class="scene-control" type="button" data-action="invent" aria-pressed="false">Switch on the invention <span aria-hidden="true">↗</span></button>
     </section>
 
-    <span class="sr-only" role="status" id="scene-status"></span>
   </main>
 
   <!-- The notice board at the end of the path, left blank for sponsor logos. -->
