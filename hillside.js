@@ -81,7 +81,7 @@ const LAYOUTS = {
         { a: 'bed', kind: 'trodden', x: 520, ground: 2370, w: 820, h: 100 },
         { a: 'spool', x: 210, w: 135, ground: 2335 }, { a: 'bench', x: 480, w: 340, ground: 2370, id: 'bench' },
         { on: 'bench', a: 'drawers', dx: -95, w: 100 }, { on: 'bench', a: 'breadboard', dx: 50, w: 115, sink: 5, id: 'breadboard' },
-        { a: 'amp', x: 770, w: 210, ground: 2410 }, { a: 'battery', x: 885, w: 66, ground: 2382 },
+        { a: 'amp', x: 770, w: 210, ground: 2410 },
         { a: 'plant', x: 1300, top: 2470, h: 420, flip: true } ] },
 
       { id: 'lane', strip: 'middle-hill-right', crest: 3030, span: 1.2, pathW: 100, via: [[540, 3080], [480, 3190]], items: [
@@ -116,7 +116,8 @@ const LAYOUTS = {
         clearing: { copy: 'finale', x: 430, y: 6530, w: 580, h: 202, in: .5, out: .5 }, items: [
         { a: 'bed', kind: 'trodden', x: 740, ground: 6440, w: 1020, h: 110 },
         { a: 'bench', x: 720, w: 400, ground: 6430, id: 'table' }, { on: 'table', a: 'countdown', dx: 0, w: 300 },
-        { a: 'bit', x: 440, w: 170, ground: 6460 }, { a: 'amp', x: 1000, w: 178, ground: 6470 }, { a: 'bite', x: 1185, w: 165, ground: 6455 } ] },
+        { a: 'bit', x: 440, w: 170, ground: 6460 }, { a: 'amp', x: 1000, w: 178, ground: 6470 }, { a: 'bite', x: 1185, w: 165, ground: 6455 },
+        { a: 'battery', x: 295, w: 78, ground: 6470 } ] },
 
       { id: 'end', strip: 'front-bank', crest: 6890, span: 1.3, pathW: 160, items: [] },
     ],
@@ -176,7 +177,8 @@ const LAYOUTS = {
         clearing: { copy: 'finale', x: 50, y: 8080, w: 500, h: 410, in: .5, out: .5 }, items: [
         { a: 'bed', kind: 'trodden', x: 300, ground: 7970, w: 590, h: 70 },
         { a: 'bench', x: 300, w: 270, ground: 7950, id: 'table' }, { on: 'table', a: 'countdown', dx: 0, w: 300 },
-        { a: 'bit', x: 85, w: 118, ground: 7970 }, { a: 'amp', x: 515, w: 120, ground: 7980 }, { a: 'bite', x: 300, w: 104, ground: 8030 } ] },
+        { a: 'bit', x: 85, w: 118, ground: 7970 }, { a: 'amp', x: 515, w: 120, ground: 7980 }, { a: 'bite', x: 300, w: 104, ground: 8030 },
+        { a: 'battery', x: 420, w: 54, ground: 8020 } ] },
 
       { id: 'end', strip: 'front-bank', crest: 8680, span: 2.1, pathW: 140, items: [] },
     ],
