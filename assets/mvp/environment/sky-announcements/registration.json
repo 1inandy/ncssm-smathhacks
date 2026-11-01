@@ -1,0 +1,57 @@
+{
+  "theme-balloon": {
+    "src": "assets/mvp/environment/sky-announcements/theme-balloon.webp",
+    "width": 500,
+    "height": 799,
+    "crop": {
+      "left": 3,
+      "top": 6,
+      "width": 986,
+      "height": 1576
+    }
+  },
+  "tow-plane": {
+    "src": "assets/mvp/environment/sky-announcements/tow-plane.webp",
+    "width": 700,
+    "height": 291,
+    "crop": {
+      "left": 66,
+      "top": 118,
+      "width": 1686,
+      "height": 701
+    }
+  },
+  "registration-banner": {
+    "src": "assets/mvp/environment/sky-announcements/registration-banner.webp",
+    "width": 1000,
+    "height": 227,
+    "crop": {
+      "left": 50,
+      "top": 141,
+      "width": 2018,
+      "height": 459
+    }
+  },
+  "theme-balloon-v2": {
+    "src": "assets/mvp/environment/sky-announcements/theme-balloon-v2.webp",
+    "width": 500,
+    "height": 799,
+    "crop": {
+      "left": 3,
+      "top": 3,
+      "width": 987,
+      "height": 1578
+    }
+  },
+  "theme-hanging-sign": {
+    "src": "assets/mvp/environment/sky-announcements/theme-hanging-sign.webp",
+    "width": 700,
+    "height": 340,
+    "crop": {
+      "left": 17,
+      "top": 0,
+      "width": 1744,
+      "height": 848
+    }
+  }
+}

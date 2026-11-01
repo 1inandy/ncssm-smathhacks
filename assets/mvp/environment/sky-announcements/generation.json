@@ -1,0 +1,40 @@
+{
+  "mode": "built-in image_gen",
+  "created": "2026-10-31",
+  "styleReferences": [
+    "assets/hillside/morganton-barn.webp",
+    "assets/hillside/bit-master.webp"
+  ],
+  "assets": [
+    {
+      "name": "theme-balloon",
+      "source": "/Users/alin08/.codex/generated_images/01a184a5-350d-7110-b76d-f3191aeff548/exec-ec7127eb-704f-4c96-a2cd-7388142109f5.png",
+      "width": 500,
+      "prompt": "Use case: illustration-story. Asset for an existing hand-painted storybook hackathon landscape. Input images are STYLE REFERENCES ONLY: warm irregular dark reddish-brown ink outlines, lightly brushed matte gouache fills, cream/leaf-green/rust palette, charming hand-drawn perspective. Do not include the barn or apple character. Genuine transparent background and transparent internal gaps, no ground, sky, scenery, white rectangle, cast backdrop shadow, text, letters, logos or watermark. One single complete isolated object, generous small transparent safety margin, crisp legibility at small website size, not a glossy 3D render or flat vector icon. Subject: one large upright hot-air balloon, front three-quarter view, whole envelope, four suspension ropes and small woven wicker basket clearly visible. Cream and leaf-green vertical cloth gores with muted rust narrow seams, bulbous volume and soft painted shading. Large clean blank cream oval medallion across the front middle of envelope, centered at about 44% of full object height; reserve its uncluttered center for real HTML title overlaid later. No symbols or writing. Basket has open top, no passenger. Natural elegant proportions, height about 1.6 times width. Transparent spaces between rigging."
+    },
+    {
+      "name": "tow-plane",
+      "source": "/Users/alin08/.codex/generated_images/01a184a5-350d-7110-b76d-f3191aeff548/exec-319f87ac-b4d5-4ecd-a08e-bd0dde79529d.png",
+      "width": 700,
+      "prompt": "Use case: illustration-story. Asset for an existing hand-painted storybook hackathon landscape. Input images are STYLE REFERENCES ONLY: warm irregular dark reddish-brown ink outlines, lightly brushed matte gouache fills, cream/leaf-green/rust palette, charming hand-drawn perspective. Do not include the barn or apple character. Genuine transparent background and transparent internal gaps, no ground, sky, scenery, white rectangle, cast backdrop shadow, text, letters, logos or watermark. One single complete isolated object, generous small transparent safety margin, crisp legibility at small website size, not a glossy 3D render or flat vector icon. Subject: one small charming vintage propeller tow airplane in SIDE PROFILE flying LEFT (nose and propeller at left, tail at right). Cream fuselage, rust-red wings, leaf-green tail, subtle hand-painted mechanical details, simple unoccupied open cockpit. Single monoplane or clear simple biplane silhouette with shallow three-quarter wing depth; believable tiny landing wheels. Small tow attachment loop at far right tail. Whole aircraft fully visible, wide landscape framing. NO rope, banner, passengers, speed lines or extra objects. Propeller distinct at nose."
+    },
+    {
+      "name": "registration-banner",
+      "source": "/Users/alin08/.codex/generated_images/01a184a5-350d-7110-b76d-f3191aeff548/exec-d9365621-16bc-4f62-ba03-bcd32ebf8001.png",
+      "width": 1000,
+      "prompt": "Use case: illustration-story. Asset for an existing hand-painted storybook hackathon landscape. Input images are STYLE REFERENCES ONLY: warm irregular dark reddish-brown ink outlines, lightly brushed matte gouache fills, cream/leaf-green/rust palette, charming hand-drawn perspective. Do not include the barn or apple character. Genuine transparent background and transparent internal gaps, no ground, sky, scenery, white rectangle, cast backdrop shadow, text, letters, logos or watermark. One single complete isolated object, generous small transparent safety margin, crisp legibility at small website size, not a glossy 3D render or flat vector icon. Subject: one horizontal blank cream cloth aerial tow banner alone, aspect ratio around 3.8:1, facing viewer almost straight on, warm brown stitched outline and subtle rust hem. Left leading edge has two small brass grommets for tow cord; right end has shallow swallowtail notch. Gentle fabric ripple at top and bottom edges and very restrained folds at ends, central 75% is clean, light, flat and EMPTY for readable real HTML text later. No lettering. No plane, rope, pole, surrounding scene or duplicate banner. Entire banner visible."
+    },
+    {
+      "name": "theme-balloon-v2",
+      "source": "/Users/alin08/.codex/generated_images/01a184a5-350d-7110-b76d-f3191aeff548/exec-c912dede-f33b-4390-a616-4473fbb4777c.png",
+      "width": 500,
+      "prompt": "Edit the referenced balloon. Change ONLY this: completely REMOVE the large cream oval medallion/front plaque and its border. Replace that region with uninterrupted alternating green and cream vertical fabric gores and rust seams flowing naturally from balloon crown to mouth. Keep the same full balloon shape, painted gouache style, palette, basket, suspension rigging, angle and proportions. No signs, no writing, no new objects. Preserve genuine alpha transparency around and through all ropes. Full balloon and basket visible; no background."
+    },
+    {
+      "name": "theme-hanging-sign",
+      "source": "/Users/alin08/.codex/generated_images/01a184a5-350d-7110-b76d-f3191aeff548/exec-c471c783-d26d-4f6a-b6f8-fbb53f413a42.png",
+      "width": 700,
+      "prompt": "Use case: illustration-story. One isolated blank hand-painted wooden sign for hanging UNDER a small hot-air balloon on a storybook website. Reference image is STYLE ONLY (warm reddish brown uneven ink, cream/green/rust gouache). Do NOT draw any balloon. Draw one small horizontal cream-painted wood plaque with rounded imperfect corners, restrained rust-brown wood edge and thickness, clean unobstructed face for HTML text. TWO thin brown suspension ropes at top: ropes start near center top at 35% and65% width, extend DOWN and slightly OUTWARD to left and right top corners of the board. The upper 30% of image is the two exposed rope spans, lower70% is the blank horizontal plaque. Full object ratio about 2:1. Blank face, no text, no letters, no symbols. Transparent background including gap between ropes; no sky, ground, shadow backdrop, balloon or duplicate plaque."
+    }
+  ]
+}

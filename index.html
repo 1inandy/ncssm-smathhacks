@@ -8,12 +8,15 @@
   <title>SMathHacks 2027 | Bits & Bites</title>
   <link rel="icon" type="image/svg+xml" href="assets/logo/smathhacks-full-color.svg">
   <link rel="stylesheet" href="hillside.css">
+  <link rel="stylesheet" href="sky-announcements.css">
+  <link rel="stylesheet" href="countdown.css">
+  <link rel="stylesheet" href="trail-boards.css">
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
   <header class="site-header">
     <a class="brand" href="#top" aria-label="SMathHacks 2027 home"><img src="assets/logo/smathhacks-full-color.svg" alt="SMathHacks 2027, Bits and Bites" width="1772" height="884"></a>
-    <nav aria-label="Primary navigation"><a href="#tracks">Tracks</a><a href="#details">Details</a><a href="#schedule">Schedule</a><a href="#faq">FAQ</a><a class="nav-roomy" href="#sponsors">Sponsors</a></nav>
+    <nav aria-label="Primary navigation"><a href="#tracks">Tracks</a><a class="nav-wide" href="#gallery">Gallery</a><a href="#details">Details</a><a href="#schedule">Schedule</a><a href="#faq">FAQ</a><a class="nav-roomy" href="#sponsors">Sponsors</a></nav>
     <div class="header-status" data-register="header"><a href="#updates">Registration soon</a></div>
   </header>
 
@@ -32,6 +35,23 @@
       <div class="hero-actions">
         <div class="registration-state" data-register="hero">Registration details coming soon</div>
       </div>
+    </section>
+
+    <aside class="sky-flight sky-announcement" aria-label="Countdown to Bits &amp; Bites">
+      <span class="flight-drift">
+        <img class="tow-plane" src="assets/mvp/environment/sky-announcements/tow-plane.webp" alt="" width="700" height="291">
+        <svg class="tow-cord" viewBox="0 0 100 30" preserveAspectRatio="none" aria-hidden="true"><path d="M0 6 Q45 14 100 0 M0 6 Q45 18 100 30"/></svg>
+        <span class="tow-banner">
+          <img src="assets/mvp/environment/sky-announcements/registration-banner.webp" alt="" width="1000" height="227">
+          <span class="banner-lettering"><span>Countdown to <span data-event-theme>Bits &amp; Bites</span></span><strong class="banner-clock" aria-hidden="true"><span><b data-countdown-unit="days">—</b>d</span><span><b data-countdown-unit="hours">—</b>h</span><span><b data-countdown-unit="minutes">—</b>m</span><span><b data-countdown-unit="seconds">—</b>s</span></strong></span>
+        </span>
+      </span>
+    </aside>
+
+    <section class="trail-face theme-sign-face" id="theme" data-trail-board="theme" aria-labelledby="theme-sign-title">
+      <h2 id="theme-sign-title"><img class="theme-logo" src="assets/brand/bits-and-bites-2027.svg" alt="Bits &amp; Bites 2027" width="760" height="490"></h2>
+      <p class="eyebrow">This year’s theme</p>
+      <p>Build at the intersection of food and technology.</p>
     </section>
 
     <section class="copy" id="tracks" data-copy="bit" aria-labelledby="ai-title">
@@ -82,6 +102,22 @@
       </ul>
     </section>
 
+    <section class="trail-face gallery-face" id="gallery" data-trail-board="gallery" aria-labelledby="gallery-title">
+      <h2 id="gallery-title">Around the hackathon</h2>
+      <p class="gallery-note" data-gallery-note>A little room for the memories. Photos coming soon.</p>
+      <ul class="gallery-grid" data-gallery-grid>
+        <li class="gallery-card"><div class="gallery-placeholder"><span class="gallery-empty-image">Your photo here</span><span class="gallery-caption">Photo slot 01</span></div></li>
+        <li class="gallery-card"><div class="gallery-placeholder"><span class="gallery-empty-image">Your photo here</span><span class="gallery-caption">Photo slot 02</span></div></li>
+        <li class="gallery-card"><div class="gallery-placeholder"><span class="gallery-empty-image">Your photo here</span><span class="gallery-caption">Photo slot 03</span></div></li>
+        <li class="gallery-card"><div class="gallery-placeholder"><span class="gallery-empty-image">Your photo here</span><span class="gallery-caption">Photo slot 04</span></div></li>
+      </ul>
+      <div class="gallery-pagination" data-gallery-pagination hidden>
+        <button type="button" data-gallery-page="previous" aria-label="Previous gallery page">←</button>
+        <span data-gallery-page-label aria-live="polite"></span>
+        <button type="button" data-gallery-page="next" aria-label="Next gallery page">→</button>
+      </div>
+    </section>
+
     <section class="copy info-copy" id="details" data-copy="details" aria-labelledby="details-title">
       <p class="eyebrow">The clearing</p>
       <h2 id="details-title">Plan your visit.</h2>
@@ -110,30 +146,66 @@
       </div>
     </section>
 
-    <section class="copy sponsors-copy" id="sponsors" data-copy="sponsors" aria-labelledby="sponsors-title">
-      <p class="eyebrow">The supply shed</p>
-      <h2 id="sponsors-title">Help stock the workbench.</h2>
-      <p>Sponsors help provide the space, supplies, and snacks that let students turn an idea into something real.</p>
-      <p id="sponsor-status">Our sponsors will be announced here.</p>
-      <!-- Empty slots until real sponsors are listed in event-config.json, which replaces them. -->
-      <div id="sponsor-list" class="sponsor-list is-placeholder" aria-hidden="true">
-        <div class="sponsor-tier"><ul><li><span class="sponsor slot big">Your logo here</span></li><li><span class="sponsor slot big">Your logo here</span></li><li><span class="sponsor slot big">Your logo here</span></li></ul></div>
-        <div class="sponsor-tier"><ul><li><span class="sponsor slot">Logo</span></li><li><span class="sponsor slot">Logo</span></li><li><span class="sponsor slot">Logo</span></li><li><span class="sponsor slot">Logo</span></li></ul></div>
+    <!-- Real HTML sits inside the painted, freestanding sponsor billboard. -->
+    <section class="site-footer sponsor-billboard" id="sponsors" data-copy="footer" aria-labelledby="sponsors-title">
+      <div class="sponsor-board-content">
+        <p class="eyebrow">Made possible by</p>
+        <h2 id="sponsors-title">Our sponsors</h2>
+        <p id="sponsor-status">Sponsor announcements coming soon.</p>
+        <div class="sponsor-placeholders" data-sponsor-placeholders aria-label="Example sponsor tiers with placeholder logos">
+          <section class="sponsor-tier" data-sponsor-level="title" aria-labelledby="placeholder-title-tier">
+            <h3 id="placeholder-title-tier">Title sponsor</h3>
+            <ul><li><span>Logo 01</span><small>placeholder</small></li></ul>
+          </section>
+          <section class="sponsor-tier" data-sponsor-level="gold" aria-labelledby="placeholder-gold-tier">
+            <h3 id="placeholder-gold-tier">Gold sponsors</h3>
+            <ul><li><span>Logo 02</span><small>placeholder</small></li><li><span>Logo 03</span><small>placeholder</small></li></ul>
+          </section>
+          <section class="sponsor-tier" data-sponsor-level="silver" aria-labelledby="placeholder-silver-tier">
+            <h3 id="placeholder-silver-tier">Silver sponsors</h3>
+            <ul><li><span>Logo 04</span><small>placeholder</small></li><li><span>Logo 05</span><small>placeholder</small></li><li><span>Logo 06</span><small>placeholder</small></li></ul>
+          </section>
+          <section class="sponsor-tier" data-sponsor-level="community" aria-labelledby="placeholder-community-tier">
+            <h3 id="placeholder-community-tier">Community partners</h3>
+            <ul><li><span>Logo 07</span><small>placeholder</small></li><li><span>Logo 08</span><small>placeholder</small></li></ul>
+          </section>
+        </div>
+        <div class="sponsor-list" id="sponsor-list" hidden></div>
+        <p class="sponsor-ask" data-sponsor-ask hidden></p>
       </div>
-      <p class="sponsor-ask" data-sponsor-ask>Interested in sponsoring SMathHacks? Contact details are coming soon.</p>
+    </section>
+
+    <section class="table-countdown" id="event-countdown" aria-label="Countdown to event day" data-countdown-at="2027-03-13T00:00:00-05:00">
+      <img src="assets/mvp/props/countdown-clock/clock.webp" alt="" width="800" height="364">
+      <div class="countdown-face">
+        <p class="countdown-caption sr-only" data-countdown-caption>Until event day</p>
+        <div class="countdown-digits" role="timer" aria-live="off" aria-label="Countdown loading" data-countdown-timer>
+          <span><strong data-countdown-unit="days">—</strong><small>days</small></span>
+          <span><strong data-countdown-unit="hours">—</strong><small>hrs</small></span>
+          <span><strong data-countdown-unit="minutes">—</strong><small>min</small></span>
+          <span><strong data-countdown-unit="seconds">—</strong><small>sec</small></span>
+        </div>
+      </div>
+      <noscript><p>Event day: March 13, 2027.</p></noscript>
     </section>
 
     <section class="copy finale-copy" id="updates" data-copy="finale" aria-labelledby="finale-title">
       <h2 id="finale-title">Make something together.</h2>
       <p>One question. A few curious minds. A whole lot of possibility.</p>
-      <div class="final-action" data-register="final"><p class="registration-state"><strong>See you in 2027.</strong> Registration details are on their way.</p></div>
+      <p class="finale-credit">Made with ❤️ by SMathHacks 2027</p>
     </section>
 
   </main>
 
-  <!-- The notice board at the end of the path, left blank for sponsor logos. -->
-  <footer class="site-footer" data-copy="footer"></footer>
   </div>
+
+  <dialog class="gallery-dialog" data-gallery-dialog aria-labelledby="gallery-dialog-title">
+    <div class="gallery-dialog-header"><h2 id="gallery-dialog-title">From the gallery</h2><button type="button" data-gallery-close aria-label="Close photo">✕</button></div>
+    <img class="gallery-dialog-image" data-gallery-large-image alt="">
+    <p data-gallery-error hidden>This photo couldn’t load.</p>
+    <p class="gallery-dialog-caption" data-gallery-large-caption></p>
+    <div class="gallery-dialog-controls"><button type="button" data-gallery-photo="previous" aria-label="Previous photo">←</button><span data-gallery-photo-label></span><button type="button" data-gallery-photo="next" aria-label="Next photo">→</button></div>
+  </dialog>
 
   <script type="module" src="event.js"></script>
   <script type="module" src="hillside.js"></script>

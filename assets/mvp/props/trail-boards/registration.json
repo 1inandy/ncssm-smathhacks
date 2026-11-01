@@ -1,0 +1,22 @@
+{
+  "theme-trail-sign": {
+    "width": 1000,
+    "height": 770,
+    "crop": {
+      "left": 28,
+      "top": 44,
+      "width": 1350,
+      "height": 1039
+    }
+  },
+  "gallery-trail-kiosk": {
+    "width": 1400,
+    "height": 1302,
+    "crop": {
+      "left": 3,
+      "top": 41,
+      "width": 1259,
+      "height": 1171
+    }
+  }
+}

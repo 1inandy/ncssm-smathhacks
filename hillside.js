@@ -1,6 +1,8 @@
 // One continuous hillside. Every object has a fixed home on a terrain tier; native scroll is the camera.
 // Two compositions of the same world: `wide` (desktop, 1440 units across) and `tall` (phone, 600 across).
 import CRESTS from './crests.js';
+import { layoutSkyAnnouncements } from './sky-announcements.js';
+import { placeTrailBoard } from './trail-boards.js';
 
 const A = 'assets/mvp/', P = A + 'props/', E = A + 'environment/', H_ = 'assets/hillside/';
 // name: [src, intrinsic width, intrinsic height]
@@ -14,7 +16,7 @@ const ART = {
   compost: [H_ + 'compost-monitor.webp', 420, 351], controller: [H_ + 'cookie-controller.webp', 420, 282], rover: [H_ + 'snack-delivery-rover.webp', 420, 400],
   printer: [H_ + 'recipe-card-printer.webp', 420, 361],
   bit: [H_ + 'bit-master.webp', 480, 568], amp: [H_ + 'amp-master.webp', 451, 600], bite: [H_ + 'bite-master.webp', 480, 540],
-  bench: [P + 'tables-v2/amp-bench.webp', 510, 270], desk: [P + 'tables-v2/bite-desk.webp', 430, 230], notice: [P + 'notice-frame.svg', 1180, 850], invention: [P + 'invention-base.svg', 380, 260],
+  bench: [P + 'tables-v2/amp-bench.webp', 510, 270], desk: [P + 'tables-v2/bite-desk.webp', 430, 230], notice: [P + 'notice-frame.svg', 1180, 850], countdown: [P + 'countdown-clock/clock.webp', 800, 364],
   stem: [E + 'left-stem.svg', 280, 720], leafA: [E + 'left-leaf-a.svg', 240, 320], leafB: [E + 'right-leaf-a.svg', 240, 320],
 };
 // The end billboard is assembled from separate painted pieces, not the flat notice icon.
@@ -43,7 +45,8 @@ const SURFACE = { bench: .12, desk: .14 };
 //   difference between real and planned height, so the gap after each clearing stays as designed
 //   whatever the text does (long copy, an open FAQ, text zoom).
 //   `in`/`out` say where along its top/bottom edge the route enters and leaves.
-// `sign`: the footer, held on the notice board where the route ends; `ground` is where its posts stand.
+// `sign`: the sponsor billboard, standing just past the info clearing; `ground` is where its posts stand.
+//   However tall its logos make it, every tier after it moves down to keep the ground below it clear.
 // Items: x is the centre; base at `ground` (absolute y, moves with its tier) or crest + `sink`.
 //   `on` sets an item on a support item's top surface, offset by `dx` (and down by `sink`). `bed` is worked ground
 //   (soil or trodden grass) under a station.
@@ -60,6 +63,8 @@ const LAYOUTS = {
         { a: 'pinwheel', x: 205, w: 84, sink: 18, cls: 'sway slow' } ] },
       { id: 'gate', strip: 'near-bank', crest: 868, pathW: 30, via: [[884, 888], [876, 960], [800, 1020], [690, 1075]], items: [
         { a: 'gate', x: 880, w: 210, sink: 30 } ] },
+      { id: 'themeStop', strip: 'middle-hill-left', crest: 1080, span: 1.2, pathW: 42,
+        trail: { kind: 'theme', x: 330, w: 500, ground: 1250, gap: 80 }, items: [] },
       { id: 'sphere', strip: 'middle-hill-right', crest: 1075, span: 1.15, pathW: 46, via: [[592, 1135], [590, 1200], [650, 1265]], items: [
         { a: 'sphere', x: 1215, w: 250, sink: 62 } ] },
       { id: 'garden', strip: 'near-bank', crest: 1250, span: 1.25, flip: true, pathW: 70, via: [[720, 1310]],
@@ -97,32 +102,28 @@ const LAYOUTS = {
         { a: 'crate', x: 170, w: 150, ground: 4300 }, { a: 'compost', x: 360, w: 150, ground: 4300 },
         { a: 'printer', x: 545, w: 125, ground: 4295 } ] },
 
+      { id: 'galleryStop', strip: 'middle-hill-right', crest: 4780, span: 1.2, pathW: 116,
+        trail: { kind: 'gallery', x: 720, w: 920, ground: 5690, gap: 110 }, items: [] },
       { id: 'quiet', strip: 'middle-hill-left', crest: 4900, span: 1.2, pathW: 120, via: [[600, 4950], [700, 5040]], items: [
         { a: 'solar', x: 1230, w: 115, sink: 30 }, { a: 'spool', x: 190, w: 125, sink: 34 } ] },
       { id: 'info', strip: 'near-bank', crest: 5030, span: 1.3, pathW: 130,
         clearing: { copy: 'details', x: 200, y: 5140, w: 1040, h: 648, in: .5, out: .5 }, items: [
         { a: 'printer', x: 1340, w: 120, ground: 5330 }, { a: 'plant', x: -150, top: 5380, h: 420 } ] },
 
-      { id: 'shedBack', strip: 'middle-hill-left', crest: 6080, span: 1.2, pathW: 135, via: [[700, 6120]], items: [
-        { a: 'solar', x: 1230, w: 110, sink: 30 }, { a: 'spool', x: 200, w: 120, sink: 34 } ] },
-      { id: 'shed', strip: 'near-bank', crest: 6210, span: 1.3, pathW: 140,
-        clearing: { copy: 'sponsors', x: 420, y: 6330, w: 600, h: 300, in: .5, out: .5 }, items: [
-        { a: 'drawers', x: 140, w: 120, ground: 6470 }, { a: 'battery', x: 1300, w: 70, ground: 6440 }, { a: 'crate', x: 1310, w: 130, ground: 6600 } ] },
+      { id: 'gatherBack', strip: 'middle-hill-right', crest: 6080, span: 1.2, pathW: 140, sign: { copy: 'footer', x: 340, w: 760, ground: 6110 }, items: [
+        { a: 'crate', x: 110, w: 140, sink: 40 }, { a: 'pinwheel', x: 1340, w: 84, sink: 24, cls: 'sway slow' } ] },
+      { id: 'gather', strip: 'near-bank', crest: 6210, span: 1.3, flip: true, pathW: 150,
+        clearing: { copy: 'finale', x: 430, y: 6530, w: 580, h: 202, in: .5, out: .5 }, items: [
+        { a: 'bed', kind: 'trodden', x: 740, ground: 6440, w: 1020, h: 110 },
+        { a: 'bench', x: 720, w: 400, ground: 6430, id: 'table' }, { on: 'table', a: 'countdown', dx: 0, w: 300 },
+        { a: 'bit', x: 440, w: 170, ground: 6460 }, { a: 'amp', x: 1000, w: 178, ground: 6470 }, { a: 'bite', x: 1185, w: 165, ground: 6455 } ] },
 
-      { id: 'gatherBack', strip: 'middle-hill-right', crest: 6800, span: 1.2, pathW: 140, via: [[720, 6830]], items: [
-        { a: 'crate', x: 250, w: 140, sink: 40 }, { a: 'pinwheel', x: 1190, w: 84, sink: 24, cls: 'sway slow' } ] },
-      { id: 'gather', strip: 'near-bank', crest: 6930, span: 1.3, flip: true, pathW: 150,
-        clearing: { copy: 'finale', x: 430, y: 7250, w: 580, h: 202, in: .5, out: .5 }, items: [
-        { a: 'bed', kind: 'trodden', x: 740, ground: 7160, w: 1020, h: 110 },
-        { a: 'bench', x: 720, w: 400, ground: 7150, id: 'table' }, { on: 'table', a: 'invention', dx: 0, w: 200 },
-        { a: 'bit', x: 440, w: 170, ground: 7180 }, { a: 'amp', x: 1000, w: 178, ground: 7190 }, { a: 'bite', x: 1185, w: 165, ground: 7175 } ] },
-
-      { id: 'end', strip: 'front-bank', crest: 7610, span: 1.3, pathW: 160, sign: { copy: 'footer', x: 400, w: 640, ground: 7890 }, items: [] },
+      { id: 'end', strip: 'front-bank', crest: 6890, span: 1.3, pathW: 160, items: [] },
     ],
   },
   tall: {
     W: 600, sky: 1300,
-    clouds: [['cloudWisp', 420, 50, 300], ['cloudPuff', 520, 330, 170], ['cloudLong', 150, 760, 340], ['cloudPuff', 500, 720, 200]],
+    clouds: [['cloudWisp', 420, 50, 300], ['cloudPuff', 520, 850, 170], ['cloudLong', 150, 760, 340], ['cloudPuff', 500, 720, 200]],
     hero: { x: 40, y: 140, w: 520 },
     tiers: [
       { id: 'ridge', strip: 'far-ridge-right', crest: 900, span: 1.9, depth: .2, items: [
@@ -131,6 +132,8 @@ const LAYOUTS = {
         { a: 'pinwheel', x: 80, w: 60, sink: 12, cls: 'sway slow' } ] },
       { id: 'gate', strip: 'near-bank', crest: 1070, span: 1.9, pathW: 24, via: [[332, 1088], [332, 1120], [385, 1180], [450, 1230]], items: [
         { a: 'gate', x: 330, w: 160, sink: 22 } ] },
+      { id: 'themeStop', strip: 'middle-hill-left', crest: 1300, span: 2, pathW: 32,
+        trail: { kind: 'theme', x: 300, w: 530, ground: 1740, gap: 100 }, items: [] },
       { id: 'sphere', strip: 'middle-hill-right', crest: 1220, span: 2, pathW: 36, via: [[482, 1275], [470, 1330]], items: [
         { a: 'sphere', x: 548, w: 140, sink: 40 } ] },
       { id: 'garden', strip: 'near-bank', crest: 1340, span: 2.1, flip: true, pathW: 54, via: [[488, 1410], [470, 1510]],
@@ -161,26 +164,21 @@ const LAYOUTS = {
         { a: 'bed', kind: 'trodden', x: 150, sink: 56, w: 270, h: 56 },
         { a: 'crate', x: 85, w: 105, sink: 30 }, { a: 'compost', x: 200, w: 95, sink: 34 }, { a: 'printer', x: 505, w: 90, sink: 30 } ] },
 
+      { id: 'galleryStop', strip: 'middle-hill-right', crest: 5840, span: 2, pathW: 98,
+        trail: { kind: 'gallery', x: 300, w: 560, ground: 6520, gap: 110 }, items: [] },
       { id: 'quiet', strip: 'middle-hill-left', crest: 5940, span: 2, pathW: 100, via: [[260, 5980], [300, 6060]], items: [
-        { a: 'notice', x: 90, w: 130, sink: 36 }, { a: 'solar', x: 500, w: 80, sink: 22 } ] },
+        { a: 'solar', x: 500, w: 80, sink: 22 } ] },
       { id: 'info', strip: 'near-bank', crest: 6080, span: 2.1, pathW: 110,
         clearing: { copy: 'details', x: 40, y: 6190, w: 520, h: 1280, in: .5, out: .5 }, items: [] },
 
-      { id: 'shedBack', strip: 'middle-hill-left', crest: 7640, span: 2, pathW: 115, via: [[300, 7680]], items: [
-        { a: 'spool', x: 90, w: 90, sink: 26 }, { a: 'solar', x: 520, w: 80, sink: 22 } ] },
-      { id: 'shed', strip: 'near-bank', crest: 7760, span: 2.1, pathW: 120, via: [[300, 7820]],
-        clearing: { copy: 'sponsors', x: 50, y: 7920, w: 500, h: 520, in: .5, out: .5 }, items: [
-        { a: 'drawers', x: 90, w: 86, ground: 7880 }, { a: 'battery', x: 520, w: 50, ground: 7870 } ] },
+      { id: 'gatherBack', strip: 'middle-hill-right', crest: 7640, span: 2, pathW: 120, sign: { copy: 'footer', x: 50, w: 500, ground: 7690 }, items: [] },
+      { id: 'gather', strip: 'near-bank', crest: 7760, span: 2.1, flip: true, pathW: 130,
+        clearing: { copy: 'finale', x: 50, y: 8080, w: 500, h: 410, in: .5, out: .5 }, items: [
+        { a: 'bed', kind: 'trodden', x: 300, ground: 7970, w: 590, h: 70 },
+        { a: 'bench', x: 300, w: 270, ground: 7950, id: 'table' }, { on: 'table', a: 'countdown', dx: 0, w: 300 },
+        { a: 'bit', x: 85, w: 118, ground: 7970 }, { a: 'amp', x: 515, w: 120, ground: 7980 }, { a: 'bite', x: 300, w: 104, ground: 8030 } ] },
 
-      { id: 'gatherBack', strip: 'middle-hill-right', crest: 8540, span: 2, pathW: 120, via: [[300, 8580]], items: [
-        { a: 'crate', x: 90, w: 100, sink: 30 } ] },
-      { id: 'gather', strip: 'near-bank', crest: 8660, span: 2.1, flip: true, pathW: 130,
-        clearing: { copy: 'finale', x: 50, y: 8980, w: 500, h: 410, in: .5, out: .5 }, items: [
-        { a: 'bed', kind: 'trodden', x: 300, ground: 8870, w: 590, h: 70 },
-        { a: 'bench', x: 300, w: 270, ground: 8850, id: 'table' }, { on: 'table', a: 'invention', dx: 0, w: 145 },
-        { a: 'bit', x: 85, w: 118, ground: 8870 }, { a: 'amp', x: 515, w: 120, ground: 8880 }, { a: 'bite', x: 300, w: 104, ground: 8930 } ] },
-
-      { id: 'end', strip: 'front-bank', crest: 9580, span: 2.1, pathW: 140, sign: { copy: 'footer', x: 50, w: 500, ground: 9980 }, items: [] },
+      { id: 'end', strip: 'front-bank', crest: 8680, span: 2.1, pathW: 140, items: [] },
     ],
   },
 };
@@ -313,17 +311,20 @@ function placeCopy(name, x, y, w) {
 function placeSign(sign, sh, W, minTop = 0) {
   const pad = 12, post = W > 1000 ? 130 : 110, ground = sign.ground + sh;
   const face = BILLBOARD.inside, fw = face.right - face.left, fh = face.bottom - face.top;
-  const iw = Math.min((sign.w + pad * 2) / fw, W - 28);
+  const iw = Math.min((sign.w + pad * 2) / fw, W - 16);
   const ix = sign.x + sign.w / 2 - iw / 2, contentX = ix + iw * face.left + pad;
   const contentW = iw * fw - pad * 2;
   const el = document.querySelector(`[data-copy="${sign.copy}"]`);
   const empty = !el.children.length && !el.textContent.trim();
+  const sponsorBoard = el.classList.contains('sponsor-billboard');
   const naturalHeight = iw * BILLBOARD.panel[2] / BILLBOARD.panel[1];
-  el.style.minHeight = empty ? `${Math.max(1, naturalHeight * fh - pad * 2) * s}px` : '';
+  const topInset = sponsorBoard ? iw * .10 : naturalHeight * face.top;
+  const bottomInset = sponsorBoard ? iw * .08 : naturalHeight * (1 - face.bottom);
+  el.style.minHeight = empty || sponsorBoard ? `${Math.max(1, naturalHeight - topInset - bottomInset - pad * 2) * s}px` : '';
   const h = placeCopy(sign.copy, contentX, 0, contentW);
-  const ih = Math.max(naturalHeight, (h + pad * 2) / fh), iy = Math.max(ground - post - ih, minTop);
+  const ih = Math.max(naturalHeight, sponsorBoard ? h + pad * 2 + topInset + bottomInset : (h + pad * 2) / fh), iy = Math.max(ground - post - ih, minTop);
   const footing = iy + ih + post;
-  placeCopy(sign.copy, contentX, iy + ih * face.top + pad, contentW);
+  placeCopy(sign.copy, contentX, iy + (sponsorBoard ? topInset : ih * face.top) + pad, contentW);
   return { ix, iy, iw, ih, ground: footing, box: [ix, iy, ix + iw, footing] };
 }
 
@@ -333,10 +334,11 @@ function render() {
   const L = vw >= 760 ? LAYOUTS.wide : LAYOUTS.tall, W = L.W;
   s = vw / W;
   world.classList.add('is-laid-out');
-  placeCopy('hero', L.hero.x, L.hero.y, L.hero.w);
+  const heroHeight = placeCopy('hero', L.hero.x, L.hero.y, L.hero.w);
+  const skyExtra = layoutSkyAnnouncements({ width: vw, scale: s, heroBottom: L.hero.y + heroHeight });
 
   // Walk downhill: place each clearing's real copy, and move everything after it to keep the gap.
-  let shift = 0, seed = 0, H = 0, lastClearingBottom = 0;
+  let shift = skyExtra, seed = 0, lastClearingBottom = 0;
   const route = [];
   const tiers = L.tiers.map(t => {
     const T = { ...t, sh: shift, crest: t.crest + shift, boxes: [] };
@@ -350,17 +352,29 @@ function render() {
       shift += h - c.h;
     }
     if (t.sign) {
-      T.board = placeSign(t.sign, shift, W, lastClearingBottom + 32);
+      T.board = placeSign(t.sign, shift, W, lastClearingBottom + (W > 1000 ? 110 : 100));
       route.push([t.sign.x + t.sign.w / 2, T.board.ground - 6]);
-      H = T.board.ground + (W > 1000 ? 110 : 90);
+      shift += Math.max(0, T.board.ground - (t.sign.ground + shift));
+      lastClearingBottom = T.board.ground;
+    }
+    if (t.trail) {
+      const requestedGround = t.trail.ground + shift;
+      T.trailBoard = placeTrailBoard(t.trail, shift, W, lastClearingBottom + 100, s);
+      route.push([W * .15, T.trailBoard.ground + 25]);
+      // New stops add actual world space; all later terrain, objects and copy move together.
+      shift += T.trailBoard.ih + t.trail.gap + Math.max(0, T.trailBoard.ground - requestedGround);
+      lastClearingBottom = T.trailBoard.ground;
+      T.boxes.push(T.trailBoard.box);
     }
     return T;
   });
+  // The world ends a little below the last stop on the route, and never above any tier's painted ground.
+  const groundTop = t => { const g = tierGeom(t, W); return g.y + g.th * STRIP.fadeFrom; };
+  const H = Math.max(lastClearingBottom + (W > 1000 ? 150 : 110), ...tiers.map(t => groundTop(t) + 40));
   const routeD = smooth(route), routePts = sample(route);
 
   let defs = `<linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#A7D3E8"/><stop offset="1" stop-color="#EDF3E8"/></linearGradient>`;
-  defs += `<radialGradient id="lamp-glow"><stop offset="0" stop-color="#F6D86B"/><stop offset="1" stop-color="#F6D86B" stop-opacity="0"/></radialGradient>`;
-  let body = `<rect width="${W}" height="${L.sky}" fill="url(#sky)"/>`;
+  let body = `<rect width="${W}" height="${L.sky + skyExtra}" fill="url(#sky)"/>`;
   body += `<g data-depth=".35">${L.clouds.map(([a, x, y, w], i) => `<g class="drift" style="animation-delay:${-i * 5}s">${img(a, x, y + w * ART[a][2] / ART[a][1], w)}</g>`).join('')}</g>`;
 
   const homes = {};
@@ -391,6 +405,7 @@ function render() {
     let items = '';
     for (const it of t.items) items += item(it, t, W, homes, rand);
     if (t.board) items += board(t.board, rand);
+    if (t.trailBoard) items += trailBoard(t.trailBoard, rand);
     body += `<g data-depth="${t.depth || 0}">${ground}${edge}<g mask="url(#m-${t.id})">${ink}${worn}</g>${scatter(t, next, W, H, routePts, rand)}${items}</g>`;
   });
 
@@ -401,6 +416,21 @@ function render() {
   world.style.height = `${Math.ceil(H * s)}px`;
   depthGroups = [...svg.querySelectorAll('[data-depth]')].filter(g => +g.dataset.depth);
   updateDepth();
+}
+
+// Grounded painted stops: cast shadow, whole artwork, then tufts over the post feet.
+function trailBoard({ kind, art, extra, naturalHeight, ix, iy, iw, ih, ground }, rand) {
+  const feet = art.feet.map(u => ix + iw * u);
+  const shadows = feet.map(x => `<ellipse cx="${r1(x)}" cy="${r1(ground - 1)}" rx="${r1(iw * .09)}" ry="${r1(iw * .018)}" fill="#22331a" opacity=".23"/>`).join('');
+  const grass = feet.map(x => tuft(x - iw * .025, ground + 3, iw * .04, rand) + tuft(x + iw * .025, ground + 4, iw * .035, rand)).join('');
+  let painting = `<image href="${art.src}" x="${r1(ix)}" y="${r1(iy)}" width="${r1(iw)}" height="${r1(ih)}"/>`;
+  if (extra > 0) {
+    const y0 = art.face[1], y1 = art.face[3];
+    const source = [0, art.height * y0, art.height * y1, art.height];
+    const dest = [0, naturalHeight * y0, naturalHeight * y1 + extra, ih];
+    painting = [0, 1, 2].map(i => `<svg x="${r1(ix)}" y="${r1(iy + dest[i])}" width="${r1(iw)}" height="${r1(dest[i + 1] - dest[i] + .1)}" viewBox="0 ${source[i]} ${art.width} ${source[i + 1] - source[i]}" preserveAspectRatio="none" overflow="hidden"><image href="${art.src}" width="${art.width}" height="${art.height}"/></svg>`).join('');
+  }
+  return `<g data-trail-art="${kind}">${shadows}${painting}${grass}</g>`;
 }
 
 // Wildflowers, tufts and stones across the open ground of a tier, kept off the path, the
@@ -448,7 +478,11 @@ function item(it, t, W, homes, rand) {
   // Contact shadow on the owning ground (or tabletop), then grass grown over the base.
   const shadow = it.on ? `<ellipse cx="${r1(x)}" cy="${r1(y - 1)}" rx="${r1(it.w * .48)}" ry="${r1(Math.max(3, it.w * .05))}" fill="#5a3a1c" opacity=".28"/>` : `<ellipse cx="${r1(x)}" cy="${r1(y - 2)}" rx="${r1(it.w * .52)}" ry="${r1(Math.max(5, it.w * .07))}" fill="#22331a" opacity=".2"/><ellipse cx="${r1(x)}" cy="${r1(y - 2)}" rx="${r1(it.w * .34)}" ry="${r1(Math.max(3, it.w * .035))}" fill="#22331a" opacity=".22"/>`;
   const roots = it.on || it.id === 'rover' ? '' : rootIn(it.a, x, y, it.w, rand);
-  if (it.a === 'invention') return invention(x, y, it.w);
+  if (it.a === 'countdown') {
+    const clock = document.getElementById('event-countdown');
+    if (clock) Object.assign(clock.style, { left: `${(x - it.w / 2) * s}px`, top: `${(y - h) * s}px`, width: `${it.w * s}px`, height: `${h * s}px` });
+    return shadow;
+  }
   if (it.id === 'rover') return `<g class="rover-body" style="--drive:${it.drive}px">${shadow}${img(it.a, x, y, it.w)}</g>`;
   let out = `${shadow}<g${it.cls ? ` class="${it.cls}"` : ''}>${img(it.a, x, y, it.w)}</g>`;
   if (it.id === 'pump') out += seedling(x - it.w / 2 + it.w * .07, y + 2, it.w * .44, h);
@@ -472,7 +506,16 @@ function board({ ix, iy, iw, ih, ground }, rand) {
   }).join('');
   const posts = postX.map(px => `<ellipse cx="${r1(px + 3)}" cy="${r1(ground + 2)}" rx="${r1(pw * 1.2)}" ry="8" fill="#22331a" opacity=".3"/>` + beam(px - pw / 2, iy + ih * .35, pw, ground - iy - ih * .35 + 3, 'data-billboard-post=""')).join('');
   const lipShade = postX.map(px => `<path d="M${r1(px - pw / 2)} ${r1(iy + ih - 2)}h${r1(pw)}v13h${r1(-pw)}Z" fill="#652713" opacity=".2"/>`).join('');
-  const panel = `<image data-billboard-panel="" href="${BILLBOARD.panel[0]}" x="${r1(ix)}" y="${r1(iy)}" width="${r1(iw)}" height="${r1(ih)}" preserveAspectRatio="none"/>`;
+  // Nine-slice the painted frame: grow the logo area without making the top timber
+  // comically thick on phones. Corners keep their original proportions.
+  const sx = [0, 180, 1420, 1600], sy = [0, 130, 480, 610];
+  const bx = iw * 180 / 1600, by = iw * 130 / 1600;
+  const dx = [0, bx, iw - bx, iw], dy = [0, by, ih - by, ih];
+  let pieces = '';
+  for (let row = 0; row < 3; row++) for (let col = 0; col < 3; col++) {
+    pieces += `<svg x="${r1(ix + dx[col])}" y="${r1(iy + dy[row])}" width="${r1(dx[col + 1] - dx[col] + .15)}" height="${r1(dy[row + 1] - dy[row] + .15)}" viewBox="${sx[col]} ${sy[row]} ${sx[col + 1] - sx[col]} ${sy[row + 1] - sy[row]}" preserveAspectRatio="none" overflow="hidden"><image href="${BILLBOARD.panel[0]}" width="1600" height="610"/></svg>`;
+  }
+  const panel = `<g data-billboard-panel="">${pieces}</g>`;
   const grass = postX.map(px => tuft(px - pw * .45, ground + 5, 34, rand) + tuft(px + pw * .4, ground + 7, 28, rand)).join('');
   return `<g data-billboard="">${cast}${braces}${posts}${lipShade}${panel}${grass}</g>`;
 }
@@ -486,18 +529,6 @@ function seedling(x, groundY, w, pumpH) {
     <image href="${P}sensor-pot.svg" x="0" y="0" width="160" height="160"/>
   </g>
   <g style="--fall:${r1(top - nozzleY + 40 * k)}px">${[0, 1, 2].map(i => `<ellipse class="drop" style="animation-delay:${i * .25}s" cx="${r1(x + (i - 1) * 4)}" cy="${r1(nozzleY)}" rx="${r1(10 * k)}" ry="${r1(14 * k)}" fill="#7cc4e4" stroke="var(--ink)" stroke-width="2"/>`).join('')}</g>`;
-}
-
-// The shared invention: base art, with its three lamps and dial drawn live so they can switch on.
-function invention(x, baseY, w) {
-  const k = w / 380;
-  const lamp = (cx, i) => `<g transform="translate(${cx - 27} -26)"><path d="M15 43 L39 43 L38 59 L16 59Z" fill="#E5C0AE" stroke="#652713" stroke-width="3" stroke-linejoin="round"/><circle class="lamp lamp-${i}" cx="27" cy="24" r="19" stroke="#652713" stroke-width="4"/></g>`;
-  return `<g transform="translate(${r1(x - w / 2)} ${r1(baseY - 235 * k)}) scale(${r1(k * 1000) / 1000})">
-    <ellipse class="glow" cx="190" cy="10" rx="230" ry="110" fill="url(#lamp-glow)"/>
-    <image href="${P}invention-base.svg" x="0" y="0" width="380" height="260"/>
-    ${[95, 190, 285].map((cx, i) => lamp(cx, i + 1)).join('')}
-    <g class="dial"><path d="M185 153 L173 126" stroke="#652713" stroke-width="7" stroke-linecap="round"/><circle cx="185" cy="153" r="7" fill="#652713"/></g>
-  </g>`;
 }
 
 // A rooted foreground plant at the edge of the frame, partly off-canvas.
@@ -542,6 +573,7 @@ function safeRender() {
 }
 const relayout = () => { cancelAnimationFrame(pending); pending = requestAnimationFrame(safeRender); };
 addEventListener('resize', relayout);
+document.addEventListener('trail-board-content-change', relayout);
 const heights = new Map();
 const watch = new ResizeObserver(entries => {
   let changed = false;

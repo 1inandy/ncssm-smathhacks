@@ -1,0 +1,9 @@
+{
+  "mode": "built-in image_gen",
+  "source": "/Users/alin08/.codex/generated_images/01a184a5-350d-7110-b76d-f3191aeff548/exec-fc76779b-b1ce-42be-8ca8-d1a0d948d6b7.png",
+  "prompt": "Use case: illustration-story. Asset type: transparent website prop for hand-painted hackathon hillside. Input images: STYLE REFERENCES ONLY, not objects to include. Make ONE freestanding tabletop countdown clock casing, viewed almost straight-on with a very slight view of its top and right side, matching warm reddish-brown irregular ink outlines and lightly brushed gouache texture of references. Wide low rounded rectangular forest/leaf green enamel case, muted rust sides, narrow cream frame around ONE large clean blank pale warm-cream rectangular display. The single blank display occupies about x12% to87%, y24% to72% of the full object; it must be completely empty for live HTML digits and labels, not four individual windows. Two small dark-brown feet at bottom, a tiny brass winding knob on right side, a simple little curved handle on top if subtle. Overall full object width about 2.1 times its height. Soft painted shading gives thickness, friendly handmade maker-project aesthetic. NO text, NO numerals, NO hands/dial, NO baked labels, NO bulbs, NO people, NO table, NO scenery, NO ground shadow. Genuine transparent alpha background with transparent gaps beneath the feet and around the silhouette. Entire object visible and fills the frame with a small safety margin. Not photorealistic, not glossy 3D, not flat vector.",
+  "styleReferences": [
+    "assets/mvp/props/tables-v2/amp-bench.webp",
+    "assets/hillside/bubble-tea-battery.webp"
+  ]
+}

@@ -1,7 +1,31 @@
 {
   "name": "SMathHacks", "year": 2027, "theme": "Bits & Bites",
   "dates": "March 13–14, 2027", "venue": null, "eligibility": null, "cost": null,
-  "duration": null, "schedule": null, "registrationUrl": null,
+  "countdownAt": "2027-03-13T00:00:00-05:00",
+  "countdownTimeZone": "America/New_York",
+  "gallery": [
+    {
+      "src": "assets/gallery/durham-community.webp",
+      "alt": "Hackathon participants gathered together on the outdoor steps in Durham.",
+      "caption": "Together in Durham"
+    },
+    {
+      "src": "assets/gallery/morganton-ideation.webp",
+      "alt": "A participant maps out project ideas and connections on a whiteboard in Morganton.",
+      "caption": "Big ideas in Morganton"
+    },
+    {
+      "src": "assets/gallery/durham-hardware.webp",
+      "alt": "Participants build together around a table with a laptop, electronics, and connecting wires in Durham.",
+      "caption": "Bits, wires & teamwork"
+    },
+    {
+      "src": "assets/gallery/durham-crew.webp",
+      "alt": "A small group poses outdoors in matching blue SMathHacks shirts in Durham.",
+      "caption": "The blue-shirt crew"
+    }
+  ],
+  "duration": null, "schedule": null, "registrationUrl": "https://docs.google.com/forms/d/e/1FAIpQLSfUDf5G5AZwn_OvfWHqp_PgylfsILe4HvmaL2Jx0N_BUnYNuA/viewform",
   "updatesUrl": null, "updatesEndpoint": null, "contactEmail": null,
   "sponsorEmail": null, "sponsors": null
 }

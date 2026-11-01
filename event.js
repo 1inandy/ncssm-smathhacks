@@ -1,5 +1,7 @@
 // Event facts and registration state from event-config.json. Independent of the illustration:
 // if the hillside fails, the page still shows confirmed details and the right call to action.
+import { configureCountdown } from './countdown.js';
+import { configureGallery } from './gallery.js';
 const $ = selector => document.querySelector(selector);
 const $$ = selector => [...document.querySelectorAll(selector)];
 
@@ -48,10 +50,12 @@ const isEmail = value => typeof value === 'string' && /^[^\s@]+@[^\s@]+\.[^\s@]+
 // Confirmed sponsors only, grouped by `tier` in the order tiers first appear. Each is a logo if
 // one is given (its name as alt text), else the name itself; linked when it has a safe URL.
 function renderSponsors(config) {
+  if (!$('#sponsor-list')) return;
   const entries = Array.isArray(config.sponsors) ? config.sponsors.filter(s => s && typeof s.name === 'string' && s.name.trim()) : [];
   if (entries.length) {
     const list = $('#sponsor-list'), tiers = new Map();
     list.replaceChildren();
+    list.hidden = false;
     list.classList.remove('is-placeholder');
     list.removeAttribute('aria-hidden');
     for (const s of entries) {
@@ -62,6 +66,11 @@ function renderSponsors(config) {
     for (const [tier, group] of tiers) {
       const block = document.createElement('div'), row = document.createElement('ul');
       block.className = 'sponsor-tier';
+      // Match real logos to the same size hierarchy previewed by the placeholder wall.
+      const tierName = tier.toLowerCase();
+      block.dataset.sponsorLevel = /title|presenting|platinum/.test(tierName) ? 'title'
+        : /gold/.test(tierName) ? 'gold'
+        : /community|partner|bronze/.test(tierName) ? 'community' : 'silver';
       if (tier) { const heading = document.createElement('h3'); heading.textContent = tier; block.append(heading); }
       for (const s of group) {
         const li = document.createElement('li'), url = destination(s.url), logo = destination(s.logo);
@@ -80,10 +89,13 @@ function renderSponsors(config) {
       list.append(block);
     }
     $('#sponsor-status').hidden = true;
+    const placeholders = $('[data-sponsor-placeholders]');
+    if (placeholders) placeholders.hidden = true;
   }
   const email = isEmail(config.sponsorEmail) ? config.sponsorEmail : isEmail(config.contactEmail) ? config.contactEmail : null;
   if (email) {
     const ask = $('[data-sponsor-ask]');
+    ask.hidden = false;
     ask.textContent = entries.length ? 'Want to join them? ' : 'Interested in sponsoring SMathHacks? ';
     ask.append(actionLink('Become a sponsor', 'mailto:' + email));
   }
@@ -94,6 +106,11 @@ async function applyConfig() {
   if (!response.ok) throw Error('Event configuration unavailable');
   const config = await response.json();
   window.eventConfig = config;
+  configureCountdown(config);
+  configureGallery(config);
+  if (typeof config.theme === 'string' && config.theme.trim()) {
+    for (const element of $$('[data-event-theme]')) element.textContent = config.theme;
+  }
 
   for (const element of $$('[data-fact]')) {
     const value = config[element.dataset.fact];
@@ -112,7 +129,7 @@ async function applyConfig() {
     }
   } else if (endpoint) {
     for (const host of $$('[data-register="hero"],[data-register="header"]')) host.replaceChildren(actionLink('Get updates', '#updates'));
-    $('[data-register="final"]').replaceChildren(updatesForm(endpoint));
+    $('[data-register="final"]')?.replaceChildren(updatesForm(endpoint));
   }
 
   if (Array.isArray(config.schedule)) {

@@ -8,7 +8,7 @@
 - **Environment and props:** individually drawn in native SVG with editable paths and approved fills. Construction source is `work/production/draw_assets.py`; exports live under `assets/mvp/environment/` and `assets/mvp/props/`. There are no generated full-scene production backgrounds, baked-in mascots, logos, or UI text.
 - **Original MVP / landmark revision 1:** no generative image model was used for those assets; revision 2 generation is documented below. The SVG authoring and measured extraction scripts are the editable production sources.
 - **Palette:** verified from the supplied Word document: forest `#386641`, leaf `#6A994E`, lime `#A7C957`, pale leaf `#CDD993`, cream `#F8F4EA`, peach `#E5C0AE`, dusty pink `#D7988C`. New linework uses the original artwork's warm brown family, `#652713`.
-- **Fonts:** Bricolage Grotesque 600 and DM Sans 400/500/600 are self-hosted TTF files retrieved from Google Fonts. Their SIL Open Font Licenses are included in `assets/fonts/`. The exact font request is retained in `work/production/font-source.css`. No remote font connection is needed by the page.
+- **Fonts:** Fraunces, Nunito, and Caveat (variable weights) are self-hosted Latin-subset WOFF2 files retrieved from Google Fonts. Their SIL Open Font Licenses are included in `assets/fonts/`. No remote font connection is needed by the page.
 - **Design references:** principles in the supplied specification guided composition. No artwork, text, or event facts were copied from the reference sites.
 - **Prior work:** original rejected scene posters and earlier character attempts remain under `.removed-generated/`; they are excluded from all runtime asset bindings.
 
