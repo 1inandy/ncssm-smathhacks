@@ -1,6 +1,6 @@
 // The theme plane lives in the opening sky; native scrolling carries it out of view.
 // Return the extra sky in world units so EVERY terrain tier moves together on smaller screens.
-export function layoutSkyAnnouncements({ width, scale, heroBottom }) {
+export function layoutSkyAnnouncements({ width, scale, heroBottom, wide }) {
   const flight = document.querySelector('.sky-flight');
   if (!flight) return 0;
   const place = (el, x, y, w, h) => Object.assign(el.style, {
@@ -15,6 +15,6 @@ export function layoutSkyAnnouncements({ width, scale, heroBottom }) {
   place(flight, (width - fw) / 2, top, fw, fw * .28);
   // No empty balloon-sized gap: reserve only the flight and a little skyline clearance.
   const bottom = top + fw * .28;
-  const firstLandmarkTop = (width >= 760 ? 360 : 690) * scale;
+  const firstLandmarkTop = (wide ? 360 : 690) * scale;
   return Math.max(0, (bottom + 35 - firstLandmarkTop) / scale);
 }

@@ -1,6 +1,6 @@
 {
   "name": "SMathHacks", "year": 2027, "theme": "Bits & Bites",
-  "dates": "March 13–14, 2027", "venue": null, "eligibility": null, "cost": null,
+  "dates": "March 13–14, 2027", "venue": "Online + NCSSM campuses", "eligibility": "North Carolina high school students", "cost": null,
   "countdownAt": "2027-03-13T00:00:00-05:00",
   "countdownTimeZone": "America/New_York",
   "gallery": [
@@ -25,7 +25,7 @@
       "caption": "The blue-shirt crew"
     }
   ],
-  "duration": null, "schedule": null, "registrationUrl": "https://docs.google.com/forms/d/e/1FAIpQLSfUDf5G5AZwn_OvfWHqp_PgylfsILe4HvmaL2Jx0N_BUnYNuA/viewform",
+  "duration": "36 hours", "schedule": null, "registrationUrl": "https://docs.google.com/forms/d/e/1FAIpQLSfUDf5G5AZwn_OvfWHqp_PgylfsILe4HvmaL2Jx0N_BUnYNuA/viewform",
   "updatesUrl": null, "updatesEndpoint": null, "contactEmail": null,
   "sponsorEmail": null, "sponsors": null
 }

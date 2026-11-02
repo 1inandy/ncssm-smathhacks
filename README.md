@@ -16,7 +16,7 @@ Then open http://localhost:8123.
 
 | Path | Role |
 | --- | --- |
-| `index.html` | All copy as real HTML: hero, the four tracks, details, schedule, FAQ, finale. |
+| `index.html` | All copy as real HTML: hero, introduction, the four tracks, participation details, schedule, FAQ, finale. |
 | `hillside.js` | Draws the world as one SVG and places each copy block in its own clearing. Layouts (`wide` desktop, `tall` phone) are plain data in `LAYOUTS`, in world units (1440 across on desktop, 600 on phone). |
 | `hillside.css` | Type, copy, clearings, ambient motion, interaction states, no-JS fallback. |
 | `event.js` | Reads `event-config.json` and fills in facts, registration links, schedule, contact and sponsors. |

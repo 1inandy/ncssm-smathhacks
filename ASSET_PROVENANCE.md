@@ -1,5 +1,13 @@
 # Asset provenance
 
+## Hanging scrapbook — November 2, 2026
+
+The hanging corkboard near the introduction uses the supplied `DSC04661.JPG` and `IMG_2181.JPG`, exported as `assets/gallery/closing-ceremony-2026.webp` and `assets/gallery/smathhacks-staircase.webp`. `work/production/prepare_memory_board.mjs` preserves the full image composition, limits runtime dimensions to 1920 pixels, and removes embedded metadata. The photographs are not cropped, retouched, or generated; supplied originals remain untouched. The cord, frame, pins, and cork-grain SVG are original code-native artwork. Both prints link to their larger local images.
+
+## User-supplied food stickers — November 2, 2026
+
+The dragonfruit, apple half, and cupcake under `assets/stickers/` are byte-for-byte copies of the supplied `BITSandBITES_H27_StickerSheet_extras_03.png`, `BITSandBITES_H27_StickerSheet_extras_04.png`, and `BITSandBITES_H27_StickerSheet_extras.png`, respectively. No generation, repainting, or background removal was applied. Inline SVG viewboxes frame the existing alpha bounds with four pixels of clearance; CSS controls display size and rotation. Decorations are hidden from assistive technology and cannot intercept clicks. Original source files remain unchanged.
+
 > Paths below (`work/`, `Logo/`, `.removed-generated/`, `assets/mvp/manifests/`, master PNGs, etc.) refer to production sources that are kept outside this repository. Only the web-ready runtime assets are committed.
 
 - **Event identity:** original `Logo/` SVG and PNG artwork supplied in this project; unchanged. The page uses the supplied full-color SVG, including its original lettering and colors.

@@ -44,6 +44,7 @@ const SURFACE = { bench: .12, desk: .14 };
 // `clearing`: a copy block placed at (x, y, w); `h` is its planned height. Every tier below moves by the
 //   difference between real and planned height, so the gap after each clearing stays as designed
 //   whatever the text does (long copy, an open FAQ, text zoom).
+//   `gap` reserves ground after an added clearing, before the next painted hill rises over it.
 //   `in`/`out` say where along its top/bottom edge the route enters and leaves.
 // `sign`: the sponsor billboard, standing just past the info clearing; `ground` is where its posts stand.
 //   However tall its logos make it, every tier after it moves down to keep the ground below it clear.
@@ -61,7 +62,8 @@ const LAYOUTS = {
         { a: 'tower', x: 770, w: 104, sink: 16 }, { a: 'watts', x: 1100, w: 500, sink: 60 } ] },
       { id: 'meadow', strip: 'middle-hill-left', crest: 770, span: 1.1, flip: true, depth: .09, items: [
         { a: 'pinwheel', x: 205, w: 84, sink: 18, cls: 'sway slow' } ] },
-      { id: 'gate', strip: 'near-bank', crest: 868, pathW: 30, via: [[884, 888], [876, 960], [800, 1020], [690, 1075]], items: [
+      { id: 'gate', strip: 'near-bank', crest: 868, pathW: 30, via: [[884, 888], [876, 960]],
+        clearing: { copy: 'about', x: 140, y: 1040, w: 1160, h: 0, gap: 140, in: .9, out: .5 }, items: [
         { a: 'gate', x: 880, w: 210, sink: 30 } ] },
       { id: 'themeStop', strip: 'middle-hill-left', crest: 1080, span: 1.2, pathW: 42,
         trail: { kind: 'theme', x: 330, w: 500, ground: 1250, gap: 80 }, items: [] },
@@ -110,6 +112,9 @@ const LAYOUTS = {
         clearing: { copy: 'details', x: 200, y: 5140, w: 1040, h: 648, in: .5, out: .5 }, items: [
         { a: 'printer', x: 1340, w: 120, ground: 5330 }, { a: 'plant', x: -150, top: 5380, h: 420 } ] },
 
+      { id: 'answers', strip: 'middle-hill-left', crest: 5900, span: 1.3, pathW: 134,
+        clearing: { copy: 'answers', x: 200, y: 6040, w: 1040, h: 0, gap: 260, in: .5, out: .5 }, items: [] },
+
       { id: 'gatherBack', strip: 'middle-hill-right', crest: 6080, span: 1.2, pathW: 140, sign: { copy: 'footer', x: 340, w: 760, ground: 6110 }, items: [
         { a: 'crate', x: 110, w: 140, sink: 40 }, { a: 'pinwheel', x: 1340, w: 84, sink: 24, cls: 'sway slow' } ] },
       { id: 'gather', strip: 'near-bank', crest: 6210, span: 1.3, flip: true, pathW: 150,
@@ -131,7 +136,8 @@ const LAYOUTS = {
         { a: 'tower', x: 230, w: 62, sink: 10 }, { a: 'watts', x: 420, w: 300, sink: 36 } ] },
       { id: 'meadow', strip: 'middle-hill-left', crest: 985, span: 1.9, flip: true, depth: .08, items: [
         { a: 'pinwheel', x: 80, w: 60, sink: 12, cls: 'sway slow' } ] },
-      { id: 'gate', strip: 'near-bank', crest: 1070, span: 1.9, pathW: 24, via: [[332, 1088], [332, 1120], [385, 1180], [450, 1230]], items: [
+      { id: 'gate', strip: 'near-bank', crest: 1070, span: 1.9, pathW: 24, via: [[332, 1088], [332, 1120]],
+        clearing: { copy: 'about', x: 50, y: 1280, w: 500, h: 0, gap: 120, in: .6, out: .5 }, items: [
         { a: 'gate', x: 330, w: 160, sink: 22 } ] },
       { id: 'themeStop', strip: 'middle-hill-left', crest: 1300, span: 2, pathW: 32,
         trail: { kind: 'theme', x: 300, w: 530, ground: 1740, gap: 100 }, items: [] },
@@ -171,6 +177,9 @@ const LAYOUTS = {
         { a: 'solar', x: 500, w: 80, sink: 22 } ] },
       { id: 'info', strip: 'near-bank', crest: 6080, span: 2.1, pathW: 110,
         clearing: { copy: 'details', x: 40, y: 6190, w: 520, h: 1280, in: .5, out: .5 }, items: [] },
+
+      { id: 'answers', strip: 'middle-hill-left', crest: 7500, span: 2.1, pathW: 116,
+        clearing: { copy: 'answers', x: 40, y: 7610, w: 520, h: 0, gap: 180, in: .5, out: .5 }, items: [] },
 
       { id: 'gatherBack', strip: 'middle-hill-right', crest: 7640, span: 2, pathW: 120, sign: { copy: 'footer', x: 50, w: 500, ground: 7690 }, items: [] },
       { id: 'gather', strip: 'near-bank', crest: 7760, span: 2.1, flip: true, pathW: 130,
@@ -333,11 +342,12 @@ function placeSign(sign, sh, W, minTop = 0) {
 function render() {
   const vw = document.documentElement.clientWidth;
   if (!vw) return;
-  const L = vw >= 760 ? LAYOUTS.wide : LAYOUTS.tall, W = L.W;
+  // Match the CSS breakpoint even when a browser's scrollbar reduces clientWidth.
+  const L = matchMedia('(min-width: 760px)').matches ? LAYOUTS.wide : LAYOUTS.tall, W = L.W;
   s = vw / W;
   world.classList.add('is-laid-out');
   const heroHeight = placeCopy('hero', L.hero.x, L.hero.y, L.hero.w);
-  const skyExtra = layoutSkyAnnouncements({ width: vw, scale: s, heroBottom: L.hero.y + heroHeight });
+  const skyExtra = layoutSkyAnnouncements({ width: vw, scale: s, heroBottom: L.hero.y + heroHeight, wide: W > 1000 });
 
   // Walk downhill: place each clearing's real copy, and move everything after it to keep the gap.
   let shift = skyExtra, seed = 0, lastClearingBottom = 0;
@@ -351,7 +361,7 @@ function render() {
       lastClearingBottom = y1;
       T.seed = seed += 3;
       route.push([x0 + (x1 - x0) * c.in, y0 + 30], [x0 + (x1 - x0) * c.out, y1 - 30]);
-      shift += h - c.h;
+      shift += h - c.h + (c.gap || 0);
     }
     if (t.sign) {
       T.board = placeSign(t.sign, shift, W, lastClearingBottom + (W > 1000 ? 110 : 100));

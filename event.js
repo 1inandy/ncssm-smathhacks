@@ -68,9 +68,11 @@ function renderSponsors(config) {
       block.className = 'sponsor-tier';
       // Match real logos to the same size hierarchy previewed by the placeholder wall.
       const tierName = tier.toLowerCase();
-      block.dataset.sponsorLevel = /title|presenting|platinum/.test(tierName) ? 'title'
-        : /gold/.test(tierName) ? 'gold'
-        : /community|partner|bronze/.test(tierName) ? 'community' : 'silver';
+      block.dataset.sponsorLevel = /chef|title|presenting|platinum/.test(tierName) ? 'chef'
+        : /banquet|gold/.test(tierName) ? 'banquet'
+        : /feast|silver/.test(tierName) ? 'feast'
+        : /appetizer|bronze/.test(tierName) ? 'appetizer'
+        : /refreshment|community|partner/.test(tierName) ? 'refreshment' : 'entree';
       if (tier) { const heading = document.createElement('h3'); heading.textContent = tier; block.append(heading); }
       for (const s of group) {
         const li = document.createElement('li'), url = destination(s.url), logo = destination(s.logo);
