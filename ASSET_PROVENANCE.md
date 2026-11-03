@@ -1,5 +1,9 @@
 # Asset provenance
 
+## Leaf cursors — November 2, 2026
+
+`assets/cursors/leaf.svg` and `leaf-pointer.svg` are original editable vector drawings using the site's green palette and warm brown outline. Their 32 × 32 PNG exports provide cursor-image fallbacks; `leaf-preview.png` is an enlarged preview. The click hotspot is the leaf tip at (3, 3). The brighter variant indicates links and controls. Cursor styling is shared across the homepage and supporting pages and applies only when a mouse or other fine hover pointer is available. No image generation or external artwork was used.
+
 ## Painted trail surface — November 2, 2026
 
 `assets/hillside/terrain/trail-earth-gouache.webp` is a new pale sandy gouache material generated with the built-in image-generation tool. The existing `near-bank-ground.webp` was used only as a painting-style reference. The exact prompt, source filename, and export settings are recorded in `assets/hillside/terrain/trail-earth-generation.json`; the original generated PNG remains in the recorded local source location. The delivery image is resized to 768 × 768 and encoded as WebP. The SVG trail and clearings remain responsive code geometry, with a shared material pattern, translucent earthy shoulders, and unoutlined grass tips. No existing terrain or supplied artwork was repainted.

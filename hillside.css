@@ -251,6 +251,13 @@ a.sponsor:hover{transform:translateY(-2px)}
   .sponsor.slot.big{min-height:72px}
 }
 .motion-paused .sway,.motion-paused .drift,.motion-paused .led{animation-play-state:paused}
+/* A leaf tip is the click point; the brighter leaf marks links and controls. */
+@media (any-hover:hover) and (any-pointer:fine){
+  html,body{cursor:url('assets/cursors/leaf.svg') 3 3,url('assets/cursors/leaf.png') 3 3,auto}
+  :root :is(a,button,summary,[role="button"],label[for],input[type="button"],input[type="submit"],input[type="reset"]){cursor:url('assets/cursors/leaf-pointer.svg') 3 3,url('assets/cursors/leaf-pointer.png') 3 3,pointer}
+  :root :is(input:not([type]),input[type="text"],input[type="email"],input[type="search"],input[type="url"],input[type="tel"],input[type="number"],input[type="password"],textarea,[contenteditable="true"]){cursor:text}
+  :root :is(button:disabled,input:disabled,[aria-disabled="true"]){cursor:not-allowed}
+}
 @media (prefers-reduced-motion:reduce){
   html{scroll-behavior:auto}
   .sway,.drift{animation:none}
