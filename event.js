@@ -1,6 +1,6 @@
 // Event facts and registration state from event-config.json. Independent of the illustration:
 // if the hillside fails, the page still shows confirmed details and the right call to action.
-import { configureCountdown } from './countdown.js';
+import { configureCountdown } from './countdown.js?v=lcd-clock';
 import { configureGallery } from './gallery.js';
 const $ = selector => document.querySelector(selector);
 const $$ = selector => [...document.querySelectorAll(selector)];

@@ -5,6 +5,11 @@
 .countdown-digits{display:grid;grid-template-columns:1.2fr 1fr 1fr 1fr;gap:2cqw}
 .countdown-digits>span{display:flex;flex-direction:column;gap:1.5cqw}
 .countdown-digits strong{font-family:var(--font-body);font-size:clamp(16px,9cqw,29px);font-weight:700;font-variant-numeric:tabular-nums;line-height:1;letter-spacing:-.04em}
+/* LCD numerals: lit segments in ink, unlit ones a faint ghost, leaning like a real clock face. */
+.countdown-digits strong:has(.seg){display:flex;justify-content:center;gap:.09em;height:1em;transform:skewX(-7deg)}
+.seg{height:100%;width:auto;fill:currentColor}
+.seg polygon{opacity:.09}
+.seg polygon.on{opacity:1}
 .countdown-digits small{font-family:var(--font-body);font-size:clamp(7px,3.2cqw,10px);font-weight:600;line-height:1;text-transform:uppercase;letter-spacing:.03em}
 .countdown-target-note{font-size:13px;line-height:1.45;opacity:.8;margin-top:18px}
 .world:not(.is-laid-out) .table-countdown{position:relative;left:auto!important;top:auto!important;width:min(340px,90%)!important;height:auto!important;aspect-ratio:800/364;margin:30px auto}

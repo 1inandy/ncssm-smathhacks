@@ -84,7 +84,7 @@ def page(slug, title, description, eyebrow, intro, art, sections, body):
   </main>
   {footer()}
   <script type="module" src="navigation.js"></script>
-  <script type="module" src="event.js"></script>
+  <script type="module" src="event.js?v=lcd-clock"></script>
 </body>
 </html>
 '''
