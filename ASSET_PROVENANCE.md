@@ -4,6 +4,10 @@
 
 `assets/past-events/logos/` holds the official 2021–2026 event logos, taken from the original Past Events archive (https://smathhacks.ncssm.edu/past-events) and, for 2026, the 2026 event site header. Exports are trimmed to their alpha bounds, capped at 720 px wide, and encoded as WebP; artwork, lettering, and colors are unchanged. Each year's section wears its own site's background: `assets/past-events/backgrounds/smathhacks-2026.webp` (wave), `smathhacks-2025.webp` (space), and `smathhacks-2024.webp` (purple mountains) are uncropped WebP exports of those sites' hero images, at most 1600 px wide. They fade into a solid base color sampled from each image, under a tint for text contrast. 2023 uses `#010101`. The 2025 mark gets a CSS-only white halo so it reads against the space image. Theme names come from each year's Tracks page or Devpost listing (2026 Under the Sea, 2025 Space & Aeronautics, 2024 Environment, 2022 Entrepreneurship); 2023 shows its tagline because no theme was published, and no 2020 logo exists in the archive.
 
+## Past Events hero photo — November 3, 2026
+
+`assets/past-events/unihacks-2023-photo-frame.webp` is the supplied UniHacks 2023 group photo with the social-media photo frame. It is cropped from 2000 × 1333 to the group (a 1600 × 1067 region that trims the ceiling), resized to 1200 × 800, and encoded as WebP. It is not retouched or generated. It replaces the staircase photo at the top of Past Events, which still appears on the corkboard and in the 2026 carousel.
+
 ## Participation photos — November 3, 2026
 
 `assets/gallery/virtual-workshop.webp` is the supplied workshop photo (a presenter with campuses and remote participants on Zoom behind her), resized from 2000 × 1333 to 1200 × 800 and encoded as WebP. It is not cropped, retouched, or generated. It sits under the Virtual option in "How to join". `assets/gallery/in-person-hardware.webp` is the supplied photo of two participants wiring a microcontroller, handled the same way, and sits under In person.

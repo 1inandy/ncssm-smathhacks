@@ -15,9 +15,8 @@
 .hero-illustration .hero-prop{position:absolute;bottom:-4px;right:0;width:155px;object-fit:contain;transform:rotate(5deg)}
 .hero-illustration.resources-art .hero-character{width:205px;left:8%}
 .hero-illustration.resources-art .hero-prop{width:140px;right:-8px}
-.hero-memory{margin:0;transform:rotate(3deg);padding:12px 12px 30px;background:var(--cream);box-shadow:5px 6px 0 #38664118}
+.hero-memory{margin:0;transform:rotate(3deg);padding:12px 12px 24px;background:var(--cream);box-shadow:5px 6px 0 #38664118}
 .hero-memory img{display:block;width:100%;height:220px;object-fit:cover}
-.hero-memory figcaption{font-family:var(--font-hand);font-size:22px;color:var(--ink);text-align:center;margin-top:12px}
 .reading-layout{max-width:1176px;margin:0 auto;padding:68px 28px 100px;display:grid;grid-template-columns:210px minmax(0,1fr);gap:70px}
 .page-index{align-self:start;position:sticky;top:115px;font-size:14px}
 .page-index p{font-family:var(--font-hand);font-size:23px;color:var(--ink);margin:0 0 15px}
@@ -149,7 +148,6 @@
   .hero-illustration.resources-art .hero-prop{width:100px;right:0}
   .hero-memory{max-width:310px;justify-self:center;padding:9px 9px 16px;margin:8px 8px 16px}
   .hero-memory img{height:180px}
-  .hero-memory figcaption{font-size:20px;margin-top:8px}
   .page-hero::after{height:34px;background-size:auto 150px}
   .reading-layout{display:block;padding:32px 24px 65px}
   .page-index{position:static;margin-bottom:36px}

@@ -96,7 +96,7 @@ def page(slug, title, description, eyebrow, intro, art, sections, body, scripts=
   <link rel="icon" type="image/svg+xml" href="assets/logo/smathhacks-full-color.svg">
   <link rel="stylesheet" href="hillside.css?v=assets-tidy">
   <link rel="stylesheet" href="navigation.css?v=assets-tidy">
-  <link rel="stylesheet" href="support.css?v=assets-tidy">
+  <link rel="stylesheet" href="support.css?v=hero-photo">
   {'<link rel="stylesheet" href="photo-viewer.css">' if viewer else ''}
 </head>
 <body class="support-page">
@@ -197,7 +197,7 @@ def winner_links(entries):
 grand = winner_links([("tide-tracking-and-intelligence-for-dive-expeditions", "TIDE: Tracking and Intelligence for Dive Expeditions"), ("u-halk-ultrasonic-harmful-algae-killer", "U-HALK: Ultrasonic Harmful Algae Killer"), ("plasticflow", "PlasticFlow"), ("pale-watch", "Pale Watch")])
 runners = winner_links([("soundscape-wnlqdv", "SoundScape"), ("sens-pod-submersible-environmental-networked-system", "SENS Pod: Submersible Environmental Networked System"), ("scuda-scuba-sign-capturing-user-interface-data-analysis", "SCUDA: Scuba-sign Capturing User-interface Data Analysis"), ("ai-carbon-sink-predictor", "AI Carbon Sink Predictor")])
 special = winner_links([("grime-garbage-river-interception-modeling-engine", "Climate Grand Award · GRIME"), ("okeanos", "Ingenuity Grand Award · Okeanos")])
-memory = '''<figure class="hero-memory"><img src="assets/gallery/smathhacks-staircase.webp" alt="SMathHacks participants in blue shirts gathered on a staircase in Morganton." width="1920" height="1280"><figcaption>A whole lot of possibility.</figcaption></figure>'''
+memory = '''<figure class="hero-memory"><img src="assets/past-events/unihacks-2023-photo-frame.webp" alt="UniHacks 2023 organizers and guests in event shirts gather around a giant social-media photo frame." width="1200" height="800"></figure>'''
 STAIRCASE_ALT = "Participants in blue event shirts gathered on a staircase in Morganton."
 photos_2026 = [("assets/gallery/closing-ceremony-2026.webp", "Participants gathered in an auditorium for the SMathHacks 2026 closing ceremony.", 1920, 1440),
                ("assets/gallery/smathhacks-staircase.webp", STAIRCASE_ALT, 1920, 1280)]
