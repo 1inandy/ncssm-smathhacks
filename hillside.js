@@ -70,7 +70,7 @@ const LAYOUTS = {
       { id: 'sphere', strip: 'middle-hill-right', crest: 1075, span: 1.15, pathW: 46, via: [[592, 1135], [590, 1200], [650, 1265]], items: [
         { a: 'sphere', x: 1215, w: 250, sink: 62 } ] },
       { id: 'garden', strip: 'near-bank', crest: 1250, span: 1.25, flip: true, pathW: 70, via: [[720, 1310]],
-        clearing: { copy: 'bit', x: 800, y: 1350, w: 500, h: 350, in: .14, out: .3 }, items: [
+        clearing: { copy: 'societal-impact', x: 800, y: 1350, w: 500, h: 350, in: .14, out: .3 }, items: [
         { a: 'bed', kind: 'soil', x: 255, ground: 1592, w: 300, h: 56 },
         { a: 'solar', x: 105, w: 130, ground: 1550 }, { a: 'pump', x: 330, w: 170, ground: 1600, id: 'pump' },
         { a: 'crate', x: 475, w: 150, ground: 1590 }, { a: 'bit', x: 620, w: 220, ground: 1655 },
@@ -99,7 +99,7 @@ const LAYOUTS = {
       { id: 'fieldBack', strip: 'middle-hill-left', crest: 3900, span: 1.2, pathW: 114, via: [[600, 3950], [760, 4060]], items: [
         { a: 'pinwheel', x: 1240, w: 80, sink: 22, cls: 'sway slow' } ] },
       { id: 'field', strip: 'near-bank', crest: 4050, span: 1.25, pathW: 116, via: [[900, 4150]],
-        clearing: { copy: 'data', x: 800, y: 4250, w: 500, h: 400, in: .2, out: .5 }, items: [
+        clearing: { copy: 'ai', x: 800, y: 4250, w: 500, h: 400, in: .2, out: .5 }, items: [
         { a: 'bed', kind: 'trodden', x: 360, ground: 4300, w: 560, h: 90 },
         { a: 'crate', x: 170, w: 150, ground: 4300 }, { a: 'compost', x: 360, w: 150, ground: 4300 },
         { a: 'printer', x: 545, w: 125, ground: 4295 } ] },
@@ -144,7 +144,7 @@ const LAYOUTS = {
       { id: 'sphere', strip: 'middle-hill-right', crest: 1220, span: 2, pathW: 36, via: [[482, 1275], [470, 1330]], items: [
         { a: 'sphere', x: 548, w: 140, sink: 40 } ] },
       { id: 'garden', strip: 'near-bank', crest: 1340, span: 2.1, flip: true, pathW: 54, via: [[488, 1410], [470, 1510]],
-        clearing: { copy: 'bit', x: 50, y: 1600, w: 500, h: 620, in: .8, out: .3 }, items: [
+        clearing: { copy: 'societal-impact', x: 50, y: 1600, w: 500, h: 620, in: .8, out: .3 }, items: [
         { a: 'bed', kind: 'soil', x: 125, sink: 40, w: 200, h: 46 },
         { a: 'pump', x: 135, w: 110, sink: 32, id: 'pump' }, { a: 'crate', x: 245, w: 100, sink: 24 }, { a: 'bit', x: 350, w: 150, sink: 46 } ] },
 
@@ -167,7 +167,7 @@ const LAYOUTS = {
       { id: 'fieldBack', strip: 'middle-hill-left', crest: 4820, span: 2, pathW: 94, via: [[300, 4870], [330, 4960]], items: [
         { a: 'pinwheel', x: 520, w: 56, sink: 14, cls: 'sway slow' } ] },
       { id: 'field', strip: 'near-bank', crest: 4960, span: 2.1, pathW: 96, via: [[320, 5060]],
-        clearing: { copy: 'data', x: 50, y: 5180, w: 500, h: 560, in: .55, out: .5 }, items: [
+        clearing: { copy: 'ai', x: 50, y: 5180, w: 500, h: 560, in: .55, out: .5 }, items: [
         { a: 'bed', kind: 'trodden', x: 150, sink: 56, w: 270, h: 56 },
         { a: 'crate', x: 85, w: 105, sink: 30 }, { a: 'compost', x: 200, w: 95, sink: 34 }, { a: 'printer', x: 505, w: 90, sink: 30 } ] },
 
@@ -234,11 +234,98 @@ function smooth(p, closed) {
   return `M${p[0].map(r1)}` + controls(p, closed).map(([, c1, c2, c]) => `C${c1.map(r1)} ${c2.map(r1)} ${c.map(r1)}`).join('') + (closed ? 'Z' : '');
 }
 // Points along the same curve, for keeping scattered detail off the path.
-function sample(p) {
+function sample(p, per = 8, segments = controls(p)) {
   const out = [];
-  for (const [b, c1, c2, c] of controls(p)) for (let k = 0; k < 8; k++) {
-    const t = k / 8, u = 1 - t;
+  for (const [b, c1, c2, c] of segments) for (let k = 0; k < per; k++) {
+    const t = k / per, u = 1 - t;
     out.push([0, 1].map(i => u * u * u * b[i] + 3 * u * u * t * c1[i] + 3 * u * t * t * c2[i] + t * t * t * c[i]));
+  }
+  return out;
+}
+// The route as a walk: each dense point with its unit normal and the distance travelled to it.
+function walk(p, segments) {
+  const pts = sample(p, 24, segments);
+  let d = 0;
+  return pts.map((q, i) => {
+    const a = pts[Math.max(0, i - 1)], b = pts[Math.min(pts.length - 1, i + 1)], len = Math.hypot(b[0] - a[0], b[1] - a[1]) || 1;
+    if (i) d += Math.hypot(q[0] - pts[i - 1][0], q[1] - pts[i - 1][1]);
+    return { p: q, n: [-(b[1] - a[1]) / len, (b[0] - a[0]) / len], t: [(b[0] - a[0]) / len, (b[1] - a[1]) / len], d };
+  });
+}
+// Interpolate x along downhill y. Unlike uniform Catmull-Rom, this cannot loop
+// back uphill when two nearby waypoints are followed by a long clearing.
+function routeControls(points) {
+  const dy = points.slice(1).map((p, i) => p[1] - points[i][1]);
+  const slopes = dy.map((h, i) => (points[i + 1][0] - points[i][0]) / h);
+  const tangents = points.map((p, i) => {
+    if (!i) return slopes[0];
+    if (i === points.length - 1) return slopes[i - 1];
+    const a = slopes[i - 1], b = slopes[i];
+    if (a * b <= 0) return 0;
+    const wa = 2 * dy[i] + dy[i - 1], wb = dy[i] + 2 * dy[i - 1];
+    return (wa + wb) / (wa / a + wb / b);
+  });
+  return dy.map((h, i) => {
+    const a = points[i], b = points[i + 1];
+    return [a, [a[0] + tangents[i] * h / 3, a[1] + h / 3], [b[0] - tangents[i + 1] * h / 3, b[1] - h / 3], b];
+  });
+}
+// Contiguous stretches of the walk inside the band y0..y1.
+function runsIn(steps, y0, y1) {
+  const runs = [];
+  let cur = null;
+  for (const st of steps) {
+    if (st.p[1] < y0 || st.p[1] > y1) { cur = null; continue; }
+    if (!cur) runs.push(cur = []);
+    cur.push(st);
+  }
+  return runs.filter(r => r.length > 1);
+}
+// Broad, quiet changes in width, rather than a repeated scalloped edge.
+const wobble = (d, seed) => Math.sin(d / 137 + seed) * .65 + Math.sin(d / 53 + seed * 2.7) * .25 + Math.sin(d / 19 + seed * 5.1) * .1;
+// The trail as a filled ribbon whose two edges wander independently, with rounded ends.
+function ribbon(run, w, seed, amp) {
+  const half = (st, side) => (st.w || w) / 2 * (1 + amp * wobble(st.d, seed + side * 9));
+  const at = (st, dx, dy, r) => [st.p[0] + dx * r, st.p[1] + dy * r];
+  const L = run.map(st => at(st, st.n[0], st.n[1], half(st, 0)));
+  const R = run.map(st => at(st, -st.n[0], -st.n[1], half(st, 1))).reverse();
+  const cap = (st, r, sign) => [1, 2, 3].map(k => {
+    const a = k / 4 * Math.PI, c = Math.cos(a), sn = Math.sin(a);
+    return at(st, sign * (st.n[0] * c + st.t[0] * sn), sign * (st.n[1] * c + st.t[1] * sn), r);
+  });
+  const first = run[0], last = run[run.length - 1];
+  return smooth([...L, ...cap(last, (last.w || w) / 2, 1), ...R, ...cap(first, (first.w || w) / 2, -1)], true);
+}
+// The earth is painted into the meadow: a translucent dry edge, one pale surface,
+// and a shared gouache texture. No enclosing ink line or raised inner stripe.
+const EARTH = '#eee3c9', SHOULDER = '#bcba8a';
+function earthLayers(shape, reference = false) {
+  const geometry = reference ? `use href="#${shape}"` : `path d="${shape}"`;
+  return {
+    ink: `<${geometry} fill="none" stroke="${SHOULDER}" stroke-width="12" stroke-linejoin="round" opacity=".28"/>`,
+    rim: `<${geometry} fill="${EARTH}"/>`,
+    centre: `<${geometry} fill="url(#trail-earth)" opacity=".82"/>`,
+  };
+}
+function trailDetail(run, w, rand, clear) {
+  const out = { detail: '' };
+  if (run[run.length - 1].d - run[0].d < w) return out;
+  // Small flat flecks and soft grass tips break up the meeting of earth and meadow.
+  const span = Math.max(10, w * .9);
+  let next = run[0].d + rand() * span;
+  for (const st of run) {
+    if (st.d < next) continue;
+    next = st.d + span * (.6 + rand() * .9);
+    if (!clear(st.p[0], st.p[1], w)) continue;
+    const r = rand();
+    if (r < .35) {
+      const off = (rand() - .5) * w * .55;
+      const x = st.p[0] + st.n[0] * off, y = st.p[1] + st.n[1] * off, r = Math.max(1.5, w * (.018 + rand() * .025));
+      out.detail += `<ellipse cx="${r1(x)}" cy="${r1(y)}" rx="${r1(r)}" ry="${r1(r * .45)}" fill="#baa77e" opacity=".5"/>`;
+    } else if (r < .75) {
+      const side = rand() < .5 ? -1 : 1, off = side * w / 2 * (.86 + rand() * .1);
+      out.detail += vergeGrass(st.p[0] + st.n[0] * off, st.p[1] + st.n[1] * off + 3, Math.min(23, Math.max(9, w * .23)) * (.75 + rand() * .45), rand);
+    }
   }
   return out;
 }
@@ -248,7 +335,7 @@ function sample(p) {
 function clearingShape([x0, y0, x1, y1], seed) {
   const e = 14, X0 = x0 - e, Y0 = y0 - e, X1 = x1 + e, Y1 = y1 + e;
   const r = Math.min(120, (X1 - X0) / 3, (Y1 - Y0) / 3), step = 110, pts = [];
-  const jitter = k => { const v = Math.sin(k * 12.9898 + seed * 78.233) * 43758.5453; return (v - Math.floor(v)) * 22; };
+  const jitter = k => { const v = Math.sin(k * 12.9898 + seed * 78.233) * 43758.5453; return (v - Math.floor(v)) * 10; };
   const push = (x, y, nx, ny) => { const j = jitter(pts.length); pts.push([x + nx * j, y + ny * j]); };
   // corner centres and the angle each corner's arc starts at, walking clockwise from top-left
   const corners = [[X0 + r, Y0 + r, Math.PI], [X1 - r, Y0 + r, -Math.PI / 2], [X1 - r, Y1 - r, 0], [X0 + r, Y1 - r, Math.PI / 2]];
@@ -275,6 +362,15 @@ const stroke = (d, w, color) => `<path d="${d}" fill="none" stroke="${color}" st
 
 // Hand-drawn ground detail, in the artwork's own palette and ink.
 const GREENS = ['#6A994E', '#A7C957', '#86ad4f', '#4f7a3f'];
+// Unoutlined brush tips at path edges blend with the painted grass underneath.
+function vergeGrass(x, y, size, rand) {
+  let d = '';
+  for (let i = 0; i < 3; i++) {
+    const bx = x + (i - 1) * size * .22, h = size * (.45 + rand() * .55), lean = (rand() - .5) * size * .8;
+    d += `M${r1(bx - size * .08)},${r1(y)}Q${r1(bx + lean * .2)},${r1(y - h * .6)} ${r1(bx + lean)},${r1(y - h)}Q${r1(bx + lean * .25 + size * .1)},${r1(y - h * .35)} ${r1(bx + size * .09)},${r1(y)}Z`;
+  }
+  return `<path d="${d}" fill="${['#80994f', '#9aaf65', '#627f47'][Math.floor(rand() * 3)]}" opacity=".85"/>`;
+}
 function tuft(x, y, size, rand) {
   const n = 4 + Math.floor(rand() * 3), sw = Math.max(1.2, size * .045);
   let d = '';
@@ -383,42 +479,96 @@ function render() {
   // The world ends a little below the last stop on the route, and never above any tier's painted ground.
   const groundTop = t => { const g = tierGeom(t, W); return g.y + g.th * STRIP.fadeFrom; };
   const H = Math.max(lastClearingBottom + (W > 1000 ? 150 : 110), ...tiers.map(t => groundTop(t) + 40));
-  const routeD = smooth(route), routePts = sample(route);
+  // One shared curve and width profile across hill layers, with no steps at their joins.
+  route.sort((a, b) => a[1] - b[1]);
+  const downhill = route.filter((p, i) => !i || p[1] > route[i - 1][1]);
+  const routeSegments = routeControls(downhill);
+  const routePts = sample(downhill, 16, routeSegments), routeWalk = walk(downhill, routeSegments);
+  const widths = tiers.filter(t => t.pathW).map(t => [t.crest, t.pathW]);
+  for (const st of routeWalk) {
+    const i = widths.findIndex(([y]) => y > st.p[1]);
+    if (i < 0) st.w = widths[widths.length - 1][1];
+    else if (!i) st.w = widths[0][1];
+    else {
+      const [ya, a] = widths[i - 1], [yb, b] = widths[i], u = (st.p[1] - ya) / (yb - ya);
+      st.w = a + (b - a) * u * u * (3 - 2 * u);
+    }
+  }
+  // Trail detail stays off every clearing and sign, where the copy sits.
+  const keepClear = tiers.flatMap(T => [T.clear, T.board && T.board.box, ...T.boxes].filter(Boolean));
+  const offClearings = (x, y, w) => keepClear.every(([x0, y0, x1, y1]) => x < x0 - w * .6 || x > x1 + w * .6 || y < y0 - w * .6 || y > y1 + w * .6);
+  const trailShape = ribbon(routeWalk, widths[0][1], hash('trail' + W) % 97, .065);
+  const trailPaint = earthLayers('trail-footprint', true);
 
   let defs = `<linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#A7D3E8"/><stop offset="1" stop-color="#EDF3E8"/></linearGradient>`;
+  defs += `<pattern id="trail-earth" patternUnits="userSpaceOnUse" width="480" height="480"><image href="${H_}terrain/trail-earth-gouache.webp" width="480" height="480" preserveAspectRatio="none"/></pattern>`;
+  defs += `<path id="trail-footprint" d="${trailShape}"/>`;
+  // Every hill uses the same exact trail cutout. Its painted crest (including the
+  // baked-in grass tufts and brown contour) cannot cross the walking surface.
+  // A vector exclusion clip preserves the original scenery/terrain painter order.
+  defs += `<clipPath id="terrain-off-trail" clipPathUnits="userSpaceOnUse"><path clip-rule="evenodd" d="M${-W},0H${W * 2}V${r1(H)}H${-W}Z ${trailShape}"/></clipPath>`;
   let body = `<rect width="${W}" height="${L.sky + skyExtra}" fill="url(#sky)"/>`;
   body += `<g data-depth=".35">${L.clouds.map(([a, x, y, w], i) => `<g class="drift" style="animation-delay:${-i * 5}s">${img(a, x, y + w * ART[a][2] / ART[a][1], w)}</g>`).join('')}</g>`;
+  // An opaque, unbroken surface underneath the terrain cutouts. Later hill
+  // layers reveal this same surface instead of an earlier hill's grass or cap.
+  body += `<g data-continuous-trail>${trailPaint.rim}${trailPaint.centre}</g>`;
 
+  // Each tier's solid ground only needs to reach the first nearer tier's solid ground, which hides
+  // everything below it. Stopping there keeps the lower world from being painted many layers deep.
+  // (Depth tiers only ever shift down, further under that cover.)
+  const solidTop = tiers.map(t => groundTop(t) - 2);
+  const coverAt = tiers.map((t, ti) => Math.min(H, ...tiers.slice(ti + 1).map((u, k) => u.depth ? H : solidTop[ti + 1 + k] + 8)));
   const homes = {};
   tiers.forEach((t, ti) => {
     const g = tierGeom(t, W), next = tiers[ti + 1], rand = rng(hash(t.id + W));
     const flipT = t.flip ? ` transform="translate(${r1(2 * g.left + g.tw)} 0) scale(-1 1)"` : '';
     const edge = `<image href="${STRIP.edge(t.strip)}" x="${r1(g.left)}" y="${r1(g.y)}" width="${r1(g.tw)}" height="${r1(g.th)}" preserveAspectRatio="none"${flipT}/>`;
-    const gy = g.y + g.th * STRIP.fadeFrom - 2, tileH = g.tw * STRIP.tileAspect;
+    const gy = solidTop[ti], bottom = Math.max(gy, coverAt[ti]), tileH = g.tw * STRIP.tileAspect;
     defs += `<pattern id="gp-${t.id}" patternUnits="userSpaceOnUse" x="${r1(g.left)}" y="${r1(gy)}" width="${r1(g.tw)}" height="${r1(tileH)}"${t.flip ? ` patternTransform="translate(${r1(2 * g.left + g.tw)} 0) scale(-1 1)"` : ''}><image href="${STRIP.ground(t.strip)}" width="${r1(g.tw)}" height="${r1(tileH)}" preserveAspectRatio="none"/></pattern>`;
-    const ground = `<rect x="${r1(g.left)}" y="${r1(gy)}" width="${r1(g.tw)}" height="${r1(H - gy)}" fill="${STRIP.base[t.strip]}"/><rect x="${r1(g.left)}" y="${r1(gy)}" width="${r1(g.tw)}" height="${r1(H - gy)}" fill="url(#gp-${t.id})"/>`;
-    defs += `<mask id="m-${t.id}" maskUnits="userSpaceOnUse" x="${-W}" y="0" width="${W * 3}" height="${r1(H + 10)}" style="mask-type:alpha">${edge}<rect x="${r1(g.left)}" y="${r1(gy)}" width="${r1(g.tw)}" height="${r1(H - gy)}"/></mask>`;
+    const ground = `<rect x="${r1(g.left)}" y="${r1(gy)}" width="${r1(g.tw)}" height="${r1(bottom - gy)}" fill="${STRIP.base[t.strip]}"/><rect x="${r1(g.left)}" y="${r1(gy)}" width="${r1(g.tw)}" height="${r1(bottom - gy)}" fill="url(#gp-${t.id})"/>`;
 
-    // Ground marks live inside the tier's own silhouette, so they vanish over its crest. Every tier
-    // draws the same route; wherever a nearer tier stands in front, it hides the farther one's copy.
-    let ink = '', worn = '';
-    if (t.pathW) { ink += stroke(routeD, t.pathW + 7, 'var(--ink)'); worn += stroke(routeD, t.pathW, 'var(--ground)'); }
+    // Clearing and verge detail still belongs to its hill, but every tier paints
+    // the identical full trail silhouette, with no separately rounded segment caps.
+    let ink = '', rim = '', centre = '', detail = '';
+    if (t.pathW) {
+      ink += trailPaint.ink; rim += trailPaint.rim; centre += trailPaint.centre;
+      const trand = rng(hash(t.id + 'trail' + W));
+      runsIn(routeWalk, g.y - t.pathW, bottom + t.pathW).forEach(run => {
+        detail += trailDetail(run, t.pathW, trand, offClearings).detail;
+      });
+    }
     if (t.lane) {
       const { from: [ax, ay], to: [bx, by], w } = t.lane, d = smooth([[ax, ay + t.sh], [(ax + bx) / 2, (ay + by) / 2 + t.sh + 8], [bx, by + t.sh]]);
-      ink += stroke(d, w + 7, 'var(--ink)');
-      worn += stroke(d, w, 'var(--ground)') + `<path d="${d}" fill="none" stroke="var(--peach)" stroke-width="4" stroke-dasharray="18 16" stroke-linecap="round"/>`;
+      ink += `<g opacity=".28">${stroke(d, w + 12, SHOULDER)}</g>`;
+      rim += stroke(d, w, EARTH);
+      centre += `<g opacity=".82">${stroke(d, w, 'url(#trail-earth)')}</g>`;
     }
     if (t.clear) {
-      const shape = clearingShape(t.clear, t.seed);
-      ink += `<path d="${shape}" fill="var(--ink)" stroke="var(--ink)" stroke-width="7" stroke-linejoin="round"/>`;
-      worn += `<path d="${shape}" fill="var(--ground)"/>`;
+      const ground = earthLayers(clearingShape(t.clear, t.seed));
+      ink += ground.ink; rim += ground.rim; centre += ground.centre;
+      const [x0, y0, x1, y1] = t.clear;
+      // Stay outside the padded copy box, leaving readable, quiet ground behind text.
+      for (const x of [x0 - 12, x1 + 12]) {
+        for (let y = y0 + 110 + rand() * 60; y < y1 - 70; y += 135 + rand() * 160) {
+          detail += vergeGrass(x + (rand() - .5) * 10, y, 13 + rand() * 11, rand);
+        }
+      }
     }
 
     let items = '';
     for (const it of t.items) items += item(it, t, W, homes, rand);
     if (t.board) items += board(t.board, rand);
     if (t.trailBoard) items += trailBoard(t.trailBoard, rand);
-    body += `<g data-depth="${t.depth || 0}">${ground}${edge}<g mask="url(#m-${t.id})">${ink}${worn}</g>${scatter(t, next, W, H, routePts, rand)}${items}</g>`;
+    // Clip the marks to the tier's crest line, traced from its profile. A vector clip, not an alpha
+    // mask: masks make browsers (Safari above all) paint an offscreen bitmap of the whole band.
+    let marks = '';
+    if (ink) {
+      const crestLine = Array.from({ length: 49 }, (_, i) => { const x = g.left + g.tw * i / 48; return [x, crestY(t, x, W) - 3]; });
+      defs += `<clipPath id="c-${t.id}"><path d="${smooth(crestLine)}L${r1(g.left + g.tw)},${r1(bottom)}L${r1(g.left)},${r1(bottom)}Z"/></clipPath>`;
+      marks = `<g data-ground-marks="${t.id}" clip-path="url(#c-${t.id})">${ink}${rim}${centre}${detail}</g>`;
+    }
+    const terrain = `<g data-terrain="${t.id}"${t.depth ? '' : ' clip-path="url(#terrain-off-trail)"'}>${ground}${edge}</g>`;
+    body += `<g data-depth="${t.depth || 0}">${terrain}${marks}${scatter(t, next, W, H, routePts, rand)}${items}</g>`;
   });
 
   svg.setAttribute('viewBox', `0 0 ${W} ${r1(H)}`);
@@ -593,7 +743,8 @@ const watch = new ResizeObserver(entries => {
     const h = Math.round(e.contentRect.height);
     if (heights.get(e.target) !== h) { heights.set(e.target, h); changed = true; }
   }
-  if (changed) relayout();
+  // Redraw before this frame paints, so a growing block (an FAQ sliding open) never outruns its clearing.
+  if (changed) { cancelAnimationFrame(pending); safeRender(); }
 });
 document.querySelectorAll('[data-copy]').forEach(el => watch.observe(el));
 safeRender();

@@ -1,0 +1,14 @@
+{
+  "tool": "built-in image_gen",
+  "date": "2026-11-02",
+  "styleReference": "assets/hillside/terrain/near-bank-ground.webp",
+  "source": "/Users/alin08/.codex/generated_images/01a19f7f-5bb4-71c3-ab63-4a7a422018cf/exec-63600549-faf3-4963-acbd-1f08c57be39b.png",
+  "output": "trail-earth-gouache.webp",
+  "export": {
+    "width": 768,
+    "height": 768,
+    "format": "webp",
+    "quality": 88
+  },
+  "prompt": "Use case: illustration-story\nAsset type: seamless repeating ground-material texture for an illustrated storybook website, square 1024x1024.\nPrimary request: Paint a flat, pale warm sandy footpath surface, to fill a winding trail and large text clearings in a whimsical gouache countryside illustration.\nInput image: supplied near-bank grass texture is a STYLE reference only: match its handmade matte gouache brushwork, simplified shapes and paper grain. Do not include the grass or green from the reference.\nComposition: orthographic flat material swatch, edge-to-edge. No perspective, no path shape, no border, no vignette. All edges must repeat seamlessly.\nPalette: very light oatmeal cream #F2E8D2 with small quiet variations of ivory #F5EEDC and sandy beige #DFD0AD. Keep the overall tile pale and low contrast for dark green text placed over it.\nMaterials: fine paper grain, soft irregular horizontal dry-brush scumbles, sparse tiny sand specks and occasional small muted beige flecks. Texture should be visible but restrained, like sun-worn earth painted by hand.\nConstraints: no outlines, no brown stripes, no cracks, no stones larger than tiny flecks, no grass, no vegetation, no text, no objects, no shadows, no lighting gradient, no watermark. This is a quiet uniform material, not a landscape illustration."
+}

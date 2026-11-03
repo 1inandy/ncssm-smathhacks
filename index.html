@@ -4,20 +4,25 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#F8F4EA">
-  <meta name="description" content="SMathHacks 2027: Bits & Bites. A student hackathon for curious minds. Build, experiment, and share what you make.">
+  <meta name="description" content="SMathHacks 2027: Bits & Bites. 36 Hours. 300+ Hackers. Infinite Creativity.">
   <title>SMathHacks 2027 | Bits & Bites</title>
   <link rel="icon" type="image/svg+xml" href="assets/logo/smathhacks-full-color.svg">
   <link rel="stylesheet" href="hillside.css">
   <link rel="stylesheet" href="sky-announcements.css">
   <link rel="stylesheet" href="countdown.css">
   <link rel="stylesheet" href="trail-boards.css">
+  <link rel="stylesheet" href="navigation.css">
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
   <header class="site-header">
     <a class="brand" href="#top" aria-label="SMathHacks 2027 home"><img src="assets/logo/smathhacks-full-color.svg" alt="SMathHacks 2027, Bits and Bites" width="1772" height="884"></a>
-    <nav aria-label="Primary navigation"><a href="#tracks">Tracks</a><a class="nav-wide" href="#gallery">Gallery</a><a href="#details">Join</a><a href="#schedule">Schedule</a><a href="#faq">FAQ</a><a class="nav-roomy" href="#sponsors">Sponsors</a></nav>
-    <div class="header-status" data-register="header"><a href="#updates">Registration soon</a></div>
+    <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="primary-navigation" hidden>Menu</button>
+    <nav class="site-nav" id="primary-navigation" aria-label="Primary navigation">
+      <a href="#tracks">Tracks</a><a href="#details">Join</a><a href="#schedule">Schedule</a><a href="#faq">FAQ</a><a href="#sponsors">Sponsors</a>
+      <details class="explore-menu"><summary>Explore</summary><div class="explore-panel"><a href="resources.html">Resources</a><a href="entrepreneurship-in-nc.html">Entrepreneurship in NC</a><a href="past-events.html">Past Events</a></div></details>
+    </nav>
+    <div class="header-status" data-register="header"><a href="#updates">Interest form soon</a></div>
   </header>
 
   <!-- The page is one tall hillside. hillside.js draws the art and places each copy block in its own
@@ -30,11 +35,12 @@
       <p class="eyebrow">A 36-hour hackathon for students, by students</p>
       <h1 class="sr-only" id="event-title">SMathHacks 2027: Bits &amp; Bites</h1>
       <img class="hero-logo" src="assets/logo/smathhacks-full-color.svg" alt="" width="1772" height="884">
-      <p class="hero-line">Build, experiment,<br>and share what you make.</p>
+      <p class="hero-line">36 Hours.<br>300+ Hackers.<br>Infinite Creativity.</p>
       <p class="event-timing" data-fact="dates">March 13–14, 2027</p>
       <p class="hero-eligibility">Open to high school students across North Carolina.</p>
       <div class="hero-actions">
-        <div class="registration-state" data-register="hero">Registration details coming soon</div>
+        <div class="registration-state" data-register="hero">Interest form coming soon</div>
+        <p class="registration-note">Registration isn’t open yet.</p>
       </div>
     </section>
 
@@ -72,12 +78,12 @@
               <img src="assets/gallery/closing-ceremony-2026.webp" alt="SMathHacks participants gathered in an auditorium beneath the 2026 closing ceremony screen." width="1920" height="1440" loading="lazy">
               <span>Closing ceremony · 2026</span>
             </a>
-            <a class="memory-print" href="assets/gallery/smathhacks-staircase.webp" target="_blank" rel="noopener" aria-label="View the full photo of SMathHacks participants on the stairs (opens in a new tab)">
-              <img src="assets/gallery/smathhacks-staircase.webp" alt="A group of SMathHacks participants in blue event shirts gathered together on a wide indoor staircase." width="1920" height="1280" loading="lazy">
-              <span>Better together</span>
+            <a class="memory-print" href="assets/gallery/smathhacks-staircase.webp" target="_blank" rel="noopener" aria-label="View the full photo of SMathHacks participants in Morganton (opens in a new tab)">
+              <img src="assets/gallery/smathhacks-staircase.webp" alt="SMathHacks participants in blue event shirts gathered on a wide indoor staircase in Morganton." width="1920" height="1280" loading="lazy">
+              <span>Morganton Hacking</span>
             </a>
           </div>
-          <p class="memory-board-note">SMathHacks, through the years.</p>
+          <p class="memory-board-note">Memories from SMathHacks 2026</p>
           <div class="sticker-cluster about-stickers" aria-hidden="true">
             <svg class="sticker sticker-dragonfruit" viewBox="150 95 347 446"><image href="assets/stickers/dragonfruit.png" width="649" height="677"/></svg>
             <svg class="sticker sticker-apple" viewBox="180 150 376 410"><image href="assets/stickers/apple.png" width="747" height="724"/></svg>
@@ -93,52 +99,68 @@
       <p>Build at the intersection of food and technology.</p>
     </section>
 
-    <section class="copy" id="tracks" data-copy="bit" aria-labelledby="ai-title">
+    <section class="copy" id="tracks" data-copy="societal-impact" aria-labelledby="societal-title">
       <p class="eyebrow">Track 1 · Bit’s growing corner</p>
-      <h2 id="ai-title">AI &amp; Machine Learning</h2>
-      <p>For projects where a model learns from data to make a prediction, classification, recommendation, or other decision. Projects might use computer vision, natural language processing, forecasting, or another machine-learning method. The model should be doing meaningful work in the final project, not added as an extra feature.</p>
+      <h2 id="societal-title">Societal Impact</h2>
+      <p>Build technology that helps people and communities. Address challenges in accessibility, education, sustainability, health, or everyday life, with a clear focus on who benefits and how.</p>
       <h3 class="examples-title">Example projects</h3>
       <ul class="track-examples">
-        <li>A vision model that measures untouched food on cafeteria trays to reveal recurring waste patterns</li>
-        <li>Predict likely harvest timing using planting dates, weather conditions, and growing degree days</li>
-        <li>Recommend ingredient swaps based on what an ingredient actually does in a recipe, such as binding, acidity, moisture, or leavening</li>
+        <li>A surplus-food donation matcher</li>
+        <li>An accessible recipe guide</li>
+        <li>A map of affordable food resources</li>
       </ul>
+      <div class="track-prizes">
+        <div class="track-prize"><h3>Grand Prize</h3><p>To be announced</p></div>
+        <div class="track-prize"><h3>Runner-up Prize</h3><p>To be announced</p></div>
+      </div>
     </section>
 
     <section class="copy" id="hardware" data-copy="amp" aria-labelledby="amp-title">
       <p class="eyebrow">Track 2 · Amp’s workshop terrace</p>
       <h2 id="amp-title">Hardware</h2>
-      <p>Solve a food or agriculture problem with a physical device. Teams might use Arduino or Raspberry Pi boards, sensors, motors, cameras, or other electronic and mechanical components. The device should be the center of the project, even if it also connects to a dashboard or uses a model behind the scenes. Kitchen tools, farm systems, storage, and transportation projects can all fit here.</p>
+      <p>Bring an idea into the physical world. Build devices, robots, or interactive prototypes using sensors, electronics, and mechanical components.</p>
       <h3 class="examples-title">Example projects</h3>
       <ul class="track-examples">
         <li>A fruit-ripeness tester</li>
-        <li>A produce box that automatically vents itself when temperature and humidity raise the risk of spoilage</li>
-        <li>A sensor probe that signals when a compost pile needs water, airflow, or turning</li>
+        <li>A smart produce-storage box</li>
+        <li>A compost-monitoring sensor</li>
       </ul>
+      <div class="track-prizes">
+        <div class="track-prize"><h3>Grand Prize</h3><p>To be announced</p></div>
+        <div class="track-prize"><h3>Runner-up Prize</h3><p>To be announced</p></div>
+      </div>
     </section>
 
     <section class="copy" id="game-design" data-copy="bite" aria-labelledby="bite-title">
       <p class="eyebrow">Track 3 · Bite’s play patch</p>
       <h2 id="bite-title">Game Design</h2>
-      <p>For projects where the main experience is a game. Build around food, farming, sustainability, nutrition, access, or culture, but let gameplay drive the project rather than a webpage with points attached. Focus on the choices a player makes based on the rules of the world, and what changes as the game unfolds. Browser, mobile, multiplayer, and simulation games all fit here.</p>
+      <p>Create a game that people want to play. Explore original mechanics, interactive storytelling, or simulations, with meaningful player choices at the heart of the experience.</p>
       <h3 class="examples-title">Example projects</h3>
       <ul class="track-examples">
-        <li>A season-by-season strategy game where crop rotation changes soil, pest pressure, and profit</li>
-        <li>A restaurant puzzle where players turn a shrinking pantry into dishes before ingredients spoil</li>
-        <li>A multiplayer supply-chain game where farms, stores, and shoppers react to shortages and surprise events</li>
+        <li>A crop-rotation strategy game</li>
+        <li>A pantry-management puzzle</li>
+        <li>A multiplayer food-supply simulation</li>
       </ul>
+      <div class="track-prizes">
+        <div class="track-prize"><h3>Grand Prize</h3><p>To be announced</p></div>
+        <div class="track-prize"><h3>Runner-up Prize</h3><p>To be announced</p></div>
+      </div>
     </section>
 
-    <section class="copy" id="data-science" data-copy="data" aria-labelledby="data-title">
+    <section class="copy" id="ai-machine-learning" data-copy="ai" aria-labelledby="ai-title">
       <p class="eyebrow">Track 4 · The harvest ledger</p>
-      <h2 id="data-title">Data Science</h2>
-      <p>Use food or agriculture data to uncover patterns and turn them into something useful. The focus is on understanding what the data shows rather than predicting a new outcome. If the main feature predicts or classifies new inputs, it belongs in AI &amp; Machine Learning.</p>
+      <h2 id="ai-title">AI &amp; Machine Learning</h2>
+      <p>Build tools that use AI to understand information, make predictions, generate content, or automate tasks. Make AI a meaningful part of how your project works.</p>
       <h3 class="examples-title">Example projects</h3>
       <ul class="track-examples">
-        <li>Map which cafeteria foods are most commonly left behind and when food waste spikes during lunch</li>
-        <li>Compare price, water use, emissions, and seasonality across possible ingredient substitutions</li>
-        <li>Visualize how distance, refrigeration, and time add cost between a farm and the grocery-store shelf</li>
+        <li>A food-waste vision tool</li>
+        <li>A harvest forecasting model</li>
+        <li>An ingredient-substitution assistant</li>
       </ul>
+      <div class="track-prizes">
+        <div class="track-prize"><h3>Grand Prize</h3><p>To be announced</p></div>
+        <div class="track-prize"><h3>Runner-up Prize</h3><p>To be announced</p></div>
+      </div>
     </section>
 
     <section class="trail-face gallery-face" id="gallery" data-trail-board="gallery" aria-labelledby="gallery-title">
@@ -155,6 +177,7 @@
         <span data-gallery-page-label aria-live="polite"></span>
         <button type="button" data-gallery-page="next" aria-label="Next gallery page">→</button>
       </div>
+      <a class="trail-link archive-link" href="past-events.html">Explore past events →</a>
     </section>
 
     <section class="copy info-copy" id="details" data-copy="details" aria-labelledby="details-title">
@@ -180,7 +203,7 @@
         <div><dt>Venue</dt><dd data-fact="venue">Online + NCSSM campuses</dd></div>
         <div><dt>Eligibility</dt><dd data-fact="eligibility">North Carolina high school students</dd></div>
         <div><dt>Cost</dt><dd data-fact="cost">To be announced</dd></div>
-        <div><dt>Applications</dt><dd data-application-status>Registration details coming soon</dd></div>
+        <div><dt>Applications</dt><dd data-application-status>Registration not open yet</dd></div>
         <div class="fact-stickers" aria-hidden="true">
           <dt class="sr-only">Bits &amp; Bites</dt>
           <dd class="sticker-cluster sticker-pair">
@@ -194,25 +217,31 @@
     <section class="copy answers-copy" id="before-you-start" data-copy="answers" aria-labelledby="answers-title">
       <p class="eyebrow">Before you start</p>
       <h2 id="answers-title">Schedule &amp; FAQ</h2>
+      <div class="hacker-resources-link">
+        <a class="trail-link" href="resources.html">Hacker resources →</a>
+        <p>Event links, beginner guides, and help with software and hardware.</p>
+      </div>
       <div class="info-lower">
         <div id="schedule" aria-labelledby="schedule-title">
           <h3 id="schedule-title">The schedule</h3>
           <p id="schedule-status">Still in the making. We’ll share the schedule when it’s confirmed.</p>
           <ol class="schedule-list" id="schedule-list" hidden></ol>
           <div class="sticker-cluster schedule-stickers" aria-hidden="true">
-            <svg class="sticker sticker-dragonfruit" viewBox="150 95 347 446"><image href="assets/stickers/dragonfruit.png" width="649" height="677"/></svg>
-            <svg class="sticker sticker-apple" viewBox="180 150 376 410"><image href="assets/stickers/apple.png" width="747" height="724"/></svg>
+            <svg class="sticker sticker-cart-peach" viewBox="238 245 1654 1368"><image href="assets/stickers/shopping-cart-peach.png" width="2138" height="2034"/></svg>
+            <svg class="sticker sticker-cart-coral" viewBox="238 245 1654 1368"><image href="assets/stickers/shopping-cart-coral.png" width="2138" height="2034"/></svg>
           </div>
         </div>
         <div id="faq" class="faq" aria-labelledby="faq-title">
-          <h3 id="faq-title">A few useful answers.</h3>
-          <details><summary>What is a hackathon?</summary><p>A hackathon is an event where people come together to explore ideas and build projects. A project might be software, hardware, a game, or an experiment that helps you learn something new.</p></details>
-          <details><summary>When can I apply?</summary><p data-application-answer>Registration details will be shared when they’re confirmed.</p></details>
-          <details><summary>Who can attend?</summary><p><span data-eligibility-answer>North Carolina high school students</span> are welcome. NCSSM residential students can participate in person at the Durham and Morganton campuses. Other North Carolina high school students participate virtually.</p></details>
-          <details><summary>Do I need coding experience?</summary><p>No prior coding experience is needed. SMathHacks is beginner-friendly, with hands-on workshops, inspiring talks, and mentors to help you learn and build throughout the event.</p></details>
-          <details><summary>How do virtual participants join?</summary><p>The opening ceremony, talks, workshops, and closing ceremony will be broadcast through Zoom. Zoom links will be available on this website and sent by email to registered participants.</p></details>
-          <details><summary>What should I bring?</summary><p>We’ll share a practical packing list alongside the confirmed venue and schedule.</p></details>
-          <details><summary>Do I need to bring a team?</summary><p>Team formation and project guidelines will be shared with the registration details.</p></details>
+          <h3 id="faq-title">FAQs</h3>
+          <p class="faq-intro">If we haven't answered your question here, please feel free to email <a href="mailto:smathhacks@ncssm.edu">smathhacks@ncssm.edu</a> and take a <a href="https://docs.google.com/document/d/1b3o_mWK17DtvlaATyR4Pa60bpLs0pt1tXk8hC2CcoNc/edit?usp=sharing">look here!</a></p>
+          <details><summary>Are you allowed to form a team on the day of SMathHacks?</summary><p>Yes, you will be able to make teams at the start of the hackathon. If you don't have a team in mind, we'll have a team formation event at the start of SMathHacks!</p></details>
+          <details><summary>See last year's projects!</summary><p>Explore the <a href="past-events.html#event-2026">2026 winners and projects</a>, or browse earlier years in our <a href="past-events.html">Past Events archive</a>.</p></details>
+          <details><summary>What is a “track”, and how do I choose one?</summary><p>Choose the track that best represents your project’s main goal or experience. Projects may fit multiple categories, but you may submit to only one track.</p></details>
+          <details><summary>What's a hackathon?</summary><p>A hackathon is an event where students work in a team, or by themselves, to build an innovative piece of software in a limited amount of time. Students will form teams around a problem or idea, and sprint to create a unique solution—these typically take the form of mobile applications, websites, or other digital solutions, however, hardware projects will also be accepted under specific regulations.</p></details>
+          <details><summary>What if I’ve never programmed before?</summary><p>That’s okay! This event is beginner-friendly, meaning that you don’t need any prior programming experience to participate! There will be incredible talks, workshops, and mentors available to guide you through the ideation and development process.</p></details>
+          <details><summary>Where’s the schedule for the event?</summary><p>The full 2027 schedule will appear in <a href="#schedule">the schedule section</a> when confirmed. Visit <a href="resources.html#essentials">Event essentials</a> for workshop and virtual-session links as they become available.</p></details>
+          <details><summary>How do teams work?</summary><p>You can have up to four people in a team. You can list teammates on the interest form or fill it out individually. If you don’t have a team yet, that’s okay—we’ll have a team formation event to help you find people to work with.</p></details>
+          <details><summary>Can I use AI to help me brainstorm?</summary><p>Yes, but you cannot use AI to program a primary part of your project. For a more detailed description, see our <a href="https://docs.google.com/document/d/1pEFH9UuxoBllNLikZc5qAYKGJyAyNFBk7YlenPAoMjU/edit?usp=sharing">Use of AI Statement</a>.</p></details>
         </div>
       </div>
     </section>
@@ -270,7 +299,12 @@
 
     <section class="copy finale-copy" id="updates" data-copy="finale" aria-labelledby="finale-title">
       <h2 id="finale-title">Make something together.</h2>
-      <p>One question. A few curious minds. A whole lot of possibility.</p>
+      <p>A few curious minds..... and a whole lot of possibility!</p>
+      <div class="continue-building">
+        <h3>Keep building after the hackathon.</h3>
+        <p>Find mentorship, funding resources, and a next step for your idea.</p>
+        <a class="trail-link" href="entrepreneurship-in-nc.html">Entrepreneurship in NC →</a>
+      </div>
       <p class="finale-credit">Made with ❤️ by SMathHacks 2027</p>
     </section>
 
@@ -287,6 +321,8 @@
   </dialog>
 
   <script type="module" src="event.js"></script>
-  <script type="module" src="hillside.js"></script>
+  <script type="module" src="hillside.js?v=continuous-hill-trail"></script>
+  <script type="module" src="faq.js"></script>
+  <script type="module" src="navigation.js"></script>
 </body>
 </html>

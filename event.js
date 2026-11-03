@@ -103,6 +103,24 @@ function renderSponsors(config) {
   }
 }
 
+// Shared event links can be confirmed without changing the resource directory's markup.
+function renderResourceLinks(config) {
+  const labels = {
+    meetingUrl: ['Virtual sessions & help room', 'Join the 2027 virtual sessions, including the help room.'],
+    submissionUrl: ['Project submissions', 'Submit your final project through the 2027 event platform.'],
+    submissionGuidelinesUrl: ['Submission requirements', 'Read what to include in your 2027 project submission.'],
+  };
+  for (const host of $$('[data-resource]')) {
+    const key = host.dataset.resource, url = destination(config.resources?.[key]);
+    if (!url || !labels[key]) continue;
+    const [label, description] = labels[key], link = document.createElement('a');
+    link.href = url; link.textContent = label + ' ↗';
+    host.querySelector('h3').replaceChildren(link);
+    host.querySelector('p').textContent = description;
+    host.querySelector('.resource-state')?.remove();
+  }
+}
+
 async function applyConfig() {
   const response = await fetch('./event-config.json');
   if (!response.ok) throw Error('Event configuration unavailable');
@@ -110,6 +128,7 @@ async function applyConfig() {
   window.eventConfig = config;
   configureCountdown(config);
   configureGallery(config);
+  renderResourceLinks(config);
   if (typeof config.theme === 'string' && config.theme.trim()) {
     for (const element of $$('[data-event-theme]')) element.textContent = config.theme;
   }
@@ -119,22 +138,22 @@ async function applyConfig() {
     if (typeof value === 'string' && value.trim()) element.textContent = value;
   }
 
-  // Only show an action that actually leads somewhere: register, else updates link, else updates form.
+  // Only show an action that actually leads somewhere: interest form, else updates link, else updates form.
   const registration = destination(config.registrationUrl);
   const updates = destination(config.updatesUrl);
   const endpoint = destination(config.updatesEndpoint);
   if (registration || updates) {
-    for (const host of $$('[data-register]')) host.replaceChildren(actionLink(registration ? 'Register' : 'Get updates', registration || updates));
-    if (registration) {
-      $('[data-application-status]').textContent = 'Applications are open';
-      $('[data-application-answer]').textContent = 'Applications are open. Use the Register link to visit the application page.';
+    for (const host of $$('[data-register]')) host.replaceChildren(actionLink(registration ? 'Interest form' : 'Get updates', registration || updates));
+    if (registration && $('[data-application-status]')) {
+      $('[data-application-status]').textContent = 'Registration not open yet · interest form open';
     }
   } else if (endpoint) {
-    for (const host of $$('[data-register="hero"],[data-register="header"]')) host.replaceChildren(actionLink('Get updates', '#updates'));
+    const updatesAnchor = $('#updates') ? '#updates' : 'index.html#updates';
+    for (const host of $$('[data-register="hero"],[data-register="header"]')) host.replaceChildren(actionLink('Get updates', updatesAnchor));
     $('[data-register="final"]')?.replaceChildren(updatesForm(endpoint));
   }
 
-  if (Array.isArray(config.schedule)) {
+  if (Array.isArray(config.schedule) && $('#schedule-list')) {
     const list = $('#schedule-list');
     for (const entry of config.schedule) {
       if (typeof entry.time !== 'string' || typeof entry.title !== 'string') continue;
@@ -146,13 +165,12 @@ async function applyConfig() {
     }
     if (list.children.length) { $('#schedule-status').hidden = true; list.hidden = false; }
   }
-  if (typeof config.eligibility === 'string' && config.eligibility.trim()) $('[data-eligibility-answer]').textContent = config.eligibility;
   renderSponsors(config);
   if (isEmail(config.contactEmail)) {
     const link = document.createElement('a');
     link.href = 'mailto:' + config.contactEmail;
     link.textContent = 'Contact the organizers';
-    $('.site-footer').append(link);
+    $('.site-footer')?.append(link);
   }
 }
 

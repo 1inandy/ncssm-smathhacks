@@ -27,5 +27,10 @@
   ],
   "duration": "36 hours", "schedule": null, "registrationUrl": "https://docs.google.com/forms/d/e/1FAIpQLSfUDf5G5AZwn_OvfWHqp_PgylfsILe4HvmaL2Jx0N_BUnYNuA/viewform",
   "updatesUrl": null, "updatesEndpoint": null, "contactEmail": null,
+  "resources": {
+    "meetingUrl": null,
+    "submissionUrl": null,
+    "submissionGuidelinesUrl": null
+  },
   "sponsorEmail": null, "sponsors": null
 }

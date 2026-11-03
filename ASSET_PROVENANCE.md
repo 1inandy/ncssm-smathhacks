@@ -1,5 +1,13 @@
 # Asset provenance
 
+## Painted trail surface — November 2, 2026
+
+`assets/hillside/terrain/trail-earth-gouache.webp` is a new pale sandy gouache material generated with the built-in image-generation tool. The existing `near-bank-ground.webp` was used only as a painting-style reference. The exact prompt, source filename, and export settings are recorded in `assets/hillside/terrain/trail-earth-generation.json`; the original generated PNG remains in the recorded local source location. The delivery image is resized to 768 × 768 and encoded as WebP. The SVG trail and clearings remain responsive code geometry, with a shared material pattern, translucent earthy shoulders, and unoutlined grass tips. No existing terrain or supplied artwork was repainted.
+
+## User-supplied shopping cart stickers — November 2, 2026
+
+`assets/stickers/shopping-cart-peach.png` and `shopping-cart-coral.png` are byte-for-byte copies of the supplied `BITSandBites_H27_cartcomp_v02.png` and `BITSandBites_H27_cartcomp_v03.png`. They replace the fruit pair beside the FAQs. Inline SVG viewboxes frame the existing alpha bounds with four pixels of clearance; CSS sizes and rotates the two stickers. No generation, repainting, or background removal was applied, and the supplied originals remain unchanged.
+
 ## Hanging scrapbook — November 2, 2026
 
 The hanging corkboard near the introduction uses the supplied `DSC04661.JPG` and `IMG_2181.JPG`, exported as `assets/gallery/closing-ceremony-2026.webp` and `assets/gallery/smathhacks-staircase.webp`. `work/production/prepare_memory_board.mjs` preserves the full image composition, limits runtime dimensions to 1920 pixels, and removes embedded metadata. The photographs are not cropped, retouched, or generated; supplied originals remain untouched. The cord, frame, pins, and cork-grain SVG are original code-native artwork. Both prints link to their larger local images.
@@ -55,3 +63,12 @@ Fourteen new original prop illustrations were created with the **built-in imageg
 ### User-supplied breadboard replacement
 
 The current BB05 toast breadboard uses the user's `/Users/alin08/Downloads/toast-breadboard.png` in place of the generated version. The supplied 720 × 480 RGBA PNG is copied byte-for-byte to `assets/mvp/props/bits-and-bites/masters/toast-breadboard.png` and to its whole-object export. No image generation or repainting was applied. Its six registered pieces, source-to-canvas matrix, indicator position, gallery/delivery image, and export bundle are rebuilt from that exact file. `work/production/bb05-user-revision.json` records the source checksum. The former generated master remains in `assets/mvp/props/bits-and-bites/revisions/toast-breadboard-generated.png` for provenance. Other approved object and landmark artwork is unchanged.
+
+
+## Supporting pages — November 2, 2026
+
+The four supporting pages carry forward content and public document links from the existing SMathHacks website: [Tracks & Prizes](https://smathhacks.ncssm.edu/tracks-prizes), [Resources](https://smathhacks.ncssm.edu/resources), [Entrepreneurship in NC](https://smathhacks.ncssm.edu/entrepreneurship-in-nc), and [Past Events](https://smathhacks.ncssm.edu/past-events). The 2026 winners come from the old homepage. Program and grant links were checked against the official [Colopy Entrepreneurship](https://entrepreneurship.ncssm.edu/) and [Grants & Resources](https://entrepreneurship.ncssm.edu/grants-resources) pages. No 2027 prize or judging promises were inferred from the old site.
+
+Eight existing program photos are served locally as `assets/entrepreneurship/program-02.webp` through `program-09.webp`. They retain their original compositions and are converted to WebP for delivery; EXIF orientation is applied and embedded metadata is not retained. Source URLs and dimensions are recorded in `work/verification/support-pages/photo-sources.json`; the old baked-in title banner is not used. Supporting-page illustrations and the 2026 scrapbook reuse the site's existing supplied/approved assets. No new generated imagery or public deployment was introduced.
+
+The full original Past Events carousel collection is also preserved locally: 28 photos from 2025, 27 from 2024, 25 from 2023, and 10 from 2022. `archive-photos.json` records each original source URL, year, campus caption where one was provided, delivery path, and dimensions. `work/production/import_archive_photos.py` converts these photos to WebP with a maximum 1280-pixel edge, applies EXIF orientation, and omits metadata. The compositions are preserved without retouching. Expandable albums keep these 90 photos accessible without making the initial archive page excessively long.

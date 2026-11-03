@@ -1,0 +1,153 @@
+/* Supporting pages share the trail's palette and artwork, with room for real reading. */
+.support-page{background:var(--cream)}
+.support-page h1{font-family:var(--font-display);font-weight:600;font-variation-settings:'SOFT' 100,'WONK' 1;font-size:clamp(48px,6.2vw,80px);line-height:1.06;letter-spacing:-.035em;text-wrap:balance;margin:0 0 22px;max-width:12ch}
+.support-page h1.long-title{max-width:none}
+.support-page h2{font-size:clamp(29px,3vw,38px);line-height:1.16}
+.support-page h3{font-size:23px;line-height:1.3}
+.page-hero{position:relative;background:linear-gradient(var(--sky-top),var(--sky-horizon));padding:145px 28px 100px;overflow:hidden}
+.page-hero::after{content:'';position:absolute;bottom:-2px;left:0;width:100%;height:66px;background:url('assets/hillside/terrain/far-ridge-right-edge.webp') center top/100% auto no-repeat;pointer-events:none;opacity:.65}
+.page-hero-inner{position:relative;max-width:1120px;margin:auto;display:grid;grid-template-columns:minmax(0,1.65fr) minmax(230px,1fr);align-items:center;gap:50px}
+.page-hero .eyebrow{font-size:23px;margin-bottom:18px}
+.page-intro{font-size:19px;line-height:1.65;max-width:48ch;text-wrap:pretty}
+.back-to-trail{display:inline-flex;align-items:center;min-height:44px;margin-top:20px;font-size:14px;font-weight:700;text-underline-offset:5px}
+.hero-illustration{position:relative;height:300px;align-self:end;pointer-events:none}
+.hero-illustration .hero-character{position:absolute;bottom:0;left:18%;width:185px;max-height:290px;object-fit:contain}
+.hero-illustration .hero-prop{position:absolute;bottom:-4px;right:0;width:155px;object-fit:contain;transform:rotate(5deg)}
+.hero-illustration.resources-art .hero-character{width:205px;left:8%}
+.hero-illustration.resources-art .hero-prop{width:140px;right:-8px}
+.hero-memory{margin:0;transform:rotate(3deg);padding:12px 12px 30px;background:var(--cream);box-shadow:5px 6px 0 #38664118}
+.hero-memory img{display:block;width:100%;height:220px;object-fit:cover}
+.hero-memory figcaption{font-family:var(--font-hand);font-size:22px;color:var(--ink);text-align:center;margin-top:12px}
+.reading-layout{max-width:1176px;margin:0 auto;padding:68px 28px 100px;display:grid;grid-template-columns:210px minmax(0,1fr);gap:70px}
+.page-index{align-self:start;position:sticky;top:115px;font-size:14px}
+.page-index p{font-family:var(--font-hand);font-size:23px;color:var(--ink);margin:0 0 15px}
+.page-index nav{display:flex;flex-direction:column;align-items:flex-start;border-left:2px solid var(--rule);padding-left:18px;gap:2px}
+.page-index a{display:flex;align-items:center;min-height:42px;text-decoration:none;font-weight:600}
+.page-index a:hover{text-decoration:underline;text-underline-offset:5px}
+.page-content{min-width:0}
+.page-content>section+section{margin-top:64px;padding-top:48px;border-top:1px solid var(--rule)}
+.section-intro{max-width:62ch;margin-bottom:26px}
+.section-intro p+p{margin-top:12px}
+.announcement{padding:26px 28px;border-left:4px solid var(--leaf);background:#a7c95720;margin-bottom:28px}
+.announcement h2{margin-bottom:12px}
+.announcement p{max-width:58ch}
+.announcement .trail-link{margin-top:10px}
+.quiet-note{font-size:14px;line-height:1.6;max-width:66ch}
+.prize-table{width:100%;border-collapse:collapse;margin:26px 0 20px;text-align:left;font-size:15px}
+.prize-table th,.prize-table td{padding:18px 16px 18px 0;vertical-align:top;border-bottom:1px solid var(--rule);width:33.333%}
+.prize-table thead th{font-size:13px;color:var(--ink);padding-top:0}
+.prize-table tbody th{font-weight:700}
+.award-list{display:grid;grid-template-columns:1fr 1fr;gap:32px;margin:30px 0}
+.award-list h3{font-size:22px;margin-bottom:10px}
+.award-list p{font-size:15px}
+.award-list strong{display:block;margin-bottom:9px;font-size:14px;color:var(--ink)}
+.resource-list{list-style:none;padding:0;margin:22px 0 0}
+.resource-list li{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:12px 28px;padding:22px 0;border-bottom:1px solid var(--rule)}
+.resource-list li:first-child{padding-top:0}
+.resource-list li:last-child{border-bottom:0;padding-bottom:0}
+.resource-list h3{font-family:var(--font-body);font-size:18px;font-weight:700;margin-bottom:6px}
+.resource-list h3 a{text-underline-offset:5px;text-decoration-thickness:1px}
+.resource-list p{font-size:15px;max-width:57ch}
+.resource-list .resource-state{font-size:12px;color:var(--ink);padding-top:4px;white-space:nowrap}
+.resource-list .resource-state:empty{display:none}
+.inline-links{display:flex;flex-wrap:wrap;gap:6px 24px;margin-top:16px}
+.inline-links a{display:inline-flex;align-items:center;min-height:44px;font-size:14px;font-weight:700;text-underline-offset:5px}
+.program-photo{margin:30px 0 0}
+.program-photo img{display:block;width:100%;height:auto;border-radius:2px}
+.program-photo figcaption{font-size:13px;margin-top:10px}
+.program-opportunities{margin-top:26px}
+.program-opportunities>div+div{margin-top:25px}
+.program-opportunities h3{font-size:22px;margin-bottom:9px}
+.program-opportunities p{font-size:16px;max-width:60ch}
+.program-photos{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px;margin-top:28px}
+.program-photos a{display:block}
+.program-photos img{display:block;width:100%;height:auto;aspect-ratio:4/3;object-fit:contain;background:var(--ground)}
+.photo-note{margin-top:18px;font-size:13px}
+.archive-year-header{display:flex;align-items:baseline;gap:18px;flex-wrap:wrap;margin-bottom:14px}
+.archive-year-header h2{font-size:43px;margin:0}
+.archive-year-header p{font-family:var(--font-hand);font-size:25px;color:var(--ink)}
+.archive-photos{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin:24px 0}
+.archive-photos figure{margin:0}
+.archive-photos img{display:block;width:100%;height:auto;aspect-ratio:4/3;object-fit:contain;background:var(--ground)}
+.archive-photos figcaption{font-size:13px;margin-top:8px}
+.winners{margin-top:30px}
+.winners h3{font-size:20px;margin:24px 0 12px}
+.winner-links{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 24px;margin:0;padding:0;list-style:none}
+.winner-links a{display:inline-block;min-height:44px;font-size:14px;line-height:1.5;padding:7px 0;text-underline-offset:4px}
+.archive-earlier{list-style:none;margin:0;padding:0}
+.archive-earlier li{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:20px 0;border-bottom:1px solid var(--rule)}
+.archive-earlier li:last-child{border-bottom:0}
+.archive-earlier h3{font-size:22px}
+.earlier-year{margin-top:32px}
+.earlier-year+.earlier-year{margin-top:40px}
+.earlier-year+.archive-earlier{margin-top:30px}
+.archive-source{font-size:14px;margin-top:28px}
+.archive-albums{margin-top:26px}
+.archive-albums details{border-top:1px solid var(--rule)}
+.archive-albums details:last-child{border-bottom:1px solid var(--rule)}
+.archive-albums summary{display:flex;align-items:center;justify-content:space-between;gap:16px;min-height:58px;cursor:pointer;list-style:none;font-weight:700;font-size:15px}
+.archive-albums summary::-webkit-details-marker{display:none}
+.archive-albums summary::after{content:'+';font-size:23px;font-weight:400}
+.archive-albums details[open]>summary::after{content:'−'}
+.archive-albums summary:focus-visible{outline:3px solid var(--forest);outline-offset:4px}
+.archived-prize-details{padding:16px 0 28px}
+.archived-prize-details>div+div{margin-top:32px}
+.archived-prize-details h3{margin-bottom:14px}
+.archived-prize-details h4{font-family:var(--font-display);font-size:20px;line-height:1.3;margin:0 0 10px}
+.album-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;padding-bottom:24px}
+.album-grid a{display:block}
+.album-grid img{display:block;width:100%;height:auto;aspect-ratio:4/3;object-fit:contain;background:var(--ground)}
+.support-footer{background:var(--forest);color:var(--cream);padding:38px 28px}
+.support-footer-inner{max-width:1120px;margin:auto;display:flex;align-items:center;justify-content:space-between;gap:28px}
+.support-footer p{font-size:14px}
+.support-footer p+p{font-size:12px;margin-top:4px}
+.support-footer nav{display:flex;flex-wrap:wrap;gap:4px 22px}
+.support-footer a{display:inline-flex;align-items:center;min-height:44px;font-size:13px;text-underline-offset:5px}
+@media(max-width:1000px){
+  .reading-layout{grid-template-columns:165px minmax(0,1fr);gap:35px}
+  .page-hero-inner{gap:25px}
+  .hero-illustration .hero-character{left:0}
+  .hero-illustration .hero-prop{right:-10px;width:130px}
+}
+@media(max-width:759px){
+  .page-hero{padding:110px 24px 62px}
+  .page-hero-inner{grid-template-columns:minmax(0,1fr);gap:24px}
+  .support-page h1{font-size:49px;max-width:13ch;margin-bottom:18px}
+  .support-page h1.long-title{font-size:clamp(30px,8.9vw,46px);max-width:none}
+  .page-hero .eyebrow{font-size:21px;margin-bottom:14px}
+  .page-intro{font-size:17px;line-height:1.65}
+  .hero-illustration{height:160px;width:230px;justify-self:end;margin-top:-10px}
+  .hero-illustration .hero-character{height:165px;width:auto;left:22px;max-width:150px}
+  .hero-illustration .hero-prop{width:110px;right:0}
+  .hero-illustration.resources-art .hero-character{height:165px;width:auto;left:24px}
+  .hero-illustration.resources-art .hero-prop{width:100px;right:0}
+  .hero-memory{max-width:310px;justify-self:center;padding:9px 9px 16px;margin:8px 8px 16px}
+  .hero-memory img{height:180px}
+  .hero-memory figcaption{font-size:20px;margin-top:8px}
+  .page-hero::after{height:34px;background-size:auto 150px}
+  .reading-layout{display:block;padding:32px 24px 65px}
+  .page-index{position:static;margin-bottom:36px}
+  .page-index p{font-size:20px;margin-bottom:8px}
+  .page-index nav{flex-direction:row;flex-wrap:wrap;gap:0 20px;border-left:0;border-bottom:1px solid var(--rule);padding:0 0 12px}
+  .page-index a{min-height:44px;font-size:13px;text-decoration:underline;text-underline-offset:4px}
+  .page-content>section+section{margin-top:40px;padding-top:34px}
+  .announcement{padding:22px 20px}
+  .announcement p{font-size:15px}
+  .resource-list li{gap:8px 14px;grid-template-columns:1fr}
+  .resource-list .resource-state{padding:0;grid-row:1;font-size:12px}
+  .resource-list h3{font-size:17px}
+  .prize-table{font-size:13px}
+  .prize-table th,.prize-table td{padding:15px 10px 15px 0;overflow-wrap:anywhere}
+  .prize-table thead th{font-size:12px}
+  .award-list{grid-template-columns:1fr;gap:26px}
+  .archive-year-header h2{font-size:37px}
+  .archive-year-header p{font-size:23px}
+  .archive-photos{gap:10px}
+  .winner-links{grid-template-columns:1fr}
+  .archive-earlier li{align-items:flex-start}
+  .archive-earlier .inline-links{margin:0;justify-content:flex-end;gap:0 12px}
+  .program-photos{gap:12px}
+  .album-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+  .support-footer-inner{display:block}
+  .support-footer nav{margin-top:18px;gap:0 20px}
+}
