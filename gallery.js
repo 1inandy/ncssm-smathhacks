@@ -1,19 +1,15 @@
 import { galleryPhotos, galleryPage } from './gallery-model.js';
 
-// Real photos only. Empty configuration leaves the explicitly labeled pinned placeholders intact.
-export function configureGallery(config) {
-  const root = document.querySelector('[data-trail-board="gallery"]');
+let openViewer;
+
+// One photo viewer shared by the gallery board and the scrapbook corkboard; each opens it with its own photo set.
+function photoViewer() {
+  if (openViewer) return openViewer;
   const dialog = document.querySelector('[data-gallery-dialog]');
-  if (!root || !dialog || root.dataset.galleryReady) return;
-  const photos = galleryPhotos(config.gallery, location.href);
-  if (!photos.length) return;
-  root.dataset.galleryReady = 'true';
-  root.classList.toggle('has-gallery-pages', photos.length > 4);
-  const grid = root.querySelector('[data-gallery-grid]'), pagination = root.querySelector('[data-gallery-pagination]');
+  if (!dialog) return null;
   const image = dialog.querySelector('[data-gallery-large-image]'), error = dialog.querySelector('[data-gallery-error]');
-  let page = 0, selected = 0, opener;
-  root.querySelector('[data-gallery-note]').textContent = 'Pinned moments. Select a photo to take a closer look.';
-  if (photos.length > 4) root.querySelector('[data-gallery-note]').hidden = true;
+  const title = dialog.querySelector('#gallery-dialog-title');
+  let photos = [], selected = 0, opener;
 
   function showPhoto(index) {
     selected = (index + photos.length) % photos.length;
@@ -33,6 +29,45 @@ export function configureGallery(config) {
   });
   dialog.addEventListener('close', () => opener?.focus());
 
+  openViewer = (set, index, from, heading) => {
+    photos = set; opener = from; title.textContent = heading;
+    showPhoto(index); dialog.showModal();
+  };
+  return openViewer;
+}
+
+// The corkboard prints stay plain links without JavaScript; with it they open in the gallery viewer.
+export function configureScrapbook() {
+  const prints = [...document.querySelectorAll('#scrapbook .memory-print')];
+  const open = prints.length && photoViewer();
+  if (!open) return;
+  const photos = prints.map(print => ({ src: print.getAttribute('href'), alt: print.querySelector('img').alt, caption: print.querySelector('span')?.textContent.trim() }));
+  for (const [index, print] of prints.entries()) {
+    print.removeAttribute('target');
+    print.setAttribute('aria-haspopup', 'dialog');
+    print.setAttribute('aria-label', `Open photo ${index + 1}: ${photos[index].caption || photos[index].alt}`);
+    print.addEventListener('click', event => {
+      if (event.metaKey || event.ctrlKey || event.shiftKey || event.button !== 0) return;
+      event.preventDefault();
+      open(photos, index, print, 'From the scrapbook');
+    });
+  }
+}
+
+// Real photos only. Empty configuration leaves the explicitly labeled pinned placeholders intact.
+export function configureGallery(config) {
+  const root = document.querySelector('[data-trail-board="gallery"]');
+  const open = photoViewer();
+  if (!root || !open || root.dataset.galleryReady) return;
+  const photos = galleryPhotos(config.gallery, location.href);
+  if (!photos.length) return;
+  root.dataset.galleryReady = 'true';
+  root.classList.toggle('has-gallery-pages', photos.length > 4);
+  const grid = root.querySelector('[data-gallery-grid]'), pagination = root.querySelector('[data-gallery-pagination]');
+  let page = 0;
+  root.querySelector('[data-gallery-note]').textContent = 'Pinned moments. Select a photo to take a closer look.';
+  if (photos.length > 4) root.querySelector('[data-gallery-note]').hidden = true;
+
   function renderPage() {
     const result = galleryPage(photos, page); page = result.current;
     grid.replaceChildren();
@@ -46,7 +81,7 @@ export function configureGallery(config) {
       thumbnail.addEventListener('error', () => { thumbnail.hidden = true; caption.textContent = 'Photo unavailable'; });
       caption.className = 'gallery-caption'; caption.textContent = photo.caption || `Photo ${result.start + offset + 1}`;
       button.append(thumbnail, caption); li.append(button); grid.append(li);
-      button.addEventListener('click', () => { opener = button; showPhoto(result.start + offset); dialog.showModal(); });
+      button.addEventListener('click', () => open(photos, result.start + offset, button, 'From the gallery'));
     }
     pagination.hidden = result.pages < 2;
     root.querySelector('[data-gallery-page-label]').textContent = `${page + 1} / ${result.pages}`;

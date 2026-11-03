@@ -2,7 +2,7 @@
 
 ## Past event logos — November 3, 2026
 
-`assets/archive-logos/` holds the official 2021–2026 event logos, taken from the original Past Events archive (https://smathhacks.ncssm.edu/past-events) and, for 2026, the 2026 event site header. Exports are trimmed to their alpha bounds, capped at 720 px wide, and encoded as WebP; artwork, lettering, and colors are unchanged. Each logo sits on a solid plate color so white and light marks stay legible on the cream page. Theme names come from each year's Tracks page or Devpost listing (2026 Under the Sea, 2025 Space & Aeronautics, 2024 Environment, 2022 Entrepreneurship); 2023 shows its tagline because no theme was published, and no 2020 logo exists in the archive.
+`assets/archive-logos/` holds the official 2021–2026 event logos, taken from the original Past Events archive (https://smathhacks.ncssm.edu/past-events) and, for 2026, the 2026 event site header. Exports are trimmed to their alpha bounds, capped at 720 px wide, and encoded as WebP; artwork, lettering, and colors are unchanged. Each year's section wears its own site's background: `bg-smathhacks-2026.webp` (wave), `bg-smathhacks-2025.webp` (space), and `bg-smathhacks-2024.webp` (purple mountains) are uncropped WebP exports of those sites' hero images, at most 1600 px wide. They fade into a solid base color sampled from each image, under a tint for text contrast. 2023 uses `#010101`. The 2025 mark gets a CSS-only white halo so it reads against the space image. Theme names come from each year's Tracks page or Devpost listing (2026 Under the Sea, 2025 Space & Aeronautics, 2024 Environment, 2022 Entrepreneurship); 2023 shows its tagline because no theme was published, and no 2020 logo exists in the archive.
 
 ## Leaf cursors — November 2, 2026
 

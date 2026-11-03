@@ -63,31 +63,55 @@
 .program-photos a{display:block}
 .program-photos img{display:block;width:100%;height:auto;aspect-ratio:4/3;object-fit:contain;background:var(--ground)}
 .photo-note{margin-top:18px;font-size:13px}
-.archive-year-header{display:flex;align-items:center;justify-content:space-between;gap:18px 28px;flex-wrap:wrap;margin-bottom:14px}
-.archive-year-title{display:flex;align-items:baseline;gap:18px;flex-wrap:wrap}
-.archive-year-header h2{font-size:43px;margin:0}
-.archive-year-header h3{font-size:22px;margin:0}
-.archive-year-header p{font-family:var(--font-hand);font-size:25px;color:var(--ink)}
-.archive-logo{display:flex;align-items:center;justify-content:center;width:240px;height:96px;margin:0;padding:14px 18px;background:var(--plate);border:1px solid var(--rule);border-radius:4px;box-sizing:border-box}
-.archive-logo img{display:block;max-width:100%;max-height:100%;width:auto;height:auto}
-.archive-logo.is-small{width:180px;height:72px;padding:10px 14px}
-.earlier-title{display:flex;align-items:center;gap:20px;flex-wrap:wrap}
-.archive-photos{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin:24px 0}
-.archive-photos figure{margin:0}
-.archive-photos img{display:block;width:100%;height:auto;aspect-ratio:4/3;object-fit:contain;background:var(--ground)}
-.archive-photos figcaption{font-size:13px;margin-top:8px}
+/* Past events: each year is a panel dressed in its own event site's background, logo in place of the theme name. */
+.page-content>.year-panel{margin-top:28px;padding-top:40px;border-top:0}
+.page-content>.year-panel:first-child{margin-top:0}
+.page-content>.year-panel+section:not(.year-panel){margin-top:72px;padding-top:0;border-top:0}
+.year-panel{--panel-base:#13313e;position:relative;isolation:isolate;overflow:hidden;padding:40px 40px 36px;border-radius:16px 11px 18px 10px;background:var(--panel-base);color:var(--forest)}
+.year-panel::before{content:'';position:absolute;inset:0 0 auto;height:min(100%,560px);z-index:-1;background:var(--panel-art,none) center top/cover no-repeat;-webkit-mask-image:linear-gradient(#000 35%,transparent);mask-image:linear-gradient(#000 35%,transparent)}
+.year-panel.year-2026,.year-panel.year-2025,.year-panel.year-2024,.year-panel.year-2023,.year-panel.year-2022{--forest:#F4EFE3;--ink:#EBD7B4;--rule:#ffffff2e;--ground:#00000047}
+.year-2026{--panel-base:#13313e;--panel-art:linear-gradient(#13313e8c,#13313ecc),url('assets/archive-logos/bg-smathhacks-2026.webp')}
+.year-2025{--panel-base:#150f20;--panel-art:linear-gradient(#150f2033,#150f2099),url('assets/archive-logos/bg-smathhacks-2025.webp')}
+.year-2024{--panel-base:#262052;--panel-art:linear-gradient(#26205200,#26205266),url('assets/archive-logos/bg-smathhacks-2024.webp')}
+.year-2023{--panel-base:#010101}
+.year-2022{--panel-base:#0f1d36}
+.year-2021{--panel-base:#fff;--forest:#123b80;--ink:#1d5bc0;--rule:#123b8026;--ground:#eef3fb;border:1px solid var(--rule)}
+.year-head{display:flex;align-items:center;flex-wrap:wrap;gap:14px 30px;margin-bottom:22px}
+.year-panel .year-num{font-size:43px;line-height:1;margin:0}
+.year-logo{display:block;width:auto;height:auto;max-width:min(100%,430px);max-height:150px}
+.year-2025 .year-logo{filter:drop-shadow(0 0 1px #fff) drop-shadow(0 0 6px #ffffffa0)}
+.year-2026 .year-logo{max-height:136px}
+#earlier-events .year-panel{margin-top:26px;padding:32px 32px 30px}
+#earlier-events .year-num{font-size:30px}
+#earlier-events .year-logo{max-height:110px;max-width:min(100%,360px)}
+#earlier-events .year-2022 .year-logo{max-height:56px}
+.year-panel>p{max-width:62ch}
+.year-panel .inline-links{margin-top:10px}
+.year-row{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-top:26px;padding:16px 0;border-bottom:1px solid var(--rule)}
+.year-row h3{font-size:30px}
+.year-row .inline-links{margin:0}
+.carousel{margin-top:24px}
+.carousel-track{position:relative;display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;scroll-behavior:smooth;overscroll-behavior-x:contain;padding-bottom:8px}
+.carousel.is-ready .carousel-track{scrollbar-width:none;padding-bottom:0}
+.carousel.is-ready .carousel-track::-webkit-scrollbar{display:none}
+.carousel-track:focus-visible{outline:3px solid var(--forest);outline-offset:4px;border-radius:6px}
+.carousel-slide{flex:0 0 84%;margin:0;scroll-snap-align:start}
+.carousel-slide:only-child{flex-basis:100%}
+.carousel-slide a{display:block;border-radius:8px;overflow:hidden}
+.carousel-slide img{display:block;width:100%;height:auto;aspect-ratio:3/2;object-fit:contain;background:var(--ground)}
+.campus-carousels .carousel+.carousel{margin-top:30px}
+.carousel-label{font-size:13px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;margin-bottom:10px}
+.carousel-controls{display:flex;align-items:center;gap:14px;margin-top:14px}
+.carousel-controls[hidden]{display:none}
+.carousel-controls button{display:grid;place-items:center;width:44px;height:44px;padding:0;border:1.5px solid currentColor;border-radius:50%;background:transparent;color:inherit;font:600 18px/1 var(--font-body);cursor:pointer;transition:background-color .2s ease,color .2s ease,opacity .2s ease}
+.carousel-controls button:hover:not(:disabled){background:var(--forest);color:var(--panel-base,var(--cream))}
+.carousel-controls button:disabled{opacity:.35;cursor:default}
+.carousel-count{font-size:14px;font-variant-numeric:tabular-nums;min-width:5ch;text-align:center}
+@media(prefers-reduced-motion:reduce){.carousel-track{scroll-behavior:auto}.carousel-controls button{transition:none}}
 .winners{margin-top:30px}
 .winners h3{font-size:20px;margin:24px 0 12px}
 .winner-links{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 24px;margin:0;padding:0;list-style:none}
 .winner-links a{display:inline-block;min-height:44px;font-size:14px;line-height:1.5;padding:7px 0;text-underline-offset:4px}
-.archive-earlier{list-style:none;margin:0;padding:0}
-.archive-earlier li{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:20px 0;border-bottom:1px solid var(--rule)}
-.archive-earlier li:last-child{border-bottom:0}
-.archive-earlier h3{font-size:22px}
-.earlier-year{margin-top:32px}
-.earlier-year+.earlier-year{margin-top:40px}
-.earlier-year+.archive-earlier{margin-top:30px}
-.archive-source{font-size:14px;margin-top:28px}
 .archive-albums{margin-top:26px}
 .archive-albums details{border-top:1px solid var(--rule)}
 .archive-albums details:last-child{border-bottom:1px solid var(--rule)}
@@ -100,9 +124,6 @@
 .archived-prize-details>div+div{margin-top:32px}
 .archived-prize-details h3{margin-bottom:14px}
 .archived-prize-details h4{font-family:var(--font-display);font-size:20px;line-height:1.3;margin:0 0 10px}
-.album-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;padding-bottom:24px}
-.album-grid a{display:block}
-.album-grid img{display:block;width:100%;height:auto;aspect-ratio:4/3;object-fit:contain;background:var(--ground)}
 .support-footer{background:var(--forest);color:var(--cream);padding:38px 28px}
 .support-footer-inner{max-width:1120px;margin:auto;display:flex;align-items:center;justify-content:space-between;gap:28px}
 .support-footer p{font-size:14px}
@@ -146,14 +167,13 @@
   .prize-table th,.prize-table td{padding:15px 10px 15px 0;overflow-wrap:anywhere}
   .prize-table thead th{font-size:12px}
   .award-list{grid-template-columns:1fr;gap:26px}
-  .archive-year-header h2{font-size:37px}
-  .archive-year-header p{font-size:23px}
-  .archive-photos{gap:10px}
-  .winner-links{grid-template-columns:1fr}
-  .archive-earlier li{align-items:flex-start}
-  .archive-earlier .inline-links{margin:0;justify-content:flex-end;gap:0 12px}
-  .program-photos{gap:12px}
-  .album-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
-  .support-footer-inner{display:block}
+        .winner-links{grid-template-columns:1fr}
+  .year-panel{padding:26px 20px 24px}
+  #earlier-events .year-panel{padding:24px 20px 22px}
+  .year-panel .year-num{font-size:37px}
+  .year-logo{max-height:112px}
+  .carousel-slide{flex-basis:90%}
+      .program-photos{gap:12px}
+    .support-footer-inner{display:block}
   .support-footer nav{margin-top:18px;gap:0 20px}
 }

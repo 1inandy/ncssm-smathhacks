@@ -38,21 +38,43 @@ def illustration(character, prop, extra=""):
     return f'''<div class="hero-illustration {extra}" aria-hidden="true"><img class="hero-character" src="assets/hillside/{character}.webp" alt=""><img class="hero-prop" src="assets/hillside/{prop}.webp" alt=""></div>'''
 
 
-def archive_album(year):
+def carousel(key, label, photos, heading=""):
+    """One swipeable strip. Without JavaScript it is still a scroll-snapping row."""
+    total = len(photos)
+    slides = "".join(f'<figure class="carousel-slide" role="group" aria-roledescription="slide" aria-label="{i} of {total}"><a href="{src}" aria-label="View full photo: {alt}"><img src="{src}" alt="{alt}" width="{w}" height="{h}" loading="lazy"></a></figure>'
+                     for i, (src, alt, w, h) in enumerate(photos, 1))
+    return (f'<div class="carousel" id="photos-{key}" role="region" aria-roledescription="carousel" aria-label="{label}">{heading}'
+            f'<div class="carousel-track" tabindex="0">{slides}</div>'
+            f'<div class="carousel-controls" hidden><button type="button" class="carousel-prev" aria-label="Previous photo">←</button>'
+            f'<p class="carousel-count" aria-live="polite">1 / {total}</p><button type="button" class="carousel-next" aria-label="Next photo">→</button></div></div>')
+
+
+def archive_carousels(year, extra=()):
+    """Campus years get a Durham strip with Morganton right under it; single-site years get one strip."""
     records = json.loads((ROOT / "archive-photos.json").read_text())
     groups = {}
-    for photo in records:
-        if photo["year"] == year:
-            groups.setdefault(photo["campus"], []).append(photo)
-    albums = []
-    for campus, photos in groups.items():
-        images = "".join(f'<a href="{p["src"]}" aria-label="View full photo: {p["alt"]}"><img src="{p["src"]}" alt="{p["alt"]}" width="{p["width"]}" height="{p["height"]}" loading="lazy"></a>' for p in photos)
-        label = campus if campus != "Event" else f"{year} event"
-        albums.append(f'<details><summary>{label} · {len(photos)} photos</summary><div class="album-grid">{images}</div></details>')
-    return f'<div class="archive-albums" id="photos-{year}">' + "".join(albums) + '</div>'
+    for p in records:
+        if p["year"] == year:
+            groups.setdefault(p["campus"], []).append((p["src"], p["alt"], p["width"], p["height"]))
+    campuses = [c for c in ("Durham", "Morganton") if c in groups]
+    if not campuses:
+        return carousel(year, f"{year} photos", list(extra) + groups.get("Event", []))
+    return '<div class="campus-carousels">' + "".join(
+        carousel(f"{year}-{c.lower()}", f"{year} {c} photos", groups[c], f'<p class="carousel-label">{c}</p>') for c in campuses) + '</div>'
 
 
-def page(slug, title, description, eyebrow, intro, art, sections, body):
+def year_panel(year, logo, body, theme=None, level=2):
+    """Each year wears its own event site's background, with its logo where the theme name used to sit."""
+    src, width, height, name = logo
+    anchor = f"event-{year}"
+    theme_text = f'<span class="sr-only">: {theme}</span>' if theme else ''
+    return (f'<section class="year-panel year-{year}" id="{anchor}" aria-labelledby="{anchor}-title">'
+            f'<header class="year-head"><h{level} id="{anchor}-title" class="year-num">{year}{theme_text}</h{level}>'
+            f'<img class="year-logo" src="assets/archive-logos/{src}.webp" alt="{name} logo" width="{width}" height="{height}"></header>'
+            f'{body}</section>')
+
+
+def page(slug, title, description, eyebrow, intro, art, sections, body, scripts=""):
     index = "".join(f'<a href="#{anchor}">{label}</a>' for anchor, label in sections)
     html = f'''<!doctype html>
 <html lang="en">
@@ -84,7 +106,7 @@ def page(slug, title, description, eyebrow, intro, art, sections, body):
   </main>
   {footer()}
   <script type="module" src="navigation.js"></script>
-  <script type="module" src="event.js?v=lcd-clock"></script>
+  <script type="module" src="event.js?v=scrapbook-viewer"></script>{scripts}
 </body>
 </html>
 '''
@@ -158,10 +180,6 @@ page("entrepreneurship-in-nc", "Entrepreneurship in NC", "Keep building after SM
       <section id="program-moments" aria-labelledby="program-moments-title"><h2 id="program-moments-title">Ideas out in the world.</h2><p>Presentations, conversations, and celebrations from the program.</p><div class="program-photos">{photos}</div><p class="photo-note">Select a photo to view it in full. Photos carried over from the <a href="https://smathhacks.ncssm.edu/entrepreneurship-in-nc">previous Entrepreneurship in NC page</a>.</p></section>''')
 
 
-def archive_logo(name, alt, width, height, plate, size=""):
-    return f'<figure class="archive-logo{size}" style="--plate:{plate}"><img src="assets/archive-logos/{name}.webp" alt="{alt}" width="{width}" height="{height}" loading="lazy"></figure>'
-
-
 def winner_links(entries):
     return '<ul class="winner-links">' + ''.join(f'<li><a href="https://devpost.com/software/{slug}">{name} ↗</a></li>' for slug, name in entries) + '</ul>'
 
@@ -170,13 +188,23 @@ grand = winner_links([("tide-tracking-and-intelligence-for-dive-expeditions", "T
 runners = winner_links([("soundscape-wnlqdv", "SoundScape"), ("sens-pod-submersible-environmental-networked-system", "SENS Pod: Submersible Environmental Networked System"), ("scuda-scuba-sign-capturing-user-interface-data-analysis", "SCUDA: Scuba-sign Capturing User-interface Data Analysis"), ("ai-carbon-sink-predictor", "AI Carbon Sink Predictor")])
 special = winner_links([("grime-garbage-river-interception-modeling-engine", "Climate Grand Award · GRIME"), ("okeanos", "Ingenuity Grand Award · Okeanos")])
 memory = '''<figure class="hero-memory"><img src="assets/gallery/smathhacks-staircase.webp" alt="SMathHacks participants in blue shirts gathered on a staircase in Morganton." width="1920" height="1280"><figcaption>A whole lot of possibility.</figcaption></figure>'''
+STAIRCASE_ALT = "Participants in blue event shirts gathered on a staircase in Morganton."
+photos_2026 = [("assets/gallery/closing-ceremony-2026.webp", "Participants gathered in an auditorium for the SMathHacks 2026 closing ceremony.", 1920, 1440),
+               ("assets/gallery/smathhacks-staircase.webp", STAIRCASE_ALT, 1920, 1280)]
+event_2026 = year_panel(2026, ("smathhacks-2026", 511, 162, "SMathHacks 2026"), f'''<p>March 14–15, 2026. Thank you to everyone who built, learned, and explored with us.</p><div class="inline-links"><a href="https://smathhacks-2026.devpost.com/">Explore all 2026 projects ↗</a><a href="#prizes-2026">2026 prizes →</a></div>{archive_carousels(2026, photos_2026)}<div class="winners"><h3>Track grand prize winners</h3>{grand}<h3>Track runners-up</h3>{runners}<h3>Special award winners</h3>{special}</div>{ARCHIVED_PRIZES}''', "Under the Sea")
+event_2025 = year_panel(2025, ("smathhacks-2025", 720, 323, "SMathHacks 2025"), f'''<p>Revisit the projects, workshops, and team-building from another year of hacking at Durham and Morganton.</p><div class="inline-links"><a href="https://sites.google.com/ncssm.edu/smathhacks2025">2025 website ↗</a><a href="https://smathhacks-2025.devpost.com/">2025 projects ↗</a></div>{archive_carousels(2025)}''', "Space &amp; Aeronautics")
+event_2024 = year_panel(2024, ("smathhacks-2024", 720, 225, "SMathHacks 2024"), f'''<p>Explore the event website and the projects students brought to life.</p><div class="inline-links"><a href="https://sites.google.com/ncssm.edu/smathhacks-2024">2024 website ↗</a><a href="https://smathhacks-2024.devpost.com/">2024 projects ↗</a></div>{archive_carousels(2024)}''', "Environment")
+event_2023 = year_panel(2023, ("unihacks-2023", 720, 164, "UniHacks 2023"), f'''<div class="inline-links"><a href="https://sites.google.com/ncssm.edu/unihacks-2023">2023 website ↗</a><a href="https://unihacks-2023.devpost.com/">2023 projects ↗</a></div>{archive_carousels(2023)}''', level=3)
+event_2022 = year_panel(2022, ("unihacks-2022", 720, 75, "UniHacks 2022"), f'''<div class="inline-links"><a href="https://unihacks-2022.devpost.com/">2022 projects ↗</a></div>{archive_carousels(2022)}''', "Entrepreneurship", level=3)
+event_2021 = year_panel(2021, ("unihacks-2021", 720, 235, "UniHacks 2021, January 23–24, 2021"), '''<div class="inline-links"><a href="https://unihacks-2021.devpost.com/">2021 projects ↗</a></div>''', level=3)
 page("past-events", "Past Events", "Explore SMathHacks and UniHacks from 2020 through 2026, with project galleries, winning hacks, and event memories.",
      "From the scrapbook", "Different themes. New ideas. The same curiosity. Take a look at the projects and people who’ve made this event what it is.",
      memory, [("event-2026", "2026"), ("event-2025", "2025"), ("event-2024", "2024"), ("earlier-events", "2020–2023")], f'''
-      <section id="event-2026" aria-labelledby="event-2026-title"><div class="archive-year-header"><div class="archive-year-title"><h2 id="event-2026-title">2026</h2><p>Under the Sea</p></div>{archive_logo("smathhacks-2026", "SMathHacks 2026 logo", 511, 162, "#10303d")}</div><p>March 14–15, 2026. Thank you to everyone who built, learned, and explored with us.</p><div class="inline-links"><a href="https://smathhacks-2026.devpost.com/">Explore all 2026 projects ↗</a><a href="#prizes-2026">2026 prizes →</a></div><div class="archive-photos"><figure><a href="assets/gallery/closing-ceremony-2026.webp"><img src="assets/gallery/closing-ceremony-2026.webp" alt="Participants gathered in an auditorium for the SMathHacks 2026 closing ceremony." width="1920" height="1440" loading="lazy"></a><figcaption>Closing ceremony · 2026</figcaption></figure><figure><a href="assets/gallery/smathhacks-staircase.webp"><img src="assets/gallery/smathhacks-staircase.webp" alt="Participants in blue event shirts gathered on a staircase in Morganton." width="1920" height="1280" loading="lazy"></a><figcaption>The Morganton crew</figcaption></figure></div><div class="winners"><h3>Track grand prize winners</h3>{grand}<h3>Track runners-up</h3>{runners}<h3>Special award winners</h3>{special}</div>{ARCHIVED_PRIZES}</section>
-      <section id="event-2025" aria-labelledby="event-2025-title"><div class="archive-year-header"><div class="archive-year-title"><h2 id="event-2025-title">2025</h2><p>Space &amp; Aeronautics</p></div>{archive_logo("smathhacks-2025", "SMathHacks 2025 logo", 720, 323, "#f0ebf7")}</div><p>Revisit the projects, workshops, and team-building from another year of hacking at Durham and Morganton.</p><div class="inline-links"><a href="https://sites.google.com/ncssm.edu/smathhacks2025">2025 website ↗</a><a href="https://smathhacks-2025.devpost.com/">2025 projects ↗</a></div>{archive_album(2025)}</section>
-      <section id="event-2024" aria-labelledby="event-2024-title"><div class="archive-year-header"><div class="archive-year-title"><h2 id="event-2024-title">2024</h2><p>Environment</p></div>{archive_logo("smathhacks-2024", "SMathHacks 2024 logo: Think. Hack. Innovate.", 720, 225, "#2f5238")}</div><p>Explore the event website and the projects students brought to life.</p><div class="inline-links"><a href="https://sites.google.com/ncssm.edu/smathhacks-2024">2024 website ↗</a><a href="https://smathhacks-2024.devpost.com/">2024 projects ↗</a></div>{archive_album(2024)}</section>
-      <section id="earlier-events" aria-labelledby="earlier-events-title"><h2 id="earlier-events-title">The UniHacks years</h2><p class="section-intro">Where the story began. Browse the original project galleries and the 2023 event website.</p><div class="earlier-year"><div class="archive-year-header"><div class="archive-year-title"><h3>2023</h3><p>Think. Hack. Innovate.</p></div>{archive_logo("unihacks-2023", "UniHacks 2023 logo", 720, 164, "#13222c", " is-small")}</div><div class="inline-links"><a href="https://sites.google.com/ncssm.edu/unihacks-2023">2023 website ↗</a><a href="https://unihacks-2023.devpost.com/">2023 projects ↗</a></div>{archive_album(2023)}</div><div class="earlier-year"><div class="archive-year-header"><div class="archive-year-title"><h3>2022</h3><p>Entrepreneurship</p></div>{archive_logo("unihacks-2022", "UniHacks 2022 logo", 720, 75, "#0f1d36", " is-small")}</div><div class="inline-links"><a href="https://unihacks-2022.devpost.com/">2022 projects ↗</a></div>{archive_album(2022)}</div><ul class="archive-earlier"><li><div class="earlier-title"><h3>2021</h3>{archive_logo("unihacks-2021", "UniHacks 2021 logo, January 23–24, 2021", 720, 235, "#ffffff", " is-small")}</div><div class="inline-links"><a href="https://unihacks-2021.devpost.com/">Projects ↗</a></div></li><li><h3>2020</h3><div class="inline-links"><a href="https://unihacks.devpost.com/">Projects ↗</a></div></li></ul><p class="archive-source">Earlier event links come from the <a href="https://smathhacks.ncssm.edu/past-events">original Past Events archive</a>. The 2026 winners are recorded on the <a href="https://smathhacks.ncssm.edu/">2026 event website</a>.</p></section>''')
+      {event_2026}
+      {event_2025}
+      {event_2024}
+      <section id="earlier-events" aria-labelledby="earlier-events-title"><h2 id="earlier-events-title">The UniHacks years</h2><p class="section-intro">Where the story began. Browse the original project galleries and the 2023 event website.</p>{event_2023}{event_2022}{event_2021}<div class="year-row"><h3>2020</h3><div class="inline-links"><a href="https://unihacks.devpost.com/">2020 projects ↗</a></div></div><p class="archive-source">Earlier event links come from the <a href="https://smathhacks.ncssm.edu/past-events">original Past Events archive</a>. The 2026 winners are recorded on the <a href="https://smathhacks.ncssm.edu/">2026 event website</a>.</p></section>''',
+     '\n  <script type="module" src="archive-carousel.js"></script>')
 
 home_path = ROOT / "index.html"
 home = home_path.read_text()
