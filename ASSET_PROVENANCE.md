@@ -1,5 +1,9 @@
 # Asset provenance
 
+## Past event logos — November 3, 2026
+
+`assets/archive-logos/` holds the official 2021–2026 event logos, taken from the original Past Events archive (https://smathhacks.ncssm.edu/past-events) and, for 2026, the 2026 event site header. Exports are trimmed to their alpha bounds, capped at 720 px wide, and encoded as WebP; artwork, lettering, and colors are unchanged. Each logo sits on a solid plate color so white and light marks stay legible on the cream page. Theme names come from each year's Tracks page or Devpost listing (2026 Under the Sea, 2025 Space & Aeronautics, 2024 Environment, 2022 Entrepreneurship); 2023 shows its tagline because no theme was published, and no 2020 logo exists in the archive.
+
 ## Leaf cursors — November 2, 2026
 
 `assets/cursors/leaf.svg` and `leaf-pointer.svg` are original editable vector drawings using the site's green palette and warm brown outline. Their 32 × 32 PNG exports provide cursor-image fallbacks; `leaf-preview.png` is an enlarged preview. The click hotspot is the leaf tip at (3, 3). The brighter variant indicates links and controls. Cursor styling is shared across the homepage and supporting pages and applies only when a mouse or other fine hover pointer is available. No image generation or external artwork was used.

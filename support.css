@@ -63,9 +63,15 @@
 .program-photos a{display:block}
 .program-photos img{display:block;width:100%;height:auto;aspect-ratio:4/3;object-fit:contain;background:var(--ground)}
 .photo-note{margin-top:18px;font-size:13px}
-.archive-year-header{display:flex;align-items:baseline;gap:18px;flex-wrap:wrap;margin-bottom:14px}
+.archive-year-header{display:flex;align-items:center;justify-content:space-between;gap:18px 28px;flex-wrap:wrap;margin-bottom:14px}
+.archive-year-title{display:flex;align-items:baseline;gap:18px;flex-wrap:wrap}
 .archive-year-header h2{font-size:43px;margin:0}
+.archive-year-header h3{font-size:22px;margin:0}
 .archive-year-header p{font-family:var(--font-hand);font-size:25px;color:var(--ink)}
+.archive-logo{display:flex;align-items:center;justify-content:center;width:240px;height:96px;margin:0;padding:14px 18px;background:var(--plate);border:1px solid var(--rule);border-radius:4px;box-sizing:border-box}
+.archive-logo img{display:block;max-width:100%;max-height:100%;width:auto;height:auto}
+.archive-logo.is-small{width:180px;height:72px;padding:10px 14px}
+.earlier-title{display:flex;align-items:center;gap:20px;flex-wrap:wrap}
 .archive-photos{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin:24px 0}
 .archive-photos figure{margin:0}
 .archive-photos img{display:block;width:100%;height:auto;aspect-ratio:4/3;object-fit:contain;background:var(--ground)}
