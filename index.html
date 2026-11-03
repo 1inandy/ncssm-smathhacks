@@ -7,11 +7,12 @@
   <meta name="description" content="SMathHacks 2027: Bits & Bites. 36 Hours. 300+ Hackers. Infinite Creativity.">
   <title>SMathHacks 2027 | Bits & Bites</title>
   <link rel="icon" type="image/svg+xml" href="assets/logo/smathhacks-full-color.svg">
-  <link rel="stylesheet" href="hillside.css">
+  <link rel="stylesheet" href="hillside.css?v=assets-tidy">
   <link rel="stylesheet" href="sky-announcements.css">
   <link rel="stylesheet" href="countdown.css?v=lcd-clock">
   <link rel="stylesheet" href="trail-boards.css">
-  <link rel="stylesheet" href="navigation.css">
+  <link rel="stylesheet" href="photo-viewer.css">
+  <link rel="stylesheet" href="navigation.css?v=assets-tidy">
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
@@ -73,7 +74,7 @@
         </svg>
         <div class="memory-board-frame">
           <h3 id="scrapbook-title">From the scrapbook</h3>
-          <div class="memory-board-photos">
+          <div class="memory-board-photos" data-photo-group="From the scrapbook">
             <a class="memory-print" href="assets/gallery/closing-ceremony-2026.webp" target="_blank" rel="noopener" aria-label="View the full photo of the SMathHacks 2026 closing ceremony (opens in a new tab)">
               <img src="assets/gallery/closing-ceremony-2026.webp" alt="SMathHacks participants gathered in an auditorium beneath the 2026 closing ceremony screen." width="1920" height="1440" loading="lazy">
               <span>Closing ceremony · 2026</span>
@@ -190,20 +191,22 @@
           <h3 id="in-person-title">In person</h3>
           <p class="participation-audience">For NCSSM residential students</p>
           <p>Join at the Durham or Morganton campus. Build with other participants, with free food, speakers, workshops, and time to work on your project.</p>
+          <img class="participation-photo" src="assets/gallery/in-person-hardware.webp" alt="Two participants in SMathHacks shirts wire up a microcontroller with an LED at a lab bench, surrounded by laptops and bins of components." width="1200" height="800" loading="lazy">
         </section>
         <section aria-labelledby="virtual-title">
           <p class="eyebrow">From home</p>
           <h3 id="virtual-title">Virtual</h3>
           <p class="participation-audience">For other NC high school students</p>
           <p>Build from home. Opening and closing ceremonies, talks, and workshops will be streamed through Zoom.</p>
+          <img class="participation-photo" src="assets/gallery/virtual-workshop.webp" alt="A presenter leads a workshop on software engineering jobs while campuses and remote participants join through Zoom on the screen behind her." width="1200" height="800" loading="lazy">
         </section>
       </div>
       <dl class="facts">
         <div><dt>Date</dt><dd data-fact="dates">March 13–14, 2027</dd></div>
         <div><dt>Venue</dt><dd data-fact="venue">Online + NCSSM campuses</dd></div>
         <div><dt>Eligibility</dt><dd data-fact="eligibility">North Carolina high school students</dd></div>
-        <div><dt>Cost</dt><dd data-fact="cost">To be announced</dd></div>
-        <div><dt>Applications</dt><dd data-application-status>Registration not open yet</dd></div>
+        <div><dt>Cost</dt><dd data-fact="cost">FREE</dd></div>
+        <div><dt>Registration</dt><dd data-registration-status>Not open yet</dd></div>
         <div class="fact-stickers" aria-hidden="true">
           <dt class="sr-only">Bits &amp; Bites</dt>
           <dd class="sticker-cluster sticker-pair">
@@ -251,7 +254,7 @@
       <div class="sponsor-board-content">
         <p class="eyebrow">Made possible by</p>
         <h2 id="sponsors-title">Our sponsors</h2>
-        <p id="sponsor-status">Sponsor announcements coming soon.</p>
+        <p id="sponsor-status">Sponsor announcements coming soon. Interested in sponsoring us? Email <a href="mailto:giving@ncssm.edu">giving@ncssm.edu</a></p>
         <div class="sponsor-placeholders" data-sponsor-placeholders aria-label="Sponsorship levels with placeholder logos">
           <section class="sponsor-tier" data-sponsor-level="chef" aria-labelledby="placeholder-chef-tier">
             <h3 id="placeholder-chef-tier">Chef’s Special</h3>
@@ -320,7 +323,7 @@
     <div class="gallery-dialog-controls"><button type="button" data-gallery-photo="previous" aria-label="Previous photo">←</button><span data-gallery-photo-label></span><button type="button" data-gallery-photo="next" aria-label="Next photo">→</button></div>
   </dialog>
 
-  <script type="module" src="event.js?v=scrapbook-viewer"></script>
+  <script type="module" src="event.js?v=photo-groups"></script>
   <script type="module" src="hillside.js?v=continuous-hill-trail"></script>
   <script type="module" src="faq.js"></script>
   <script type="module" src="navigation.js"></script>

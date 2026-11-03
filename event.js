@@ -1,7 +1,7 @@
 // Event facts and registration state from event-config.json. Independent of the illustration:
 // if the hillside fails, the page still shows confirmed details and the right call to action.
 import { configureCountdown } from './countdown.js?v=lcd-clock';
-import { configureGallery, configureScrapbook } from './gallery.js';
+import { configureGallery, configurePhotoGroups } from './gallery.js?v=photo-groups';
 const $ = selector => document.querySelector(selector);
 const $$ = selector => [...document.querySelectorAll(selector)];
 
@@ -144,8 +144,11 @@ async function applyConfig() {
   const endpoint = destination(config.updatesEndpoint);
   if (registration || updates) {
     for (const host of $$('[data-register]')) host.replaceChildren(actionLink(registration ? 'Interest form' : 'Get updates', registration || updates));
-    if (registration && $('[data-application-status]')) {
-      $('[data-application-status]').textContent = 'Registration not open yet · interest form open';
+    const status = $('[data-registration-status]');
+    if (registration && status) {
+      const form = document.createElement('a');
+      form.href = registration; form.textContent = 'Interest form ↗';
+      status.replaceChildren('Not open yet · ', form);
     }
   } else if (endpoint) {
     const updatesAnchor = $('#updates') ? '#updates' : 'index.html#updates';
@@ -174,5 +177,5 @@ async function applyConfig() {
   }
 }
 
-configureScrapbook();
+configurePhotoGroups();
 applyConfig().catch(error => console.error(error.message));

@@ -21,6 +21,10 @@ __pycache__/
 *.log
 
 # Design sources and working files live outside the repo
+# High-res masters feed work/production/prepare_*.mjs; only the web-sized exports ship.
+*-master.png
+# Screenshots from visual checks
+work/verification/
 *.ai
 *.psd
 *.docx

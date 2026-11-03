@@ -25,6 +25,8 @@ Then open http://localhost:8123.
 | `resources.html`, `entrepreneurship-in-nc.html`, `past-events.html` | Supporting pages for learning links, the Colopy program, and the 2020–2026 archive. |
 | `navigation.css`, `navigation.js` | Shared Explore dropdown and mobile navigation. |
 | `support.css` | Reading layouts for the supporting pages, using the existing palette and artwork. |
+| `gallery.js`, `photo-viewer.css` | The shared photo viewer. It powers the homepage gallery board, and any container marked `data-photo-group="Title"` (the scrapbook corkboard, the program photos, the Past Events carousels) opens its image links in it. |
+| `archive-carousel.js` | Prev/next buttons, arrow keys and the counter for the Past Events photo carousels. They still scroll and snap without it. |
 | `assets/` | Self-hosted fonts (with OFL licenses), logo, and web-sized artwork. |
 
 ## Updating event details
@@ -41,9 +43,11 @@ Edit `event-config.json`. Any field left `null` shows "To be announced".
 
 ## Supporting-page copy
 
-The site remains buildless: serve the checked-in HTML directly. To revise supporting-page copy or the shared navigation, edit `work/production/build_support_pages.py` and run `python3 work/production/build_support_pages.py` from the repository root. It renders the three pages and synchronizes the homepage header; it leaves all other homepage content intact. Page styles and behavior live in the CSS/JS files above.
+The site remains buildless: serve the checked-in HTML directly. To revise supporting-page copy or the shared navigation, edit `work/production/build_support_pages.py` and run `python3 work/production/build_support_pages.py` from the repository root. It renders the three pages and synchronizes the homepage header and photo viewer dialog; it leaves all other homepage content intact. Page styles and behavior live in the CSS/JS files above.
 
-Each of the four homepage tracks has its own **Grand Prize** and **Runner-up Prize** placeholders. Prize items and judging details remain unconfirmed; there is no overall award section. The 2026 prize table and special awards live in an expandable section of Past Events; there is no separate prize page. Learning documents and hardware inventory carried over from the old site are labeled as previous-event references. The Past Events page includes all original website and Devpost links, plus 2026 winners; 90 original photos from 2022–2025 are stored locally and grouped into expandable albums. `archive-photos.json` records their years, campus labels, source URLs, and dimensions. The optional importer `work/production/import_archive_photos.py` uses Pillow only for importing and optimizing photos; serving or regenerating the HTML requires no packages.
+Stylesheets and scripts are linked with a `?v=` tag (e.g. `hillside.css?v=sponsor-email`) so returning visitors don't keep a cached copy. When you change one of those files, change its tag in `index.html` and in `build_support_pages.py`, then rebuild.
+
+Each of the four homepage tracks has its own **Grand Prize** and **Runner-up Prize** placeholders. Prize items and judging details remain unconfirmed; there is no overall award section. The 2026 prize table and special awards live in an expandable section of Past Events; there is no separate prize page. Learning documents and hardware inventory carried over from the old site are labeled as previous-event references. The Past Events page includes all original website and Devpost links, plus 2026 winners; Each year is a panel in that year's original logo and site background (`assets/past-events/logos/` and `backgrounds/`), with its photos in a swipeable carousel; 2024 and 2025 have separate Durham and Morganton carousels. The 90 original photos from 2022–2025 are stored locally. `archive-photos.json` records their years, campus labels, source URLs, and dimensions. The optional importer `work/production/import_archive_photos.py` uses Pillow only for importing and optimizing photos; serving or regenerating the HTML requires no packages.
 
 ## Deploy (GitHub Pages)
 

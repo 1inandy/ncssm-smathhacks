@@ -76,7 +76,7 @@ if __name__ == "__main__":
             campus = section["captions"][index] if index < len(section["captions"]) else "Event"
             year = section["year"]
             records.append({"year": year, "campus": campus,
-                            "src": f"assets/past-events/{year}-{index + 1:02d}.webp",
+                            "src": f"assets/past-events/photos/{year}-{index + 1:02d}.webp",
                             "alt": f"{campus} photo {index + 1} from the {year} hackathon.",
                             "source": url})
     with ThreadPoolExecutor(max_workers=6) as pool:

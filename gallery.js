@@ -36,21 +36,25 @@ function photoViewer() {
   return openViewer;
 }
 
-// The corkboard prints stay plain links without JavaScript; with it they open in the gallery viewer.
-export function configureScrapbook() {
-  const prints = [...document.querySelectorAll('#scrapbook .memory-print')];
-  const open = prints.length && photoViewer();
+// Photo links in any [data-photo-group] (the corkboard, the program photos) stay plain links without
+// JavaScript; with it they open in the viewer, titled by the group and paged within it.
+export function configurePhotoGroups() {
+  const groups = document.querySelectorAll('[data-photo-group]');
+  const open = groups.length && photoViewer();
   if (!open) return;
-  const photos = prints.map(print => ({ src: print.getAttribute('href'), alt: print.querySelector('img').alt, caption: print.querySelector('span')?.textContent.trim() }));
-  for (const [index, print] of prints.entries()) {
-    print.removeAttribute('target');
-    print.setAttribute('aria-haspopup', 'dialog');
-    print.setAttribute('aria-label', `Open photo ${index + 1}: ${photos[index].caption || photos[index].alt}`);
-    print.addEventListener('click', event => {
-      if (event.metaKey || event.ctrlKey || event.shiftKey || event.button !== 0) return;
-      event.preventDefault();
-      open(photos, index, print, 'From the scrapbook');
-    });
+  for (const group of groups) {
+    const links = [...group.querySelectorAll('a[href]')].filter(link => link.querySelector('img'));
+    const photos = links.map(link => ({ src: link.getAttribute('href'), alt: link.querySelector('img').alt, caption: link.querySelector('span')?.textContent.trim() }));
+    for (const [index, link] of links.entries()) {
+      link.removeAttribute('target');
+      link.setAttribute('aria-haspopup', 'dialog');
+      link.setAttribute('aria-label', `Open photo ${index + 1}: ${photos[index].caption || photos[index].alt}`);
+      link.addEventListener('click', event => {
+        if (event.metaKey || event.ctrlKey || event.shiftKey || event.button !== 0) return;
+        event.preventDefault();
+        open(photos, index, link, group.dataset.photoGroup);
+      });
+    }
   }
 }
 

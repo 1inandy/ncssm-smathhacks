@@ -38,12 +38,12 @@ def illustration(character, prop, extra=""):
     return f'''<div class="hero-illustration {extra}" aria-hidden="true"><img class="hero-character" src="assets/hillside/{character}.webp" alt=""><img class="hero-prop" src="assets/hillside/{prop}.webp" alt=""></div>'''
 
 
-def carousel(key, label, photos, heading=""):
+def carousel(key, label, title, photos, heading=""):
     """One swipeable strip. Without JavaScript it is still a scroll-snapping row."""
     total = len(photos)
     slides = "".join(f'<figure class="carousel-slide" role="group" aria-roledescription="slide" aria-label="{i} of {total}"><a href="{src}" aria-label="View full photo: {alt}"><img src="{src}" alt="{alt}" width="{w}" height="{h}" loading="lazy"></a></figure>'
                      for i, (src, alt, w, h) in enumerate(photos, 1))
-    return (f'<div class="carousel" id="photos-{key}" role="region" aria-roledescription="carousel" aria-label="{label}">{heading}'
+    return (f'<div class="carousel" id="photos-{key}" role="region" aria-roledescription="carousel" aria-label="{label}" data-photo-group="{title}">{heading}'
             f'<div class="carousel-track" tabindex="0">{slides}</div>'
             f'<div class="carousel-controls" hidden><button type="button" class="carousel-prev" aria-label="Previous photo">←</button>'
             f'<p class="carousel-count" aria-live="polite">1 / {total}</p><button type="button" class="carousel-next" aria-label="Next photo">→</button></div></div>')
@@ -58,9 +58,9 @@ def archive_carousels(year, extra=()):
             groups.setdefault(p["campus"], []).append((p["src"], p["alt"], p["width"], p["height"]))
     campuses = [c for c in ("Durham", "Morganton") if c in groups]
     if not campuses:
-        return carousel(year, f"{year} photos", list(extra) + groups.get("Event", []))
+        return carousel(year, f"{year} photos", str(year), list(extra) + groups.get("Event", []))
     return '<div class="campus-carousels">' + "".join(
-        carousel(f"{year}-{c.lower()}", f"{year} {c} photos", groups[c], f'<p class="carousel-label">{c}</p>') for c in campuses) + '</div>'
+        carousel(f"{year}-{c.lower()}", f"{year} {c} photos", f"{year} · {c}", groups[c], f'<p class="carousel-label">{c}</p>') for c in campuses) + '</div>'
 
 
 def year_panel(year, logo, body, theme=None, level=2):
@@ -70,11 +70,20 @@ def year_panel(year, logo, body, theme=None, level=2):
     theme_text = f'<span class="sr-only">: {theme}</span>' if theme else ''
     return (f'<section class="year-panel year-{year}" id="{anchor}" aria-labelledby="{anchor}-title">'
             f'<header class="year-head"><h{level} id="{anchor}-title" class="year-num">{year}{theme_text}</h{level}>'
-            f'<img class="year-logo" src="assets/archive-logos/{src}.webp" alt="{name} logo" width="{width}" height="{height}"></header>'
+            f'<img class="year-logo" src="assets/past-events/logos/{src}.webp" alt="{name} logo" width="{width}" height="{height}"></header>'
             f'{body}</section>')
 
 
-def page(slug, title, description, eyebrow, intro, art, sections, body, scripts=""):
+PHOTO_VIEWER = '''<dialog class="gallery-dialog" data-gallery-dialog aria-labelledby="gallery-dialog-title">
+    <div class="gallery-dialog-header"><h2 id="gallery-dialog-title">From the gallery</h2><button type="button" data-gallery-close aria-label="Close photo">✕</button></div>
+    <img class="gallery-dialog-image" data-gallery-large-image alt="">
+    <p data-gallery-error hidden>This photo couldn’t load.</p>
+    <p class="gallery-dialog-caption" data-gallery-large-caption></p>
+    <div class="gallery-dialog-controls"><button type="button" data-gallery-photo="previous" aria-label="Previous photo">←</button><span data-gallery-photo-label></span><button type="button" data-gallery-photo="next" aria-label="Next photo">→</button></div>
+  </dialog>'''
+
+
+def page(slug, title, description, eyebrow, intro, art, sections, body, scripts="", viewer=False):
     index = "".join(f'<a href="#{anchor}">{label}</a>' for anchor, label in sections)
     html = f'''<!doctype html>
 <html lang="en">
@@ -85,9 +94,10 @@ def page(slug, title, description, eyebrow, intro, art, sections, body, scripts=
   <meta name="description" content="{description}">
   <title>{title} | SMathHacks 2027</title>
   <link rel="icon" type="image/svg+xml" href="assets/logo/smathhacks-full-color.svg">
-  <link rel="stylesheet" href="hillside.css">
-  <link rel="stylesheet" href="navigation.css">
-  <link rel="stylesheet" href="support.css">
+  <link rel="stylesheet" href="hillside.css?v=assets-tidy">
+  <link rel="stylesheet" href="navigation.css?v=assets-tidy">
+  <link rel="stylesheet" href="support.css?v=assets-tidy">
+  {'<link rel="stylesheet" href="photo-viewer.css">' if viewer else ''}
 </head>
 <body class="support-page">
   <a class="skip-link" href="#main">Skip to content</a>
@@ -105,8 +115,9 @@ def page(slug, title, description, eyebrow, intro, art, sections, body, scripts=
     </div>
   </main>
   {footer()}
+  {PHOTO_VIEWER if viewer else ''}
   <script type="module" src="navigation.js"></script>
-  <script type="module" src="event.js?v=scrapbook-viewer"></script>{scripts}
+  <script type="module" src="event.js?v=photo-groups"></script>{scripts}
 </body>
 </html>
 '''
@@ -129,7 +140,6 @@ ARCHIVED_PRIZES = '''<div class="archive-albums"><details id="prizes-2026"><summ
         <h3 id="special-awards-title">2026 special awards</h3>
         <div class="award-list"><div><h4>Ingenuity Award</h4><strong>Up to 4 NVIDIA SHIELDs</strong><p>Recognized an innovative, feasible response to an ocean-related need, with evidence of its potential impact.</p></div><div><h4>Best Climate Aware Solution</h4><strong>Up to 4 NVIDIA SHIELDs</strong><p>Recognized a project addressing an environmental need with a detailed solution and potential climate impact.</p></div></div>
         <p class="quiet-note">These 2026 special awards could be won alongside a track prize.</p>
-        <p class="archive-source">Archived from the <a href="https://smathhacks.ncssm.edu/tracks-prizes">2026 Tracks &amp; Prizes page</a>.</p>
       </div></div></details></div>'''
 
 
@@ -176,8 +186,8 @@ page("entrepreneurship-in-nc", "Entrepreneurship in NC", "Keep building after SM
      illustration("bit-master", "leaf-solar-charger"),
      [("colopy-program", "The Colopy program"), ("next-steps", "Funding &amp; mentorship"), ("program-moments", "Program moments")], f'''
       <section id="colopy-program" aria-labelledby="colopy-title"><h2 id="colopy-title">The Colopy Entrepreneurship Program at NCSSM</h2><p>Established in 2024 through a gift from the Colopy family, the program helps students explore entrepreneurship through hands-on learning, mentorship, and support for their ideas.</p><p>It brings business principles together with creative problem-solving, helping students develop ventures that respond to real needs in their communities.</p><div class="inline-links"><a href="https://entrepreneurship.ncssm.edu/">Explore the Colopy program ↗</a></div><figure class="program-photo"><img src="assets/entrepreneurship/program-02.webp" alt="{photo_alts[2]}" width="1280" height="884" loading="lazy"><figcaption>From the Colopy program’s student community.</figcaption></figure></section>
-      <section id="next-steps" aria-labelledby="next-steps-title"><h2 id="next-steps-title">Take the next step.</h2><div class="program-opportunities"><div><h3>Find funding for your idea</h3><p>The program’s Grants &amp; Resources page explains Accelerator Grants and shares a funding toolkit. Check the program’s current process and eligibility before applying.</p><a class="trail-link" href="https://entrepreneurship.ncssm.edu/grants-resources">Explore grants &amp; resources ↗</a></div><div><h3>Learn with people who’ve done it</h3><p>Explore educational programming and mentorship to develop your idea beyond its first prototype.</p><a class="trail-link" href="https://entrepreneurship.ncssm.edu/">Meet the program ↗</a></div><div><h3>Talk through your next move</h3><p>For questions about the program, mentorship, or funding, contact <a href="mailto:entrepreneurship@ncssm.edu">entrepreneurship@ncssm.edu</a>.</p></div></div></section>
-      <section id="program-moments" aria-labelledby="program-moments-title"><h2 id="program-moments-title">Ideas out in the world.</h2><p>Presentations, conversations, and celebrations from the program.</p><div class="program-photos">{photos}</div><p class="photo-note">Select a photo to view it in full. Photos carried over from the <a href="https://smathhacks.ncssm.edu/entrepreneurship-in-nc">previous Entrepreneurship in NC page</a>.</p></section>''')
+      <section id="next-steps" aria-labelledby="next-steps-title"><h2 id="next-steps-title">Take the next step.</h2><div class="program-opportunities"><div><h3>Find funding for your idea</h3><p>The program’s Grants &amp; Resources page explains Accelerator Grants and shares a funding toolkit. Check the program’s current process and eligibility before applying.</p><a class="trail-link" href="https://entrepreneurship.ncssm.edu/grants-resources">Explore grants &amp; resources ↗</a></div><div><h3>Learn with people who’ve done it</h3><p>Explore educational programming and mentorship to develop your idea beyond its first prototype.</p></div><div><h3>Talk through your next move</h3><p>For questions about the program, mentorship, or funding, contact <a href="mailto:entrepreneurship@ncssm.edu">entrepreneurship@ncssm.edu</a>.</p></div></div></section>
+      <section id="program-moments" aria-labelledby="program-moments-title"><h2 id="program-moments-title">Ideas out in the world.</h2><p>Presentations, conversations, and celebrations from the program.</p><div class="program-photos" data-photo-group="From the program">{photos}</div></section>''', viewer=True)
 
 
 def winner_links(entries):
@@ -191,7 +201,7 @@ memory = '''<figure class="hero-memory"><img src="assets/gallery/smathhacks-stai
 STAIRCASE_ALT = "Participants in blue event shirts gathered on a staircase in Morganton."
 photos_2026 = [("assets/gallery/closing-ceremony-2026.webp", "Participants gathered in an auditorium for the SMathHacks 2026 closing ceremony.", 1920, 1440),
                ("assets/gallery/smathhacks-staircase.webp", STAIRCASE_ALT, 1920, 1280)]
-event_2026 = year_panel(2026, ("smathhacks-2026", 511, 162, "SMathHacks 2026"), f'''<p>March 14–15, 2026. Thank you to everyone who built, learned, and explored with us.</p><div class="inline-links"><a href="https://smathhacks-2026.devpost.com/">Explore all 2026 projects ↗</a><a href="#prizes-2026">2026 prizes →</a></div>{archive_carousels(2026, photos_2026)}<div class="winners"><h3>Track grand prize winners</h3>{grand}<h3>Track runners-up</h3>{runners}<h3>Special award winners</h3>{special}</div>{ARCHIVED_PRIZES}''', "Under the Sea")
+event_2026 = year_panel(2026, ("smathhacks-2026", 511, 162, "SMathHacks 2026"), f'''<p>March 14–15, 2026. Thank you to everyone who built, learned, and explored with us.</p><div class="inline-links"><a href="https://sites.google.com/ncssm.edu/smathhacks2026/home">2026 website ↗</a><a href="https://smathhacks-2026.devpost.com/">Explore all 2026 projects ↗</a><a href="#prizes-2026">2026 prizes →</a></div>{archive_carousels(2026, photos_2026)}<div class="winners"><h3>Track grand prize winners</h3>{grand}<h3>Track runners-up</h3>{runners}<h3>Special award winners</h3>{special}</div>{ARCHIVED_PRIZES}''', "Under the Sea")
 event_2025 = year_panel(2025, ("smathhacks-2025", 720, 323, "SMathHacks 2025"), f'''<p>Revisit the projects, workshops, and team-building from another year of hacking at Durham and Morganton.</p><div class="inline-links"><a href="https://sites.google.com/ncssm.edu/smathhacks2025">2025 website ↗</a><a href="https://smathhacks-2025.devpost.com/">2025 projects ↗</a></div>{archive_carousels(2025)}''', "Space &amp; Aeronautics")
 event_2024 = year_panel(2024, ("smathhacks-2024", 720, 225, "SMathHacks 2024"), f'''<p>Explore the event website and the projects students brought to life.</p><div class="inline-links"><a href="https://sites.google.com/ncssm.edu/smathhacks-2024">2024 website ↗</a><a href="https://smathhacks-2024.devpost.com/">2024 projects ↗</a></div>{archive_carousels(2024)}''', "Environment")
 event_2023 = year_panel(2023, ("unihacks-2023", 720, 164, "UniHacks 2023"), f'''<div class="inline-links"><a href="https://sites.google.com/ncssm.edu/unihacks-2023">2023 website ↗</a><a href="https://unihacks-2023.devpost.com/">2023 projects ↗</a></div>{archive_carousels(2023)}''', level=3)
@@ -203,11 +213,12 @@ page("past-events", "Past Events", "Explore SMathHacks and UniHacks from 2020 th
       {event_2026}
       {event_2025}
       {event_2024}
-      <section id="earlier-events" aria-labelledby="earlier-events-title"><h2 id="earlier-events-title">The UniHacks years</h2><p class="section-intro">Where the story began. Browse the original project galleries and the 2023 event website.</p>{event_2023}{event_2022}{event_2021}<div class="year-row"><h3>2020</h3><div class="inline-links"><a href="https://unihacks.devpost.com/">2020 projects ↗</a></div></div><p class="archive-source">Earlier event links come from the <a href="https://smathhacks.ncssm.edu/past-events">original Past Events archive</a>. The 2026 winners are recorded on the <a href="https://smathhacks.ncssm.edu/">2026 event website</a>.</p></section>''',
-     '\n  <script type="module" src="archive-carousel.js"></script>')
+      <section id="earlier-events" aria-labelledby="earlier-events-title"><h2 id="earlier-events-title">The UniHacks years</h2><p class="section-intro">Where the story began. Browse the original project galleries and the 2023 event website.</p>{event_2023}{event_2022}{event_2021}<div class="year-row"><h3>2020</h3><div class="inline-links"><a href="https://unihacks.devpost.com/">2020 projects ↗</a></div></div></section>''',
+     '\n  <script type="module" src="archive-carousel.js"></script>', viewer=True)
 
 home_path = ROOT / "index.html"
 home = home_path.read_text()
 home = re.sub(r'<header class="site-header">.*?</header>', header("home"), home, count=1, flags=re.S)
+home = re.sub(r'<dialog class="gallery-dialog".*?</dialog>', PHOTO_VIEWER, home, count=1, flags=re.S)
 home_path.write_text(home)
 print("Rendered three supporting pages and synchronized the homepage header.")
