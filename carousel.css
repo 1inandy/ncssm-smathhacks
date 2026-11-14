@@ -1,0 +1,19 @@
+/* Photo carousels shared by Past Events and the How to join cards: one framed photo at a time,
+   mixed 3:2 and 16:9 shots cropped to one shape. Native scroll-snap does the work;
+   archive-carousel.js adds the buttons, keys, and counter. */
+.carousel{margin-top:24px}
+.carousel-track{position:relative;display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;scroll-behavior:smooth;overscroll-behavior-x:contain;padding-bottom:6px}
+.carousel.is-ready .carousel-track{scrollbar-width:none}
+.carousel.is-ready .carousel-track::-webkit-scrollbar{display:none}
+.carousel-track:focus-visible{outline:3px solid var(--forest);outline-offset:4px;border-radius:6px}
+.carousel-slide{flex:0 0 100%;margin:0;scroll-snap-align:start}
+.carousel-slide a{display:block;overflow:hidden;border:2px solid var(--ink);border-radius:10px 7px 12px 8px;box-shadow:3px 4px 0 #65271326}
+.carousel-slide img{display:block;width:100%;height:auto;aspect-ratio:3/2;object-fit:cover;background:var(--ground)}
+.carousel-label{font-size:13px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;margin-bottom:10px}
+.carousel-controls{display:flex;align-items:center;justify-content:center;gap:14px;margin-top:10px}
+.carousel-controls[hidden]{display:none}
+.carousel-controls button{display:grid;place-items:center;width:38px;height:38px;padding:0;border:1.5px solid currentColor;border-radius:50%;background:transparent;color:inherit;font:600 16px/1 var(--font-body);cursor:pointer;transition:background-color .2s ease,color .2s ease,opacity .2s ease}
+.carousel-controls button:hover:not(:disabled){background:var(--forest);color:var(--panel-base,var(--cream))}
+.carousel-controls button:disabled{opacity:.35;cursor:default}
+.carousel-count{font-size:14px;font-variant-numeric:tabular-nums;min-width:5ch;text-align:center}
+@media(prefers-reduced-motion:reduce){.carousel-track{scroll-behavior:auto}.carousel-controls button{transition:none}}
