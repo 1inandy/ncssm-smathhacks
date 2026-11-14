@@ -2,7 +2,7 @@
 // Two compositions of the same world: `wide` (desktop, 1440 units across) and `tall` (phone, 600 across).
 import CRESTS from './crests.js';
 import { layoutSkyAnnouncements } from './sky-announcements.js';
-import { placeTrailBoard } from './trail-boards.js';
+import { placeTrailBoard } from './trail-boards.js?v=theme-note';
 
 const A = 'assets/mvp/', P = A + 'props/', E = A + 'environment/', H_ = 'assets/hillside/';
 // name: [src, intrinsic width, intrinsic height]
@@ -12,11 +12,11 @@ const ART = {
   watts: [H_ + 'watts.webp', 640, 394], barn: [H_ + 'morganton-barn.webp', 700, 345], sphere: [H_ + 'sphere-monument.webp', 420, 394], tetra: [H_ + 'tetragranny.webp', 420, 411],
   gate: [H_ + 'fruit-circuit-gate.webp', 420, 345], pinwheel: [H_ + 'pixel-pinwheel.webp', 388, 420], pump: [H_ + 'drip-irrigation-pump.webp', 420, 373],
   crate: [H_ + 'harvest-crate.webp', 420, 238], solar: [H_ + 'leaf-solar-charger.webp', 420, 407], drawers: [H_ + 'component-drawers.webp', 420, 371],
-  spool: [H_ + 'vine-cable-spool.webp', 420, 249], breadboard: [H_ + 'toast-breadboard.webp', 420, 331], battery: [H_ + 'bubble-tea-battery.webp', 405, 420],
-  compost: [H_ + 'compost-monitor.webp', 420, 351], controller: [H_ + 'cookie-controller.webp', 420, 282], rover: [H_ + 'snack-delivery-rover.webp', 420, 400],
+  breadboard: [H_ + 'toast-breadboard.webp', 420, 331], battery: [H_ + 'bubble-tea-battery.webp', 405, 420],
+  compost: [H_ + 'compost-monitor.webp', 420, 351], controller: [H_ + 'cookie-controller.webp', 420, 282],
   printer: [H_ + 'recipe-card-printer.webp', 420, 361],
   bit: [H_ + 'bit-master.webp', 480, 568], amp: [H_ + 'amp-master.webp', 451, 600], bite: [H_ + 'bite-master.webp', 480, 540],
-  bench: [P + 'tables-v2/amp-bench.webp', 510, 270], desk: [P + 'tables-v2/bite-desk.webp', 430, 230], notice: [P + 'notice-frame.svg', 1180, 850], countdown: [P + 'countdown-clock/clock.webp', 800, 364],
+  bench: [P + 'tables-v2/amp-bench.webp', 510, 270], desk: [P + 'tables-v2/bite-desk.webp', 430, 230], notice: [P + 'notice-frame.svg', 1180, 850],
   stem: [E + 'left-stem.svg', 280, 720], leafA: [E + 'left-leaf-a.svg', 240, 320], leafB: [E + 'right-leaf-a.svg', 240, 320],
 };
 // The end billboard is assembled from separate painted pieces, not the flat notice icon.
@@ -61,12 +61,12 @@ const LAYOUTS = {
       { id: 'ridge', strip: 'far-ridge-right', crest: 650, span: 1.2, depth: .22, items: [
         { a: 'tower', x: 770, w: 104, sink: 16 }, { a: 'watts', x: 1100, w: 500, sink: 60 } ] },
       { id: 'meadow', strip: 'middle-hill-left', crest: 770, span: 1.1, flip: true, depth: .09, items: [
-        { a: 'pinwheel', x: 205, w: 84, sink: 18, cls: 'sway slow' } ] },
+        { a: 'pinwheel', x: 1390, w: 84, sink: 18, cls: 'sway slow' } ] },
       { id: 'gate', strip: 'near-bank', crest: 868, pathW: 30, via: [[884, 888], [876, 960]],
         clearing: { copy: 'about', x: 140, y: 1040, w: 1160, h: 0, gap: 140, in: .9, out: .5 }, items: [
         { a: 'gate', x: 880, w: 210, sink: 30 } ] },
       { id: 'themeStop', strip: 'middle-hill-left', crest: 1080, span: 1.2, pathW: 42,
-        trail: { kind: 'theme', x: 330, w: 500, ground: 1250, gap: 80 }, items: [] },
+        trail: { kind: 'theme', x: 370, w: 600, ground: 1250, gap: -120 }, items: [] },
       { id: 'sphere', strip: 'middle-hill-right', crest: 1075, span: 1.15, pathW: 46, via: [[592, 1135], [590, 1200], [650, 1265]], items: [
         { a: 'sphere', x: 1215, w: 250, sink: 62 } ] },
       { id: 'garden', strip: 'near-bank', crest: 1250, span: 1.25, flip: true, pathW: 70, via: [[720, 1310]],
@@ -81,7 +81,7 @@ const LAYOUTS = {
       { id: 'workshop', strip: 'near-bank', crest: 2150, span: 1.2, pathW: 92, via: [[1000, 2250], [975, 2390]],
         clearing: { copy: 'amp', x: 420, y: 2490, w: 600, h: 322, in: .86, out: .2 }, items: [
         { a: 'bed', kind: 'trodden', x: 520, ground: 2370, w: 820, h: 100 },
-        { a: 'spool', x: 210, w: 135, ground: 2335 }, { a: 'bench', x: 480, w: 340, ground: 2370, id: 'bench' },
+        { a: 'bench', x: 480, w: 340, ground: 2370, id: 'bench' },
         { on: 'bench', a: 'drawers', dx: -95, w: 100 }, { on: 'bench', a: 'breadboard', dx: 50, w: 115, sink: 5, id: 'breadboard' },
         { a: 'amp', x: 770, w: 210, ground: 2410 },
         { a: 'plant', x: 1300, top: 2470, h: 420, flip: true } ] },
@@ -89,12 +89,11 @@ const LAYOUTS = {
       { id: 'lane', strip: 'middle-hill-right', crest: 3030, span: 1.2, pathW: 100, via: [[540, 3080], [480, 3190]], items: [
         { a: 'tetra', x: 190, w: 300, sink: 78 } ] },
       { id: 'play', strip: 'near-bank', crest: 3180, span: 1.25, flip: true, pathW: 110,
-        clearing: { copy: 'bite', x: 140, y: 3300, w: 520, h: 295, in: .6, out: .7 },
-        lane: { from: [700, 3600], to: [1380, 3600], w: 62 }, items: [
+        clearing: { copy: 'bite', x: 140, y: 3300, w: 520, h: 295, in: .6, out: .7 }, items: [
         { a: 'bed', kind: 'trodden', x: 1140, ground: 3480, w: 560, h: 90 },
         { a: 'desk', x: 1060, w: 320, ground: 3470, id: 'desk' },
         { on: 'desk', a: 'controller', dx: -80, w: 105 }, { on: 'desk', a: 'printer', dx: 70, w: 92 },
-        { a: 'bite', x: 1265, w: 195, ground: 3505 }, { a: 'rover', x: 820, w: 120, ground: 3622, id: 'rover', drive: 420 } ] },
+        { a: 'bite', x: 1265, w: 195, ground: 3505 } ] },
 
       { id: 'fieldBack', strip: 'middle-hill-left', crest: 3900, span: 1.2, pathW: 114, via: [[600, 3950], [760, 4060]], items: [
         { a: 'pinwheel', x: 1240, w: 80, sink: 22, cls: 'sway slow' } ] },
@@ -107,7 +106,7 @@ const LAYOUTS = {
       { id: 'galleryStop', strip: 'middle-hill-right', crest: 4780, span: 1.2, pathW: 116,
         trail: { kind: 'gallery', x: 720, w: 920, ground: 5690, gap: 110 }, items: [] },
       { id: 'quiet', strip: 'middle-hill-left', crest: 4900, span: 1.2, pathW: 120, via: [[600, 4950], [700, 5040]], items: [
-        { a: 'solar', x: 1230, w: 115, sink: 30 }, { a: 'spool', x: 190, w: 125, sink: 34 } ] },
+        { a: 'solar', x: 1230, w: 115, sink: 30 } ] },
       { id: 'info', strip: 'near-bank', crest: 5030, span: 1.3, pathW: 130,
         clearing: { copy: 'details', x: 200, y: 5140, w: 1040, h: 648, in: .5, out: .5 }, items: [
         { a: 'printer', x: 1340, w: 120, ground: 5330 }, { a: 'plant', x: -150, top: 5380, h: 420 } ] },
@@ -118,11 +117,7 @@ const LAYOUTS = {
       { id: 'gatherBack', strip: 'middle-hill-right', crest: 6080, span: 1.2, pathW: 140, sign: { copy: 'footer', x: 340, w: 760, ground: 6110 }, items: [
         { a: 'crate', x: 110, w: 140, sink: 40 }, { a: 'pinwheel', x: 1340, w: 84, sink: 24, cls: 'sway slow' } ] },
       { id: 'gather', strip: 'near-bank', crest: 6210, span: 1.3, flip: true, pathW: 150,
-        clearing: { copy: 'finale', x: 430, y: 6530, w: 580, h: 202, in: .5, out: .5 }, items: [
-        { a: 'bed', kind: 'trodden', x: 740, ground: 6440, w: 1020, h: 110 },
-        { a: 'bench', x: 720, w: 400, ground: 6430, id: 'table' }, { on: 'table', a: 'countdown', dx: 0, w: 300 },
-        { a: 'bit', x: 440, w: 170, ground: 6460 }, { a: 'amp', x: 1000, w: 178, ground: 6470 }, { a: 'bite', x: 1185, w: 165, ground: 6455 },
-        { a: 'battery', x: 295, w: 78, ground: 6470 } ] },
+        clearing: { copy: 'finale', x: 370, y: 6530, w: 700, h: 202, in: .5, out: .5 }, items: [] },
 
       { id: 'end', strip: 'front-bank', crest: 6890, span: 1.3, pathW: 160, items: [] },
     ],
@@ -159,10 +154,9 @@ const LAYOUTS = {
       { id: 'lane', strip: 'middle-hill-right', crest: 3560, span: 2, pathW: 80, via: [[420, 3600], [380, 3690]], items: [
         { a: 'tetra', x: 120, w: 190, sink: 50 } ] },
       { id: 'play', strip: 'near-bank', crest: 3700, span: 2.1, flip: true, pathW: 90, via: [[330, 3790], [320, 3960]],
-        clearing: { copy: 'bite', x: 50, y: 4090, w: 500, h: 500, in: .5, out: .4 },
-        lane: { from: [30, 3940], to: [590, 3940], w: 44 }, items: [
+        clearing: { copy: 'bite', x: 50, y: 4090, w: 500, h: 500, in: .5, out: .4 }, items: [
         { a: 'desk', x: 455, w: 230, sink: 70, id: 'desk' }, { on: 'desk', a: 'controller', dx: -45, w: 74 },
-        { a: 'bite', x: 190, w: 140, sink: 80 }, { a: 'rover', x: 90, w: 90, ground: 3958, id: 'rover', drive: 360 } ] },
+        { a: 'bite', x: 190, w: 140, sink: 80 } ] },
 
       { id: 'fieldBack', strip: 'middle-hill-left', crest: 4820, span: 2, pathW: 94, via: [[300, 4870], [330, 4960]], items: [
         { a: 'pinwheel', x: 520, w: 56, sink: 14, cls: 'sway slow' } ] },
@@ -183,11 +177,7 @@ const LAYOUTS = {
 
       { id: 'gatherBack', strip: 'middle-hill-right', crest: 7640, span: 2, pathW: 120, sign: { copy: 'footer', x: 50, w: 500, ground: 7690 }, items: [] },
       { id: 'gather', strip: 'near-bank', crest: 7760, span: 2.1, flip: true, pathW: 130,
-        clearing: { copy: 'finale', x: 50, y: 8080, w: 500, h: 410, in: .5, out: .5 }, items: [
-        { a: 'bed', kind: 'trodden', x: 300, ground: 7970, w: 590, h: 70 },
-        { a: 'bench', x: 300, w: 270, ground: 7950, id: 'table' }, { on: 'table', a: 'countdown', dx: 0, w: 300 },
-        { a: 'bit', x: 85, w: 118, ground: 7970 }, { a: 'amp', x: 515, w: 120, ground: 7980 }, { a: 'bite', x: 300, w: 104, ground: 8030 },
-        { a: 'battery', x: 420, w: 54, ground: 8020 } ] },
+        clearing: { copy: 'finale', x: 50, y: 8080, w: 500, h: 410, in: .5, out: .5 }, items: [] },
 
       { id: 'end', strip: 'front-bank', crest: 8680, span: 2.1, pathW: 140, items: [] },
     ],
@@ -358,7 +348,6 @@ const img = (a, x, y, w, extra = '') => {
   const [src, iw, ih] = ART[a], h = w * ih / iw;
   return `<image href="${src}" x="${r1(x - w / 2)}" y="${r1(y - h)}" width="${r1(w)}" height="${r1(h)}" preserveAspectRatio="none" ${extra}/>`;
 };
-const stroke = (d, w, color) => `<path d="${d}" fill="none" stroke="${color}" stroke-width="${r1(w)}" stroke-linecap="round" stroke-linejoin="round"/>`;
 
 // Hand-drawn ground detail, in the artwork's own palette and ink.
 const GREENS = ['#6A994E', '#A7C957', '#86ad4f', '#4f7a3f'];
@@ -537,12 +526,6 @@ function render() {
         detail += trailDetail(run, t.pathW, trand, offClearings).detail;
       });
     }
-    if (t.lane) {
-      const { from: [ax, ay], to: [bx, by], w } = t.lane, d = smooth([[ax, ay + t.sh], [(ax + bx) / 2, (ay + by) / 2 + t.sh + 8], [bx, by + t.sh]]);
-      ink += `<g opacity=".28">${stroke(d, w + 12, SHOULDER)}</g>`;
-      rim += stroke(d, w, EARTH);
-      centre += `<g opacity=".82">${stroke(d, w, 'url(#trail-earth)')}</g>`;
-    }
     if (t.clear) {
       const ground = earthLayers(clearingShape(t.clear, t.seed));
       ink += ground.ink; rim += ground.rim; centre += ground.centre;
@@ -601,7 +584,6 @@ function scatter(t, next, W, H, routePts, rand) {
   const wide = W > 1000, far = !!t.depth, k = (wide ? 1 : .78) * (far ? .55 : 1);
   const keepOut = [...(t.clear ? [t.clear] : []), ...(t.board ? [t.board.box] : []), ...t.boxes];
   const offPath = (x, y) => !t.pathW || routePts.every(([px, py]) => Math.hypot(px - x, py - y) > t.pathW / 2 + 16 * k);
-  const offLane = (x, y) => !t.lane || Math.abs(y - (t.lane.from[1] + t.sh)) > t.lane.w / 2 + 14;
   let out = '';
   // Sparse and evenly spread: each mark keeps its distance from the others, so the ground reads as
   // dressed rather than carpeted.
@@ -611,7 +593,7 @@ function scatter(t, next, W, H, routePts, rand) {
     const bottom = Math.min(next ? crestY(next, x, W) - 4 : H - 10, top + 820);
     if (bottom - top < 24) continue;
     const y = top + rand() * (bottom - top), m = 22 * k, r = rand();
-    if (keepOut.some(([x0, y0, x1, y1]) => x > x0 - m && x < x1 + m && y > y0 - m && y < y1 + m) || !offPath(x, y) || !offLane(x, y)) continue;
+    if (keepOut.some(([x0, y0, x1, y1]) => x > x0 - m && x < x1 + m && y > y0 - m && y < y1 + m) || !offPath(x, y)) continue;
     if (placed.some(([px, py]) => Math.hypot(px - x, py - y) < gap)) continue;
     placed.push([x, y]);
     if (r < .4) out += tuft(x, y, (18 + rand() * 16) * k, rand);
@@ -639,13 +621,7 @@ function item(it, t, W, homes, rand) {
   if (!it.on) t.boxes.push([x - it.w / 2, y - h, x + it.w / 2, y + 6]);
   // Contact shadow on the owning ground (or tabletop), then grass grown over the base.
   const shadow = it.on ? `<ellipse cx="${r1(x)}" cy="${r1(y - 1)}" rx="${r1(it.w * .48)}" ry="${r1(Math.max(3, it.w * .05))}" fill="#5a3a1c" opacity=".28"/>` : `<ellipse cx="${r1(x)}" cy="${r1(y - 2)}" rx="${r1(it.w * .52)}" ry="${r1(Math.max(5, it.w * .07))}" fill="#22331a" opacity=".2"/><ellipse cx="${r1(x)}" cy="${r1(y - 2)}" rx="${r1(it.w * .34)}" ry="${r1(Math.max(3, it.w * .035))}" fill="#22331a" opacity=".22"/>`;
-  const roots = it.on || it.id === 'rover' ? '' : rootIn(it.a, x, y, it.w, rand);
-  if (it.a === 'countdown') {
-    const clock = document.getElementById('event-countdown');
-    if (clock) Object.assign(clock.style, { left: `${(x - it.w / 2) * s}px`, top: `${(y - h) * s}px`, width: `${it.w * s}px`, height: `${h * s}px` });
-    return shadow;
-  }
-  if (it.id === 'rover') return `<g class="rover-body" style="--drive:${it.drive}px">${shadow}${img(it.a, x, y, it.w)}</g>`;
+  const roots = it.on ? '' : rootIn(it.a, x, y, it.w, rand);
   let out = `${shadow}<g${it.cls ? ` class="${it.cls}"` : ''}>${img(it.a, x, y, it.w)}</g>`;
   if (it.id === 'pump') out += seedling(x - it.w / 2 + it.w * .07, y + 2, it.w * .44, h);
   if (it.id === 'breadboard') out += [[.33, .4], [.52, .3], [.7, .48]].map(([u, v], i) => {
