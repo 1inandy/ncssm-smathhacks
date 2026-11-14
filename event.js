@@ -1,7 +1,7 @@
 // Event facts and registration state from event-config.json. Independent of the illustration:
 // if the hillside fails, the page still shows confirmed details and the right call to action.
-import { configureCountdown } from './countdown.js?v=lcd-clock';
-import { configureGallery, configurePhotoGroups } from './gallery.js?v=photo-groups';
+import { configureCountdown } from './countdown.js?v=banner';
+import { configureGallery, configurePhotoGroups } from './gallery.js?v=no-captions';
 const $ = selector => document.querySelector(selector);
 const $$ = selector => [...document.querySelectorAll(selector)];
 
@@ -78,7 +78,7 @@ function renderSponsors(config) {
         const li = document.createElement('li'), url = destination(s.url), logo = destination(s.logo);
         const tile = document.createElement(url ? 'a' : 'span');
         tile.className = 'sponsor';
-        if (url) { tile.href = url; tile.rel = 'noopener'; }
+        if (url) { tile.href = url; tile.target = '_blank'; tile.rel = 'noopener'; }
         if (logo) {
           const img = document.createElement('img');
           img.src = logo; img.alt = s.name; img.loading = 'lazy';

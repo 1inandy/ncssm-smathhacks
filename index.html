@@ -7,21 +7,78 @@
   <meta name="description" content="SMathHacks 2027: Bits & Bites. 36 Hours. 300+ Hackers. Infinite Creativity.">
   <title>SMathHacks 2027 | Bits & Bites</title>
   <link rel="icon" type="image/svg+xml" href="assets/logo/smathhacks-full-color.svg">
-  <link rel="stylesheet" href="hillside.css?v=assets-tidy">
+  <script>
+    // Show the loading screen on the first visit of a session only; a failsafe never lets it trap the page.
+    // When it shows, land at the top of the hillside (not a restored scroll position) unless a #section was asked for.
+    try {
+      if (!sessionStorage.getItem('smh-loaded')) {
+        document.documentElement.classList.add('is-loading');
+        if (!location.hash && 'scrollRestoration' in history) history.scrollRestoration = 'manual';
+      }
+    } catch (e) {}
+    setTimeout(function () { var r = document.documentElement; if (r.classList.contains('is-loading')) { r.classList.remove('is-loading'); var l = document.querySelector('.site-loader'); if (l) l.remove(); } }, 16000);
+  </script>
+  <link rel="preload" as="image" href="assets/hillside/bit-master.webp">
+  <link rel="preload" as="image" href="assets/hillside/amp-master.webp">
+  <link rel="preload" as="image" href="assets/hillside/bite-master.webp">
+  <link rel="preload" as="image" href="assets/mvp/environment/atmosphere/cloud-puff.webp">
+  <link rel="preload" as="image" href="assets/mvp/environment/atmosphere/cloud-long.webp">
+  <link rel="preload" as="image" href="assets/mvp/environment/atmosphere/cloud-wisp.webp">
+  <link rel="stylesheet" href="carousel.css?v=framed">
+  <link rel="stylesheet" href="hillside.css?v=framed-carousels">
+  <link rel="stylesheet" href="loader.css">
   <link rel="stylesheet" href="sky-announcements.css">
-  <link rel="stylesheet" href="countdown.css?v=lcd-clock">
-  <link rel="stylesheet" href="trail-boards.css">
+  <link rel="stylesheet" href="trail-boards.css?v=theme-logo">
   <link rel="stylesheet" href="photo-viewer.css">
-  <link rel="stylesheet" href="navigation.css?v=assets-tidy">
+  <link rel="stylesheet" href="navigation.css?v=speakers-tba">
 </head>
 <body>
+  <div class="site-loader" role="status" aria-live="polite" aria-busy="true">
+    <div class="loader-sky"></div>
+    <div class="loader-clouds" aria-hidden="true">
+      <span class="loader-cloud" style="left:-6%;top:5%;width:max(38vw,240px);--rise:-45vh;--rise-d:.05s;--rise-t:1.2s;--in:0s;--speed:70;--drift:11s"><img src="assets/mvp/environment/atmosphere/cloud-wisp.webp" alt=""></span>
+      <span class="loader-cloud" style="right:-8%;top:3%;width:max(44vw,260px);--rise:-50vh;--rise-d:0s;--rise-t:1.25s;--in:.08s;--speed:80;--drift:13s"><img src="assets/mvp/environment/atmosphere/cloud-long.webp" alt=""></span>
+      <span class="loader-cloud" style="right:-6%;top:30%;width:max(28vw,170px);--rise:-70vh;--rise-d:.12s;--rise-t:1.35s;--in:.16s;--speed:110;--drift:9s"><img src="assets/mvp/environment/atmosphere/cloud-puff.webp" alt=""></span>
+      <span class="loader-cloud" style="left:-5%;top:36%;width:max(26vw,160px);--rise:-75vh;--rise-d:.18s;--rise-t:1.3s;--in:.12s;--speed:100;--drift:10s"><img src="assets/mvp/environment/atmosphere/cloud-wisp.webp" alt=""></span>
+      <span class="loader-cloud" style="left:6%;bottom:22%;width:max(24vw,150px);--rise:-90vh;--rise-d:.1s;--rise-t:1.45s;--in:.2s;--speed:140;--drift:12s"><img src="assets/mvp/environment/atmosphere/cloud-wisp.webp" alt=""></span>
+      <span class="loader-cloud" style="left:-12%;bottom:-4%;width:max(50vw,300px);--rise:-115vh;--rise-d:.22s;--rise-t:1.6s;--in:.24s;--speed:160;--drift:10s"><img src="assets/mvp/environment/atmosphere/cloud-puff.webp" alt=""></span>
+      <span class="loader-cloud" style="left:26%;bottom:-6%;width:max(52vw,320px);--rise:-120vh;--rise-d:.3s;--rise-t:1.65s;--in:.3s;--speed:170;--drift:14s"><img src="assets/mvp/environment/atmosphere/cloud-long.webp" alt=""></span>
+      <span class="loader-cloud" style="right:-14%;bottom:-2%;width:max(54vw,320px);--rise:-110vh;--rise-d:.16s;--rise-t:1.55s;--in:.28s;--speed:150;--drift:11s"><img src="assets/mvp/environment/atmosphere/cloud-puff.webp" alt=""></span>
+      <span class="loader-cloud" style="left:-8%;top:118%;width:max(46vw,280px);--speed:190;--rise:-60vh;--rise-d:0s;--rise-t:1s;--in:0s;--drift:10s"><img src="assets/mvp/environment/atmosphere/cloud-puff.webp" alt=""></span>
+      <span class="loader-cloud" style="right:-10%;top:150%;width:max(50vw,300px);--speed:210;--rise:-60vh;--rise-d:0s;--rise-t:1s;--in:0s;--drift:10s"><img src="assets/mvp/environment/atmosphere/cloud-long.webp" alt=""></span>
+      <span class="loader-cloud" style="left:30%;top:185%;width:max(34vw,220px);--speed:230;--rise:-60vh;--rise-d:0s;--rise-t:1s;--in:0s;--drift:10s"><img src="assets/mvp/environment/atmosphere/cloud-wisp.webp" alt=""></span>
+    </div>
+    <div class="loader-stage">
+      <img class="loader-logo" src="assets/logo/smathhacks-full-color.svg" alt="SMathHacks 2027" width="1772" height="884">
+      <div class="loader-crew" aria-hidden="true">
+        <img src="assets/hillside/bit-master.webp" alt="" width="480" height="568">
+        <img src="assets/hillside/amp-master.webp" alt="" width="451" height="600">
+        <img src="assets/hillside/bite-master.webp" alt="" width="480" height="540">
+      </div>
+      <div class="loader-cookie" data-loader-cookie aria-hidden="true"></div>
+      <p class="loader-caption" data-loader-caption>Planting the hillside…</p>
+      <p class="loader-percent" data-loader-percent aria-hidden="true">0 bits baked</p>
+    </div>
+  </div>
+  <script>
+    // Fade the loader's art in as soon as it has decoded, without waiting for the rest of the page to parse.
+    (function () {
+      var r = document.documentElement;
+      if (!r.classList.contains('is-loading')) return;
+      var go = function () { if (!r.classList.contains('loader-ready')) { r.classList.add('loader-ready'); window.__loaderShownAt = performance.now(); } };
+      var imgs = document.querySelectorAll('.site-loader img'), left = imgs.length;
+      var one = function () { if (--left <= 0) go(); };
+      [].forEach.call(imgs, function (i) { if (i.complete) one(); else { i.addEventListener('load', one); i.addEventListener('error', one); } });
+      setTimeout(go, 1500);
+    })();
+  </script>
   <a class="skip-link" href="#main">Skip to content</a>
   <header class="site-header">
     <a class="brand" href="#top" aria-label="SMathHacks 2027 home"><img src="assets/logo/smathhacks-full-color.svg" alt="SMathHacks 2027, Bits and Bites" width="1772" height="884"></a>
     <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="primary-navigation" hidden>Menu</button>
     <nav class="site-nav" id="primary-navigation" aria-label="Primary navigation">
       <a href="#tracks">Tracks</a><a href="#details">Join</a><a href="#schedule">Schedule</a><a href="#faq">FAQ</a><a href="#sponsors">Sponsors</a>
-      <details class="explore-menu"><summary>Explore</summary><div class="explore-panel"><a href="resources.html">Resources</a><a href="entrepreneurship-in-nc.html">Entrepreneurship in NC</a><a href="past-events.html">Past Events</a></div></details>
+      <details class="explore-menu"><summary>Explore</summary><div class="explore-panel"><a href="resources.html">Resources</a><a href="entrepreneurship-in-nc.html">Entrepreneurship in NC</a><a href="past-events.html">Past Events</a><span class="explore-soon" aria-disabled="true">Speakers &amp; Partners <small>TBD</small></span></div></details>
     </nav>
     <div class="header-status" data-register="header"><a href="#updates">Interest form soon</a></div>
   </header>
@@ -43,15 +100,24 @@
         <div class="registration-state" data-register="hero">Interest form coming soon</div>
         <p class="registration-note">Registration isn’t open yet.</p>
       </div>
+      <div class="hero-sponsors">
+        <ul aria-label="Sponsors">
+          <li><a href="https://www.hudsonrivertrading.com/" target="_blank" rel="noopener"><img src="assets/sponsors/hrt-compact.png" alt="Hudson River Trading" width="240" height="187" data-logo="hrt"></a></li>
+          <li><a href="https://sig.com/" target="_blank" rel="noopener"><img src="assets/sponsors/susquehanna.svg" alt="Susquehanna" width="281" height="23" data-logo="susquehanna"></a></li>
+          <li><a href="https://www.janestreet.com/" target="_blank" rel="noopener"><img src="assets/sponsors/jane-street.webp" alt="Jane Street" width="900" height="334" data-logo="jane-street"></a></li>
+          <li><a href="https://ncinnovation.org/" target="_blank" rel="noopener"><img src="assets/sponsors/nc-innovation.svg" alt="NC Innovation" width="396" height="61" data-logo="nc-innovation"></a></li>
+        </ul>
+        <a class="hero-sponsors-link" href="#sponsors">See all sponsors ↓</a>
+      </div>
     </section>
 
-    <aside class="sky-flight sky-announcement" aria-label="Countdown to Bits &amp; Bites">
+    <aside class="sky-flight sky-announcement" aria-label="Countdown to SMathHacks 2027" data-countdown-at="2027-03-13T00:00:00-05:00">
       <span class="flight-drift">
         <img class="tow-plane" src="assets/mvp/environment/sky-announcements/tow-plane.webp" alt="" width="700" height="291">
         <svg class="tow-cord" viewBox="0 0 100 30" preserveAspectRatio="none" aria-hidden="true"><path d="M0 6 Q45 14 100 0 M0 6 Q45 18 100 30"/></svg>
         <span class="tow-banner">
           <img src="assets/mvp/environment/sky-announcements/registration-banner.webp" alt="" width="1000" height="227">
-          <span class="banner-lettering"><span>Countdown to <span data-event-theme>Bits &amp; Bites</span></span><strong class="banner-clock" aria-hidden="true"><span><b data-countdown-unit="days">—</b>d</span><span><b data-countdown-unit="hours">—</b>h</span><span><b data-countdown-unit="minutes">—</b>m</span><span><b data-countdown-unit="seconds">—</b>s</span></strong></span>
+          <span class="banner-lettering"><span>Countdown to SMathHacks 2027</span><strong class="banner-clock" aria-hidden="true"><span><b data-countdown-unit="days">—</b>d</span><span><b data-countdown-unit="hours">—</b>h</span><span><b data-countdown-unit="minutes">—</b>m</span><span><b data-countdown-unit="seconds">—</b>s</span></strong></span>
         </span>
       </span>
     </aside>
@@ -60,8 +126,9 @@
       <div class="about-text">
         <p class="eyebrow">A place to start something</p>
         <h2 id="about-title">What is SMathHacks?</h2>
-        <p>An annual 36-hour hackathon hosted by the <a href="https://www.ncssm.edu/">North Carolina School of Science and Mathematics</a>, open to high school students across North Carolina.</p>
+        <p>An annual 36-hour hackathon hosted by the <a href="https://www.ncssm.edu/">North Carolina School of Science and Mathematics</a>, <strong class="key-point">open to all high school students across North Carolina</strong>.</p>
         <p>Meet new people and build a project together. Talks, hands-on workshops, and mentors will help you explore new technology along the way.</p>
+        <p>The hackathon is <strong class="key-point">virtual for non-NCSSM students</strong>, so every North Carolina high schooler can take part from home. NCSSM students can join in person at our Morganton or Durham campus.</p>
         <p class="beginner-note">Your first hackathon? You’re welcome here.</p>
         <a class="participation-link" href="#details">See how to join <span aria-hidden="true">↓</span></a>
       </div>
@@ -77,11 +144,11 @@
           <div class="memory-board-photos" data-photo-group="From the scrapbook">
             <a class="memory-print" href="assets/gallery/closing-ceremony-2026.webp" target="_blank" rel="noopener" aria-label="View the full photo of the SMathHacks 2026 closing ceremony (opens in a new tab)">
               <img src="assets/gallery/closing-ceremony-2026.webp" alt="SMathHacks participants gathered in an auditorium beneath the 2026 closing ceremony screen." width="1920" height="1440" loading="lazy">
-              <span>Closing ceremony · 2026</span>
+              <span>Durham</span>
             </a>
             <a class="memory-print" href="assets/gallery/smathhacks-staircase.webp" target="_blank" rel="noopener" aria-label="View the full photo of SMathHacks participants in Morganton (opens in a new tab)">
               <img src="assets/gallery/smathhacks-staircase.webp" alt="SMathHacks participants in blue event shirts gathered on a wide indoor staircase in Morganton." width="1920" height="1280" loading="lazy">
-              <span>Morganton Hacking</span>
+              <span>Morganton</span>
             </a>
           </div>
           <p class="memory-board-note">Memories from SMathHacks 2026</p>
@@ -95,13 +162,15 @@
     </section>
 
     <section class="trail-face theme-sign-face" id="theme" data-trail-board="theme" aria-labelledby="theme-sign-title">
-      <h2 id="theme-sign-title"><img class="theme-logo" src="assets/brand/bits-and-bites-2027.svg" alt="Bits &amp; Bites 2027" width="760" height="490"></h2>
+      <img class="theme-logo" src="assets/brand/bits-and-bites-2027.svg" alt="" width="760" height="490">
       <p class="eyebrow">This year’s theme</p>
-      <p>Build at the intersection of food and technology.</p>
+      <h2 id="theme-sign-title" class="theme-title">Bits &amp; Bites</h2>
+      <p class="theme-tagline">Build at the intersection of food and technology.</p>
+      <p class="theme-note">The overall theme will guide your hack. Although you will submit to a specific track, your hack must adhere to the larger theme.</p>
     </section>
 
     <section class="copy" id="tracks" data-copy="societal-impact" aria-labelledby="societal-title">
-      <p class="eyebrow">Track 1 · Bit’s growing corner</p>
+      <p class="eyebrow">Track 1</p>
       <h2 id="societal-title">Societal Impact</h2>
       <p>Build technology that helps people and communities. Address challenges in accessibility, education, sustainability, health, or everyday life, with a clear focus on who benefits and how.</p>
       <h3 class="examples-title">Example projects</h3>
@@ -117,7 +186,7 @@
     </section>
 
     <section class="copy" id="hardware" data-copy="amp" aria-labelledby="amp-title">
-      <p class="eyebrow">Track 2 · Amp’s workshop terrace</p>
+      <p class="eyebrow">Track 2</p>
       <h2 id="amp-title">Hardware</h2>
       <p>Bring an idea into the physical world. Build devices, robots, or interactive prototypes using sensors, electronics, and mechanical components.</p>
       <h3 class="examples-title">Example projects</h3>
@@ -133,7 +202,7 @@
     </section>
 
     <section class="copy" id="game-design" data-copy="bite" aria-labelledby="bite-title">
-      <p class="eyebrow">Track 3 · Bite’s play patch</p>
+      <p class="eyebrow">Track 3</p>
       <h2 id="bite-title">Game Design</h2>
       <p>Create a game that people want to play. Explore original mechanics, interactive storytelling, or simulations, with meaningful player choices at the heart of the experience.</p>
       <h3 class="examples-title">Example projects</h3>
@@ -149,7 +218,7 @@
     </section>
 
     <section class="copy" id="ai-machine-learning" data-copy="ai" aria-labelledby="ai-title">
-      <p class="eyebrow">Track 4 · The harvest ledger</p>
+      <p class="eyebrow">Track 4</p>
       <h2 id="ai-title">AI &amp; Machine Learning</h2>
       <p>Build tools that use AI to understand information, make predictions, generate content, or automate tasks. Make AI a meaningful part of how your project works.</p>
       <h3 class="examples-title">Example projects</h3>
@@ -191,21 +260,21 @@
           <h3 id="in-person-title">In person</h3>
           <p class="participation-audience">For NCSSM residential students</p>
           <p>Join at the Durham or Morganton campus. Build with other participants, with free food, speakers, workshops, and time to work on your project.</p>
-          <img class="participation-photo" src="assets/gallery/in-person-hardware.webp" alt="Two participants in SMathHacks shirts wire up a microcontroller with an LED at a lab bench, surrounded by laptops and bins of components." width="1200" height="800" loading="lazy">
+          <div class="carousel participation-carousel" role="region" aria-roledescription="carousel" aria-label="In-person photos" data-photo-group="In person"><div class="carousel-track" tabindex="0"><figure class="carousel-slide" role="group" aria-roledescription="slide" aria-label="1 of 10"><a href="assets/gallery/join/in-person-01.webp"><img src="assets/gallery/join/in-person-01.webp" alt="Two participants in SMathHacks shirts wire up a microcontroller at a lab bench beside laptops and bins of parts." width="1200" height="800" loading="lazy"></a></figure><figure class="carousel-slide" role="group" aria-roledescription="slide" aria-label="2 of 10"><a href="assets/gallery/join/in-person-02.webp"><img src="assets/gallery/join/in-person-02.webp" alt="Participants work around a table of laptops and backpacks as a mentor leans in to help." width="1200" height="675" loading="lazy"></a></figure><figure class="carousel-slide" role="group" aria-roledescription="slide" aria-label="3 of 10"><a href="assets/gallery/join/in-person-03.webp"><img src="assets/gallery/join/in-person-03.webp" alt="A mentor talks with rows of participants working on laptops in a large workshop room." width="1200" height="800" loading="lazy"></a></figure><figure class="carousel-slide" role="group" aria-roledescription="slide" aria-label="4 of 10"><a href="assets/gallery/join/in-person-04.webp"><img src="assets/gallery/join/in-person-04.webp" alt="Three participants work on laptops around a round wooden table." width="1200" height="675" loading="lazy"></a></figure><figure class="carousel-slide" role="group" aria-roledescription="slide" aria-label="5 of 10"><a href="assets/gallery/join/in-person-05.webp"><img src="assets/gallery/join/in-person-05.webp" alt="A room of participants eats and works at round tables while one gives a thumbs up." width="1200" height="675" loading="lazy"></a></figure><figure class="carousel-slide" role="group" aria-roledescription="slide" aria-label="6 of 10"><a href="assets/gallery/join/in-person-06.webp"><img src="assets/gallery/join/in-person-06.webp" alt="Three participants in SMathHacks shirts smile while holding meal boxes." width="1200" height="800" loading="lazy"></a></figure><figure class="carousel-slide" role="group" aria-roledescription="slide" aria-label="7 of 10"><a href="assets/gallery/join/in-person-07.webp"><img src="assets/gallery/join/in-person-07.webp" alt="Two participants connect a small circuit board next to a laptop showing code." width="1200" height="800" loading="lazy"></a></figure><figure class="carousel-slide" role="group" aria-roledescription="slide" aria-label="8 of 10"><a href="assets/gallery/join/in-person-08.webp"><img src="assets/gallery/join/in-person-08.webp" alt="Four participants code on laptops around a table beneath a wall screen." width="1200" height="800" loading="lazy"></a></figure><figure class="carousel-slide" role="group" aria-roledescription="slide" aria-label="9 of 10"><a href="assets/gallery/join/in-person-09.webp"><img src="assets/gallery/join/in-person-09.webp" alt="Participants sketch ideas on a whiteboard and point at a monitor full of graphs." width="1200" height="800" loading="lazy"></a></figure><figure class="carousel-slide" role="group" aria-roledescription="slide" aria-label="10 of 10"><a href="assets/gallery/join/in-person-10.webp"><img src="assets/gallery/join/in-person-10.webp" alt="A participant works with wires and a soldering station beside a laptop." width="1200" height="675" loading="lazy"></a></figure></div><div class="carousel-controls" hidden><button type="button" class="carousel-prev" aria-label="Previous photo">←</button><p class="carousel-count" aria-live="polite">1 / 10</p><button type="button" class="carousel-next" aria-label="Next photo">→</button></div></div>
         </section>
         <section aria-labelledby="virtual-title">
           <p class="eyebrow">From home</p>
           <h3 id="virtual-title">Virtual</h3>
           <p class="participation-audience">For other NC high school students</p>
           <p>Build from home. Opening and closing ceremonies, talks, and workshops will be streamed through Zoom.</p>
-          <img class="participation-photo" src="assets/gallery/virtual-workshop.webp" alt="A presenter leads a workshop on software engineering jobs while campuses and remote participants join through Zoom on the screen behind her." width="1200" height="800" loading="lazy">
+          <div class="carousel participation-carousel" role="region" aria-roledescription="carousel" aria-label="Virtual photos" data-photo-group="Virtual"><div class="carousel-track" tabindex="0"><figure class="carousel-slide" role="group" aria-roledescription="slide" aria-label="1 of 5"><a href="assets/gallery/join/virtual-01.webp"><img src="assets/gallery/join/virtual-01.webp" alt="A speaker presents Machine Learning with Python to participants on laptops, with remote attendees on Zoom." width="1200" height="800" loading="lazy"></a></figure><figure class="carousel-slide" role="group" aria-roledescription="slide" aria-label="2 of 5"><a href="assets/gallery/join/virtual-02.webp"><img src="assets/gallery/join/virtual-02.webp" alt="Participants watch a presenter&#x27;s code on a large screen in a classroom." width="1200" height="675" loading="lazy"></a></figure><figure class="carousel-slide" role="group" aria-roledescription="slide" aria-label="3 of 5"><a href="assets/gallery/join/virtual-03.webp"><img src="assets/gallery/join/virtual-03.webp" alt="A presenter speaks in front of screens showing a Zoom call." width="1200" height="800" loading="lazy"></a></figure><figure class="carousel-slide" role="group" aria-roledescription="slide" aria-label="4 of 5"><a href="assets/gallery/join/virtual-04.webp"><img src="assets/gallery/join/virtual-04.webp" alt="A speaker presents on a stage in front of large NCSSM letters." width="1200" height="800" loading="lazy"></a></figure><figure class="carousel-slide" role="group" aria-roledescription="slide" aria-label="5 of 5"><a href="assets/gallery/join/virtual-05.webp"><img src="assets/gallery/join/virtual-05.webp" alt="Participants watch a Validate Your Idea talk beneath a large screen and NCSSM letters." width="1200" height="800" loading="lazy"></a></figure></div><div class="carousel-controls" hidden><button type="button" class="carousel-prev" aria-label="Previous photo">←</button><p class="carousel-count" aria-live="polite">1 / 5</p><button type="button" class="carousel-next" aria-label="Next photo">→</button></div></div>
         </section>
       </div>
       <dl class="facts">
         <div><dt>Date</dt><dd data-fact="dates">March 13–14, 2027</dd></div>
         <div><dt>Venue</dt><dd data-fact="venue">Online + NCSSM campuses</dd></div>
         <div><dt>Eligibility</dt><dd data-fact="eligibility">North Carolina high school students</dd></div>
-        <div><dt>Cost</dt><dd data-fact="cost">FREE</dd></div>
+        <div><dt>Cost</dt><dd data-fact="cost">Free</dd></div>
         <div><dt>Registration</dt><dd data-registration-status>Not open yet</dd></div>
         <div class="fact-stickers" aria-hidden="true">
           <dt class="sr-only">Bits &amp; Bites</dt>
@@ -254,59 +323,36 @@
       <div class="sponsor-board-content">
         <p class="eyebrow">Made possible by</p>
         <h2 id="sponsors-title">Our sponsors</h2>
-        <p id="sponsor-status">Sponsor announcements coming soon. Interested in sponsoring us? Email <a href="mailto:giving@ncssm.edu">giving@ncssm.edu</a></p>
-        <div class="sponsor-placeholders" data-sponsor-placeholders aria-label="Sponsorship levels with placeholder logos">
-          <section class="sponsor-tier" data-sponsor-level="chef" aria-labelledby="placeholder-chef-tier">
-            <h3 id="placeholder-chef-tier">Chef’s Special</h3>
-            <ul><li><span>Logo 01</span><small>placeholder</small></li></ul>
+        <p id="sponsor-status">Interested in sponsoring us? Email <a href="mailto:giving@ncssm.edu">giving@ncssm.edu</a></p>
+        <div class="sponsor-list sponsor-wall" id="sponsor-list">
+          <section class="sponsor-tier" data-rank="1" aria-label="Title sponsor">
+            <ul><li><a class="sponsor" href="https://www.hudsonrivertrading.com/" target="_blank" rel="noopener"><img src="assets/sponsors/hrt.png" alt="Hudson River Trading" width="882" height="83"></a><p class="sponsor-caption">Title Sponsor</p></li></ul>
           </section>
-          <section class="sponsor-tier" data-sponsor-level="banquet" aria-labelledby="placeholder-banquet-tier">
-            <h3 id="placeholder-banquet-tier">Banquet</h3>
-            <ul><li><span>Logo 02</span><small>placeholder</small></li><li><span>Logo 03</span><small>placeholder</small></li></ul>
+          <section class="sponsor-tier" data-rank="2" aria-label="Sponsor">
+            <ul><li><a class="sponsor" href="https://sig.com/" target="_blank" rel="noopener"><img src="assets/sponsors/susquehanna.svg" alt="Susquehanna" width="281" height="23"></a></li></ul>
           </section>
-          <section class="sponsor-tier" data-sponsor-level="feast" aria-labelledby="placeholder-feast-tier">
-            <h3 id="placeholder-feast-tier">Feast</h3>
-            <ul><li><span>Logo 04</span><small>placeholder</small></li><li><span>Logo 05</span><small>placeholder</small></li></ul>
-          </section>
-          <section class="sponsor-tier" data-sponsor-level="entree" aria-labelledby="placeholder-entree-tier">
-            <h3 id="placeholder-entree-tier">Entrée</h3>
-            <ul><li><span>Logo 06</span><small>placeholder</small></li><li><span>Logo 07</span><small>placeholder</small></li><li><span>Logo 08</span><small>placeholder</small></li></ul>
-          </section>
-          <section class="sponsor-tier" data-sponsor-level="appetizer" aria-labelledby="placeholder-appetizer-tier">
-            <h3 id="placeholder-appetizer-tier">Appetizer</h3>
-            <ul><li><span>Logo 09</span><small>placeholder</small></li><li><span>Logo 10</span><small>placeholder</small></li><li><span>Logo 11</span><small>placeholder</small></li></ul>
-          </section>
-          <section class="sponsor-tier" data-sponsor-level="refreshment" aria-labelledby="placeholder-refreshment-tier">
-            <h3 id="placeholder-refreshment-tier">Refreshment</h3>
-            <ul><li><span>Logo 12</span><small>placeholder</small></li><li><span>Logo 13</span><small>placeholder</small></li><li><span>Logo 14</span><small>placeholder</small></li><li><span>Logo 15</span><small>placeholder</small></li></ul>
+          <section class="sponsor-tier" data-rank="3" aria-label="Sponsors">
+            <ul>
+              <li><a class="sponsor" href="https://www.janestreet.com/" target="_blank" rel="noopener"><img src="assets/sponsors/jane-street.webp" alt="Jane Street" width="900" height="334" data-logo="jane-street"></a></li>
+              <li><a class="sponsor" href="https://ncinnovation.org/" target="_blank" rel="noopener"><img src="assets/sponsors/nc-innovation.svg" alt="NC Innovation" width="396" height="61" data-logo="nc-innovation"></a></li>
+            </ul>
           </section>
         </div>
-        <div class="sponsor-list" id="sponsor-list" hidden></div>
         <p class="sponsor-ask" data-sponsor-ask hidden></p>
       </div>
     </section>
 
-    <section class="table-countdown" id="event-countdown" aria-label="Countdown to event day" data-countdown-at="2027-03-13T00:00:00-05:00">
-      <img src="assets/mvp/props/countdown-clock/clock.webp" alt="" width="800" height="364">
-      <div class="countdown-face">
-        <p class="countdown-caption sr-only" data-countdown-caption>Until event day</p>
-        <div class="countdown-digits" role="timer" aria-live="off" aria-label="Countdown loading" data-countdown-timer>
-          <span><strong data-countdown-unit="days">—</strong><small>days</small></span>
-          <span><strong data-countdown-unit="hours">—</strong><small>hrs</small></span>
-          <span><strong data-countdown-unit="minutes">—</strong><small>min</small></span>
-          <span><strong data-countdown-unit="seconds">—</strong><small>sec</small></span>
-        </div>
-      </div>
-      <noscript><p>Event day: March 13, 2027.</p></noscript>
-    </section>
 
-    <section class="copy finale-copy" id="updates" data-copy="finale" aria-labelledby="finale-title">
-      <h2 id="finale-title">Make something together.</h2>
-      <p>A few curious minds..... and a whole lot of possibility!</p>
+    <section class="copy finale-copy" id="updates" data-copy="finale" aria-label="Keep building and contact">
       <div class="continue-building">
         <h3>Keep building after the hackathon.</h3>
         <p>Find mentorship, funding resources, and a next step for your idea.</p>
         <a class="trail-link" href="entrepreneurship-in-nc.html">Entrepreneurship in NC →</a>
+      </div>
+      <div class="finale-contact">
+        <a class="finale-host" href="https://www.ncssm.edu/" target="_blank" rel="noopener"><img src="assets/sponsors/ncssm.svg" alt="North Carolina School of Science and Mathematics" width="1091" height="360"></a>
+        <p>Contact: <a href="mailto:smathhacks@ncssm.edu">smathhacks@ncssm.edu</a></p>
+        <p class="finale-social"><a href="https://www.instagram.com/smathhacks/" target="_blank" rel="noopener"><svg class="ig-glyph" viewBox="0 0 24 24" aria-hidden="true"><rect x="2.5" y="2.5" width="19" height="19" rx="5.5"/><circle cx="12" cy="12" r="4.4"/><circle class="ig-dot" cx="17.4" cy="6.6" r="1.2"/></svg><span class="sr-only">Instagram: </span>@smathhacks</a></p>
       </div>
       <p class="finale-credit">Made with ❤️ by SMathHacks 2027</p>
     </section>
@@ -323,9 +369,11 @@
     <div class="gallery-dialog-controls"><button type="button" data-gallery-photo="previous" aria-label="Previous photo">←</button><span data-gallery-photo-label></span><button type="button" data-gallery-photo="next" aria-label="Next photo">→</button></div>
   </dialog>
 
-  <script type="module" src="event.js?v=photo-groups"></script>
-  <script type="module" src="hillside.js?v=continuous-hill-trail"></script>
+  <script type="module" src="event.js?v=no-captions"></script>
+  <script type="module" src="hillside.js?v=no-spool-2"></script>
   <script type="module" src="faq.js"></script>
   <script type="module" src="navigation.js"></script>
+  <script type="module" src="loader.js"></script>
+  <script type="module" src="archive-carousel.js"></script>
 </body>
 </html>

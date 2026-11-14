@@ -52,6 +52,20 @@ a:focus-visible,button:focus-visible{outline:3px solid var(--forest);outline-off
 /* Once a real action exists (Interest form / Get updates), it becomes the primary button. */
 .registration-state{font-size:13px}
 .registration-note{margin:0;padding:4px 12px;border-radius:999px;background:var(--cream);color:var(--forest);font-size:13px;font-weight:600;box-shadow:inset 0 0 0 1.5px var(--forest)}
+/* A quiet credit line under the call to action; the full billboard is further down the trail. */
+.hero-sponsors{position:relative;z-index:1;width:max-content;max-width:min(660px,100vw - 40px);margin-top:26px}
+.hero-sponsors ul{margin:0;padding:0;list-style:none;display:flex;align-items:center;flex-wrap:wrap;gap:14px 24px}
+.hero-sponsors li,.hero-sponsors li a{display:flex}
+.hero-sponsors li a{transition:transform .2s cubic-bezier(.3,.7,.4,1)}
+.hero-sponsors li a:hover{transform:translateY(-2px)}
+/* No backing card: a soft halo keeps marks and link legible over the painted hill lines. */
+.hero-sponsors img{display:block;width:auto;filter:drop-shadow(0 0 2px #fbf6eacc) drop-shadow(0 0 6px #fbf6ea99)}
+.hero-sponsors [data-logo="hrt"]{height:52px}
+.hero-sponsors [data-logo="susquehanna"]{height:16px}
+.hero-sponsors [data-logo="jane-street"]{height:42px}
+.hero-sponsors [data-logo="nc-innovation"]{height:25px}
+.hero-sponsors-link{display:inline-block;margin-top:10px;text-shadow:0 0 3px #fbf6ea,0 0 6px #fbf6ea,0 0 10px #fbf6ea;font-size:13px;font-weight:600;color:var(--forest);text-underline-offset:3px}
+.hero-sponsors-link:hover{text-decoration-thickness:2px}
 .action-link{display:inline-flex;align-items:center;min-height:44px;padding:8px 18px;border-radius:6px;background:var(--forest);color:var(--cream);font-size:14px;font-weight:500;text-decoration:none}
 .header-status .action-link{min-height:38px;padding:6px 14px;font-size:13px}
 .header-status>a:not(.action-link){min-height:44px;display:flex;align-items:center;text-decoration:none}
@@ -67,6 +81,8 @@ a:focus-visible,button:focus-visible{outline:3px solid var(--forest);outline-off
 .about-copy{display:grid;grid-template-columns:minmax(0,.95fr) minmax(0,1.15fr);align-items:center;gap:clamp(36px,4vw,64px)}
 .about-text{min-width:0}
 .about-text>p:not(.eyebrow){max-width:54ch;text-wrap:pretty}
+/* Who can take part, and how: the two facts a first-time visitor most needs. */
+.key-point{font-weight:800;color:var(--forest);text-decoration:underline;text-decoration-color:#a7c957;text-decoration-thickness:3px;text-underline-offset:4px;text-decoration-skip-ink:none}
 .world:not(.is-laid-out) .about-copy{display:block}
 .about-copy h2{text-wrap:balance}
 .examples-title{margin-top:22px;font-size:22px;font-family:var(--font-hand);font-weight:600;line-height:1.2;opacity:.75}
@@ -80,6 +96,8 @@ a:focus-visible,button:focus-visible{outline:3px solid var(--forest);outline-off
 .facts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px 32px;margin:26px 0 0;padding:22px 0;border-block:1px solid var(--rule)}
 .facts dt{font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;opacity:.75}
 .facts dd{margin:2px 0 0;font-size:16px}
+/* The price is the selling point: hand-lettered and underlined. */
+.facts [data-fact="cost"]{display:inline-block;margin-top:0;font-family:var(--font-hand);font-size:30px;font-weight:700;line-height:1;color:var(--forest);text-decoration:underline;text-decoration-color:#a7c957;text-decoration-thickness:3px;text-underline-offset:4px;text-decoration-skip-ink:none}
 .participation-options{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:36px 0;margin-top:30px}
 .participation-options>section:first-child{padding-right:36px}
 .participation-options>section+section{padding-left:36px;border-left:1px solid var(--rule)}
@@ -88,9 +106,10 @@ a:focus-visible,button:focus-visible{outline:3px solid var(--forest);outline-off
 .participation-options p:not(.eyebrow){max-width:46ch;font-size:16px}
 .participation-options .participation-audience{font-weight:700;line-height:1.4}
 .participation-options p+p{margin-top:10px}
-.participation-options p:has(+.participation-photo){margin-bottom:18px}
+.participation-options p:has(+.participation-carousel){margin-bottom:18px}
 .participation-options>section{display:flex;flex-direction:column}
-.participation-photo{display:block;width:100%;height:auto;margin-top:auto;border:2px solid var(--ink);border-radius:10px 7px 12px 8px;box-shadow:3px 4px 0 #65271326}
+/* The shared carousel (carousel.css) sits at the foot of each card. */
+.participation-carousel{margin-top:auto}
 .info-copy .facts{margin-bottom:0;padding-bottom:0;border-bottom:0}
 .info-lower{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.6fr);gap:40px;margin-top:26px}
 .info-lower h3{margin-bottom:10px}
@@ -145,7 +164,20 @@ a.sponsor:hover{transform:translateY(-2px)}
 .finale-copy{text-align:center}
 .finale-copy h2,.finale-copy>p{margin-inline:auto}
 .finale-copy .registration-state{margin-top:16px;font-size:14px}
-.finale-copy .finale-credit{margin-top:18px;font-size:14px;opacity:.8}
+.finale-contact{margin-top:30px;padding-top:28px;border-top:1px solid var(--rule);display:flex;flex-direction:column;align-items:center;gap:4px}
+.finale-contact p{margin:0;font-size:18px;line-height:1.6}
+.finale-contact p a{font-weight:600;text-underline-offset:3px}
+.finale-social a{display:inline-flex;align-items:center;gap:8px}
+.ig-glyph{width:24px;height:24px;flex:none;fill:none;stroke:currentColor;stroke-width:2}
+.ig-glyph .ig-dot{fill:currentColor;stroke:none}
+.finale-host{display:block;margin-bottom:16px;transition:transform .2s cubic-bezier(.3,.7,.4,1)}
+.finale-host:hover{transform:translateY(-2px)}
+.finale-host img{display:block;width:min(300px,72vw);height:auto}
+.finale-copy .finale-credit{margin-top:24px;font-size:16px;opacity:.8}
+/* The closing clearing reads at a larger size than the rest of the trail copy. */
+.finale-copy .continue-building h3{font-size:clamp(26px,2.4vw,32px);margin-bottom:12px}
+.finale-copy .continue-building p{font-size:18px;line-height:1.55}
+.finale-copy .continue-building .trail-link{font-size:18px;margin-top:10px}
 
 .site-footer{display:flex;align-items:center;gap:24px;flex-wrap:wrap;padding:28px clamp(16px,5vw,80px);background:var(--cream);border-top:2.5px solid var(--ink);color:var(--forest);font-size:14px}
 .site-footer img{width:110px;height:auto}
@@ -171,7 +203,6 @@ a.sponsor:hover{transform:translateY(-2px)}
 .sponsor-billboard .sponsor-ask{justify-content:center;margin-top:14px;gap:6px}
 .sponsor-billboard .sponsor-ask .action-link{margin:0}
 .sponsor-billboard [hidden]{display:none!important}
-.sponsor-placeholders{width:100%;margin:18px 0 4px;display:grid;gap:16px}
 .sponsor-billboard .sponsor-tier{width:100%;margin-inline:auto}
 /* Tier names read as section headers: bold hand lettering between two short painted rules. */
 .sponsor-billboard .sponsor-tier h3{display:flex;align-items:center;justify-content:center;gap:12px;font-family:var(--font-hand);font-size:clamp(23px,2vw,29px);font-weight:700;color:var(--ink);line-height:1;letter-spacing:0;margin:0 0 8px;opacity:1}
@@ -184,13 +215,23 @@ a.sponsor:hover{transform:translateY(-2px)}
 .sponsor-billboard [data-sponsor-level="entree"]{--logo-width:30.5%;--logo-height:46px;--logo-text:22px;--logo-image:38px}
 .sponsor-billboard [data-sponsor-level="appetizer"]{--logo-width:27%;--logo-height:40px;--logo-text:19px;--logo-image:32px}
 .sponsor-billboard [data-sponsor-level="refreshment"]{--logo-width:22%;--logo-height:34px;--logo-text:17px;--logo-image:26px}
-.sponsor-placeholders li{min-height:var(--logo-height);padding:6px;border:1.5px dashed #65271366;border-radius:8px 5px 9px 6px;display:flex;flex-direction:column;align-items:center;justify-content:center;color:#652713a6;background:#f8f4ea44}
-.sponsor-placeholders li>span{font-family:var(--font-hand);font-size:var(--logo-text);font-weight:600;line-height:1.1}
-.sponsor-placeholders small{font-size:10px;letter-spacing:.06em;line-height:1.3}
 .sponsor-billboard [data-sponsor-level] .sponsor{min-height:var(--logo-height);font-size:var(--logo-text)}
 .world.is-laid-out .sponsor-billboard [data-sponsor-level] .sponsor img{max-height:var(--logo-image)}
+/* Confirmed sponsors: ranks are separated by space alone. The title sponsor always gets its own,
+   widest line; later ranks share a line when they fit. Wide wordmarks are sized by width, tall marks by height. */
+#sponsors .sponsor-wall{display:grid;gap:clamp(26px,3.4vw,40px);margin-top:clamp(32px,3.6vw,44px)}
+#sponsors .sponsor-wall .sponsor-tier ul{display:flex;justify-content:center;align-items:center;flex-wrap:wrap;gap:20px clamp(32px,6vw,64px)}
+#sponsors .sponsor-wall .sponsor-tier li{display:flex;flex-direction:column;align-items:center;min-width:0}
+#sponsors .sponsor-wall .sponsor{min-height:0;padding:0}
+#sponsors .sponsor-wall .sponsor img{display:block;height:auto;max-height:none;max-width:none}
+#sponsors .sponsor-wall :is([data-rank="1"],[data-rank="2"]) li{width:100%}
+#sponsors .sponsor-wall [data-rank="1"] img{width:min(660px,100%)}
+#sponsors .sponsor-wall :is([data-rank="1"],[data-rank="2"]) .sponsor{width:100%}
+#sponsors .sponsor-wall [data-rank="2"] img{width:min(460px,84%)}
+#sponsors .sponsor-wall img[data-logo="jane-street"]{width:auto;height:clamp(64px,6.6vw,90px)}
+#sponsors .sponsor-wall img[data-logo="nc-innovation"]{width:auto;height:clamp(36px,3.8vw,52px)}
+.sponsor-caption{margin:14px 0 0;font-family:var(--font-body);font-size:12px;font-weight:600;line-height:1;letter-spacing:.16em;text-transform:uppercase;color:var(--ink);opacity:.6}
 @media(max-width:759px){
-  .sponsor-placeholders{gap:14px;margin-top:18px}
   .sponsor-billboard [data-sponsor-level] ul{gap:8px}
   .sponsor-billboard [data-sponsor-level="chef"]{--logo-width:94%;--logo-height:70px;--logo-text:29px;--logo-image:60px}
   .sponsor-billboard [data-sponsor-level="banquet"]{--logo-width:46%;--logo-height:56px;--logo-text:24px;--logo-image:46px}
@@ -198,14 +239,12 @@ a.sponsor:hover{transform:translateY(-2px)}
   .sponsor-billboard [data-sponsor-level="entree"]{--logo-width:30%;--logo-height:44px;--logo-text:19px;--logo-image:34px}
   .sponsor-billboard [data-sponsor-level="appetizer"]{--logo-width:30%;--logo-height:38px;--logo-text:17px;--logo-image:28px}
   .sponsor-billboard [data-sponsor-level="refreshment"]{--logo-width:22%;--logo-height:32px;--logo-text:15px;--logo-image:24px}
-  .sponsor-placeholders small{font-size:8px;letter-spacing:0}
 }
 @media(max-width:759px){.sponsor-billboard .sponsor-tier ul{grid-template-columns:repeat(2,minmax(0,1fr))}.sponsor-billboard .eyebrow,.world.is-laid-out .sponsor-billboard .eyebrow{font-size:21px}.world.is-laid-out .sponsor-billboard #sponsor-status{font-size:13px}}
 @media(max-width:439px){.site-header nav .nav-roomy{display:none}}
 
 /* Interactive parts of the art, shown at rest. */
 .led{opacity:0;transition:opacity .4s ease}
-.rover-body{transition:none}
 .lamp{fill:#CDD993;transition:fill .35s ease}
 .glow{opacity:0;transition:opacity .5s ease 1s}
 .dial{transform-box:fill-box;transform-origin:50% 50%;transition:transform .9s cubic-bezier(.34,1.4,.5,1)}
