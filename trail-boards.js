@@ -10,8 +10,8 @@ export function placeTrailBoard(spec, shift, worldWidth, minTop, scale) {
   const [x0, y0, x1, y1] = art.face;
   const face = document.querySelector(`[data-trail-board="${spec.kind}"]`);
   let extra = 0;
-  if (face && spec.kind === 'gallery') {
-    // Measure the real cards at this width. Only the cork/post middle grows; roof and feet don't stretch.
+  if (face) {
+    // Measure the real content at this width. Only the face's middle band grows; roof and feet don't stretch.
     Object.assign(face.style, { width: `${width * (x1 - x0) * scale}px`, height: 'auto' });
     extra = Math.max(0, face.offsetHeight / scale - naturalHeight * (y1 - y0));
   }

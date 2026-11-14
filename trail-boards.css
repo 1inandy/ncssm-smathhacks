@@ -1,10 +1,13 @@
 /* Both boards stand in the world. Only their actual lettering and photo cards are HTML. */
 .trail-face{position:absolute;z-index:2;container-type:inline-size;color:var(--ink);text-align:center;line-height:1.2}
-.theme-sign-face{display:grid;grid-template-columns:auto 1fr;grid-template-rows:auto auto;align-content:center;align-items:center;column-gap:4cqw;row-gap:1.5cqw;text-align:left;mix-blend-mode:multiply}
-.theme-sign-face h2{grid-row:1/3;margin:0;line-height:0;transform:rotate(-2deg)}
-.theme-logo{display:block;width:auto;height:27cqw}
-.theme-sign-face .eyebrow{font-size:5.5cqw;margin:0;line-height:1;align-self:end}
-.theme-sign-face>p:last-child{font-size:clamp(10px,3.6cqw,17px);max-width:24ch;margin:0;line-height:1.3;align-self:start}
+/* Logo on the left; the theme named in words beside it, so it reads even where the lettering doesn't.
+   The note on how theme and tracks relate spans the board underneath. */
+.theme-sign-face{display:grid;grid-template-columns:auto auto;justify-content:center;grid-template-rows:auto auto auto auto;align-content:center;align-items:center;column-gap:4.5cqw;padding:4cqw 2cqw;text-align:left;mix-blend-mode:multiply}
+.theme-logo{grid-row:1/4;display:block;width:auto;height:33cqw;transform:rotate(-2deg)}
+.theme-sign-face .eyebrow{font-size:5cqw;margin:0;line-height:1;align-self:end}
+.theme-sign-face .theme-title{margin:1.2cqw 0 1.4cqw;font-size:clamp(18px,7.4cqw,38px);line-height:1;white-space:nowrap;color:var(--ink)}
+.theme-tagline{font-size:clamp(10px,3.6cqw,17px);max-width:23ch;margin:0;line-height:1.3;align-self:start}
+.theme-note{grid-column:1/-1;margin:3.5cqw 0 0;padding-top:3cqw;border-top:1px solid #65271333;font-size:clamp(10px,3.4cqw,16px);line-height:1.4;text-align:center;text-wrap:balance}
 .gallery-face{padding:0;display:block}
 .gallery-face h2{font-family:var(--font-hand);font-size:clamp(24px,8cqw,46px);margin:0 0 1cqw;line-height:1}
 .gallery-note{font-size:clamp(9px,3.2cqw,15px);margin:0 0 3cqw;line-height:1.2}
