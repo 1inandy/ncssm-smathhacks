@@ -1,0 +1,122 @@
+/* Loading screen as a landing: we start high above the hillside and descend as the art arrives.
+   --loader-p (0–1, set by loader.js) is real progress. The real page sits low on screen while we are
+   "up high" and rises into place as we come down; the clouds stream upward past us and are gone
+   before we reach the page's own painted clouds; on finish the page touches down with a small bump.
+   Narrow screens whose first view is all sky (the hills start below the fold) descend past the top of the
+   page to land on the hills (--loader-ground, measured by loader.js), then pan up to the hero.
+   Only shown when the inline head script adds .is-loading, so no-JS visitors never see it. */
+:root{
+  /* Altitude falls off with the square of what's left: fast from high up, easing off as the ground nears, like a landing. */
+  --loader-alt:calc((1 - var(--loader-p, 0)) * (1 - var(--loader-p, 0)) * 150vh);
+  --loader-glide:1.6s cubic-bezier(.45,0,.15,1);
+}
+.site-loader{display:none}
+.is-loading .site-loader,.loader-leaving .site-loader{position:fixed;inset:0;z-index:500;display:grid;place-items:center;overflow:hidden;
+  color:var(--ink,#652713);font-family:var(--font-body,'Nunito',sans-serif)}
+.loader-leaving .site-loader{pointer-events:none}
+
+/* The ground: the actual page, lowered by our altitude (off-screen entirely at the start). Each step of progress is a glide, not a jump. */
+.is-loading .world,.loader-leaving .world{transform:translateY(calc(var(--loader-alt) - var(--loader-ground, 0px)));transition:transform var(--loader-glide)}
+/* The bump uses the separate `translate` property so it adds to wherever the page is, rather than snapping it to 0. */
+.loader-leaving .world{animation:loader-touchdown .75s cubic-bezier(.3,0,.3,1) .05s}
+@keyframes loader-touchdown{0%{translate:0 0}35%{translate:0 9px}70%{translate:0 -2px}100%{translate:0 0}}
+/* After landing on the hills, look up: a slow, eased pan back to the top of the page. */
+.loader-panning .world{transition:transform 1.4s cubic-bezier(.65,0,.35,1)}
+/* From the air you only see the painted land; the header and the page's words appear once we've landed. */
+.is-loading .site-header,.is-loading .world main{opacity:0;visibility:hidden}
+.loader-leaving .site-header,.loader-leaving .world main{animation:loader-header-in .5s ease var(--loader-reveal, .35s) both}
+@keyframes loader-header-in{from{opacity:0}to{opacity:1}}
+
+/* The sky above the hillside: fills exactly the gap above the lowered page and meets its painted sky (#A7D3E8) seamlessly. */
+/* It's deeper blue up high and lightens as we drop toward the page. */
+.loader-sky{position:absolute;inset:0 0 auto;height:calc(var(--loader-alt) - var(--loader-ground, 0px) + 2px);background:linear-gradient(180deg,#5e9cc9 0%,#86bedc 55%,#A7D3E8 100%);
+  transition:height var(--loader-glide)}
+
+/* Clouds: we fall through them. Each climbs at its own --speed (vh per full descent; nearer clouds faster),
+   some start below the screen and rush past, and the whole layer fades from 30% and is gone by 60% progress, so it's
+   clear sky by the time the page's own clouds come into view. The image inside carries the idle drift. */
+.loader-clouds{position:absolute;inset:0;pointer-events:none;opacity:clamp(0, calc((.6 - var(--loader-p, 0)) / .3), 1);transition:opacity var(--loader-glide)}
+.loader-cloud{position:absolute;opacity:0;transform:translateY(24px);translate:0 calc(var(--loader-p, 0) * var(--speed, 120) * -1vh);
+  transition:opacity .7s ease var(--in,0s),transform 1.1s cubic-bezier(.22,1,.36,1) var(--in,0s),translate var(--loader-glide)}
+.loader-cloud img{display:block;width:100%;height:auto;animation:loader-drift var(--drift,9s) ease-in-out infinite alternate;animation-delay:calc(var(--in,0s) * -6)}
+@keyframes loader-drift{from{transform:translateX(-14px)}to{transform:translateX(14px)}}
+
+.loader-stage{position:relative;z-index:1;width:min(440px,calc(100% - 48px));display:flex;flex-direction:column;align-items:center;text-align:center;
+  opacity:0;transform:translateY(10px);transition:opacity .5s ease .1s,transform .7s cubic-bezier(.22,1,.36,1) .1s}
+/* Nothing appears until the loader's own art has decoded, so it fades in whole instead of popping in piece by piece. */
+.loader-ready .loader-cloud,.loader-ready .loader-stage{opacity:1;transform:none}
+.loader-logo{width:min(220px,60%);height:auto;margin-bottom:22px}
+
+.loader-crew{display:flex;justify-content:center;align-items:flex-end;gap:clamp(10px,4vw,26px);height:96px}
+.loader-crew img{display:block;width:auto;height:84px;transform-origin:50% 100%;animation:loader-hop 1.2s cubic-bezier(.45,0,.55,1) infinite}
+.loader-crew img:nth-child(2){height:90px;animation-delay:.18s}
+.loader-crew img:nth-child(3){animation-delay:.36s}
+@keyframes loader-hop{
+  0%,55%,100%{transform:translateY(0) scale(1,1)}
+  12%{transform:translateY(0) scale(1.06,.92)}
+  30%{transform:translateY(-18px) scale(.96,1.05)}
+  48%{transform:translateY(0) scale(1.05,.94)}
+}
+
+/* The progress meter is a cookie baked one bit at a time ("Bits & Bites"): loader.js lays out a pixel grid
+   cut to a circle, and each bit pops onto the tray as real progress arrives. Edge bits are browned, a few
+   are chocolate chips. At 100% Bite lunges over and takes a chomp out of it, and the crumbs fall away. */
+.loader-cookie{--bit:clamp(8px,1.6vh,11px);--gap:1px;position:relative;display:grid;grid-template-columns:repeat(var(--cols,13),var(--bit));gap:var(--gap);
+  margin-top:6px;filter:drop-shadow(0 3px 0 #6527132e)}
+.loader-cookie i{width:var(--bit);height:var(--bit);border-radius:2px;background:#e3b26b;box-shadow:inset 0 -2px 0 #0000001a;
+  opacity:0;transform:translateY(-16px) scale(.4);transition:opacity .18s ease,transform .42s cubic-bezier(.34,1.7,.5,1)}
+.loader-cookie i.edge{background:#c98a45}
+.loader-cookie i.hi{background:#f0cb8a}
+.loader-cookie i.chip{background:#5b3a22;border-radius:3px}
+.loader-cookie i.out{visibility:hidden}
+/* The empty slot shows a faint tray where the cookie will go, so the meter reads before any bits land. */
+.loader-cookie i.slot{opacity:.16;transform:none;background:#652713;box-shadow:none;transition:none}
+.loader-cookie i.on{opacity:1;transform:none}
+/* The chomp: bitten bits fall as crumbs, each with its own drift and spin. */
+.loader-cookie i.eaten{animation:loader-crumb .7s cubic-bezier(.4,0,.8,.6) var(--cd,0s) forwards}
+@keyframes loader-crumb{
+  0%{opacity:1;transform:none}
+  20%{transform:translate(calc(var(--dx) * .3),-6px) rotate(calc(var(--rot) * .3))}
+  100%{opacity:0;transform:translate(var(--dx),70px) rotate(var(--rot)) scale(.6)}
+}
+.loader-cookie.chomped{animation:loader-cookie-shake .28s ease}
+@keyframes loader-cookie-shake{30%{transform:translate(-3px,1px) rotate(-2deg)}65%{transform:translate(2px,0) rotate(1deg)}}
+/* Bite leans in for the chomp (overrides the hop for that one moment). */
+.loader-crew img.chomping{animation:loader-chomp .5s cubic-bezier(.3,0,.3,1) forwards}
+@keyframes loader-chomp{
+  0%{transform:none}
+  40%{transform:translate(-26px,30px) rotate(-14deg) scale(1.08,.94)}
+  60%{transform:translate(-22px,26px) rotate(-10deg) scale(.96,1.05)}
+  100%{transform:translate(0,0) rotate(0) scale(1)}
+}
+.loader-caption{margin-top:14px;font-family:var(--font-hand,'Caveat',cursive);font-size:24px;font-weight:600;line-height:1.2;min-height:1.2em}
+.loader-percent{margin-top:2px;font-size:13px;font-weight:700;letter-spacing:.08em;opacity:.65;font-variant-numeric:tabular-nums}
+/* A soft cream halo keeps the words readable when the hills and buildings slide in behind them. */
+.loader-caption,.loader-percent{text-shadow:0 0 3px #F8F4EA,0 0 8px #F8F4EA,0 0 14px #F8F4EAcc}
+
+/* Exit: the crew and trail lift out first, then every remaining cloud rises at its own pace and fades. */
+.loader-leaving .site-loader{pointer-events:none}
+.loader-leaving .loader-stage{animation:loader-stage-out .45s cubic-bezier(.55,0,.75,.3) forwards}
+.loader-leaving .loader-cloud{animation:loader-rise var(--rise-t,1.4s) cubic-bezier(.45,0,.25,1) var(--rise-d,0s) forwards}
+@keyframes loader-stage-out{to{opacity:0;transform:translateY(-28px) scale(.97)}}
+@keyframes loader-fade{to{opacity:0}}
+@keyframes loader-rise{
+  0%{opacity:1;transform:translateY(0)}
+  60%{opacity:.9}
+  100%{opacity:0;transform:translateY(var(--rise,-60vh)) scale(1.08)}
+}
+
+@media (prefers-reduced-motion:reduce){
+  /* No descent: a plain sky screen that fades away. */
+  .is-loading .world,.loader-leaving .world,.loader-clouds{transform:none;transition:none;animation:none}
+  .loader-cloud{translate:none}
+  .loader-clouds{opacity:1}
+  .loader-sky{height:100%;transition:none;background:linear-gradient(180deg,#A7D3E8 0%,#EDF3E8 100%)}
+  .loader-crew img,.loader-cloud img{animation:none}
+  .loader-cloud,.loader-stage,.loader-cookie i{transition:opacity .3s ease}
+  .loader-cookie i{transform:none}
+  .loader-cookie i.eaten,.loader-cookie.chomped,.loader-crew img.chomping{animation:none}
+  .loader-cloud,.loader-stage{transform:none}
+  .loader-leaving .loader-stage,.loader-leaving .loader-cloud,.loader-leaving .loader-sky{animation:loader-fade .35s ease forwards}
+  .loader-leaving .site-header,.loader-leaving .world main{animation:none}
+}
