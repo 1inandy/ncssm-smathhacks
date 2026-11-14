@@ -77,14 +77,18 @@ export function configureGallery(config) {
     grid.replaceChildren();
     for (const [offset, photo] of result.photos.entries()) {
       const li = document.createElement('li'), button = document.createElement('button');
-      const thumbnail = document.createElement('img'), caption = document.createElement('span');
+      const thumbnail = document.createElement('img');
       li.className = 'gallery-card'; button.className = 'gallery-photo'; button.type = 'button';
       button.setAttribute('aria-label', `Open photo ${result.start + offset + 1}: ${photo.caption || photo.alt}`);
       thumbnail.className = 'gallery-image'; thumbnail.src = photo.src; thumbnail.alt = photo.alt;
       thumbnail.loading = 'lazy'; thumbnail.width = 600; thumbnail.height = 400;
-      thumbnail.addEventListener('error', () => { thumbnail.hidden = true; caption.textContent = 'Photo unavailable'; });
-      caption.className = 'gallery-caption'; caption.textContent = photo.caption || `Photo ${result.start + offset + 1}`;
-      button.append(thumbnail, caption); li.append(button); grid.append(li);
+      // Pinned photos carry no caption; the label above names each one for screen readers.
+      thumbnail.addEventListener('error', () => {
+        const note = document.createElement('span');
+        note.className = 'gallery-caption'; note.textContent = 'Photo unavailable';
+        thumbnail.replaceWith(note);
+      });
+      button.append(thumbnail); li.append(button); grid.append(li);
       button.addEventListener('click', () => open(photos, result.start + offset, button, 'From the gallery'));
     }
     pagination.hidden = result.pages < 2;
