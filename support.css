@@ -15,8 +15,12 @@
 .hero-illustration .hero-prop{position:absolute;bottom:-4px;right:0;width:155px;object-fit:contain;transform:rotate(5deg)}
 .hero-illustration.resources-art .hero-character{width:205px;left:8%}
 .hero-illustration.resources-art .hero-prop{width:140px;right:-8px}
+@media(min-width:760px){.page-hero-inner:has(.hero-memory){grid-template-columns:minmax(0,1.4fr) minmax(260px,1fr)}}
 .hero-memory{margin:0;transform:rotate(3deg);padding:12px 12px 24px;background:var(--cream);box-shadow:5px 6px 0 #38664118}
-.hero-memory img{display:block;width:100%;height:220px;object-fit:cover}
+.hero-memory img{display:block;width:100%;height:280px;object-fit:cover}
+/* Bite runs in from the lower-left corner of the snapshot, overlapping its frame a little. */
+.hero-memory-wrap{position:relative}
+.hero-memory-character{position:absolute;z-index:1;left:-112px;bottom:-62px;width:176px;height:auto;transform:rotate(-4deg);filter:drop-shadow(3px 5px 0 #38664122);pointer-events:none}
 .reading-layout{max-width:1176px;margin:0 auto;padding:68px 28px 100px;display:grid;grid-template-columns:210px minmax(0,1fr);gap:70px}
 .page-index{align-self:start;position:sticky;top:115px;font-size:14px}
 .page-index p{font-family:var(--font-hand);font-size:23px;color:var(--ink);margin:0 0 15px}
@@ -80,32 +84,14 @@
 .year-2025 .year-logo{filter:drop-shadow(0 0 1px #fff) drop-shadow(0 0 6px #ffffffa0)}
 .year-2026 .year-logo{max-height:136px}
 #earlier-events .year-panel{margin-top:26px;padding:32px 32px 30px}
-#earlier-events .year-num{font-size:30px}
 #earlier-events .year-logo{max-height:110px;max-width:min(100%,360px)}
 #earlier-events .year-2022 .year-logo{max-height:56px}
 .year-panel>p{max-width:62ch}
 .year-panel .inline-links{margin-top:10px}
 .year-row{display:flex;flex-direction:column;align-items:flex-start;gap:12px;margin-top:26px;padding:16px 0;border-bottom:1px solid var(--rule)}
-.year-row h3{font-size:30px}
+.year-row h3{font-size:43px;line-height:1}
 .year-row .inline-links{margin:0}
-.carousel{margin-top:24px}
-.carousel-track{position:relative;display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;scroll-behavior:smooth;overscroll-behavior-x:contain;padding-bottom:8px}
-.carousel.is-ready .carousel-track{scrollbar-width:none;padding-bottom:0}
-.carousel.is-ready .carousel-track::-webkit-scrollbar{display:none}
-.carousel-track:focus-visible{outline:3px solid var(--forest);outline-offset:4px;border-radius:6px}
-.carousel-slide{flex:0 0 84%;margin:0;scroll-snap-align:start}
-.carousel-slide:only-child{flex-basis:100%}
-.carousel-slide a{display:block;border-radius:8px;overflow:hidden}
-.carousel-slide img{display:block;width:100%;height:auto;aspect-ratio:3/2;object-fit:contain;background:var(--ground)}
 .campus-carousels .carousel+.carousel{margin-top:30px}
-.carousel-label{font-size:13px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;margin-bottom:10px}
-.carousel-controls{display:flex;align-items:center;gap:14px;margin-top:14px}
-.carousel-controls[hidden]{display:none}
-.carousel-controls button{display:grid;place-items:center;width:44px;height:44px;padding:0;border:1.5px solid currentColor;border-radius:50%;background:transparent;color:inherit;font:600 18px/1 var(--font-body);cursor:pointer;transition:background-color .2s ease,color .2s ease,opacity .2s ease}
-.carousel-controls button:hover:not(:disabled){background:var(--forest);color:var(--panel-base,var(--cream))}
-.carousel-controls button:disabled{opacity:.35;cursor:default}
-.carousel-count{font-size:14px;font-variant-numeric:tabular-nums;min-width:5ch;text-align:center}
-@media(prefers-reduced-motion:reduce){.carousel-track{scroll-behavior:auto}.carousel-controls button{transition:none}}
 .winners{margin-top:30px}
 .winners h3{font-size:20px;margin:24px 0 12px}
 .winner-links{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 24px;margin:0;padding:0;list-style:none}
@@ -146,8 +132,10 @@
   .hero-illustration .hero-prop{width:110px;right:0}
   .hero-illustration.resources-art .hero-character{height:165px;width:auto;left:24px}
   .hero-illustration.resources-art .hero-prop{width:100px;right:0}
-  .hero-memory{max-width:310px;justify-self:center;padding:9px 9px 16px;margin:8px 8px 16px}
-  .hero-memory img{height:180px}
+  .hero-memory{max-width:360px;justify-self:center;padding:9px 9px 16px;margin:8px 8px 16px}
+  .hero-memory img{height:220px}
+  .hero-memory-wrap{justify-self:center;width:min(360px,100%)}
+  .hero-memory-character{left:-18px;bottom:-34px;width:118px}
   .page-hero::after{height:34px;background-size:auto 150px}
   .reading-layout{display:block;padding:32px 24px 65px}
   .page-index{position:static;margin-bottom:36px}
@@ -167,9 +155,8 @@
         .winner-links{grid-template-columns:1fr}
   .year-panel{padding:26px 20px 24px}
   #earlier-events .year-panel{padding:24px 20px 22px}
-  .year-panel .year-num{font-size:37px}
+  .year-panel .year-num,.year-row h3{font-size:37px}
   .year-logo{max-height:112px}
-  .carousel-slide{flex-basis:90%}
       .program-photos{gap:12px}
     .support-footer-inner{display:block}
   .support-footer nav{margin-top:18px;gap:0 20px}
