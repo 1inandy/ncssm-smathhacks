@@ -29,6 +29,8 @@ Then open http://localhost:8123.
 | `archive-carousel.js` | Prev/next buttons, arrow keys and the counter for the Past Events photo carousels. They still scroll and snap without it. |
 | `assets/` | Self-hosted fonts (with OFL licenses), logo, and web-sized artwork. |
 
+The `#tracks` link lands at a wooden signpost beside the theme board (below it on phones). Its four arrow links lead to the individual track clearings, starting with `#societal-impact`. The signpost uses the existing painted timber assets; its styles live in `trail-boards.css` and its placement is measured in `hillside.js`.
+
 ## Updating event details
 
 Edit `event-config.json`. Any field left `null` shows "To be announced".

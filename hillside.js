@@ -66,7 +66,8 @@ const LAYOUTS = {
         clearing: { copy: 'about', x: 140, y: 1040, w: 1160, h: 0, gap: 140, in: .9, out: .5 }, items: [
         { a: 'gate', x: 880, w: 210, sink: 30 } ] },
       { id: 'themeStop', strip: 'middle-hill-left', crest: 1080, span: 1.2, pathW: 42,
-        trail: { kind: 'theme', x: 370, w: 600, ground: 1250, gap: -120 }, items: [] },
+        trail: { kind: 'theme', x: 370, w: 600, ground: 1250, gap: -120 },
+        signpost: { x: 1090, w: 460 }, items: [] },
       { id: 'sphere', strip: 'middle-hill-right', crest: 1075, span: 1.15, pathW: 46, via: [[592, 1135], [590, 1200], [650, 1265]], items: [
         { a: 'sphere', x: 1215, w: 250, sink: 62 } ] },
       { id: 'garden', strip: 'near-bank', crest: 1250, span: 1.25, flip: true, pathW: 70, via: [[720, 1310]],
@@ -135,7 +136,8 @@ const LAYOUTS = {
         clearing: { copy: 'about', x: 50, y: 1280, w: 500, h: 0, gap: 120, in: .6, out: .5 }, items: [
         { a: 'gate', x: 330, w: 160, sink: 22 } ] },
       { id: 'themeStop', strip: 'middle-hill-left', crest: 1300, span: 2, pathW: 32,
-        trail: { kind: 'theme', x: 300, w: 530, ground: 1740, gap: 100 }, items: [] },
+        trail: { kind: 'theme', x: 300, w: 530, ground: 1740, gap: 100 },
+        signpost: { x: 300, w: 500 }, items: [] },
       { id: 'sphere', strip: 'middle-hill-right', crest: 1220, span: 2, pathW: 36, via: [[482, 1275], [470, 1330]], items: [
         { a: 'sphere', x: 548, w: 140, sink: 40 } ] },
       { id: 'garden', strip: 'near-bank', crest: 1340, span: 2.1, flip: true, pathW: 54, via: [[488, 1410], [470, 1510]],
@@ -457,10 +459,20 @@ function render() {
     if (t.trail) {
       const requestedGround = t.trail.ground + shift;
       T.trailBoard = placeTrailBoard(t.trail, shift, W, lastClearingBottom + 100, s);
+      let stopBottom = T.trailBoard.ground;
+      if (t.signpost) {
+        const el = document.querySelector('[data-track-signpost]');
+        const { x, w } = t.signpost;
+        const top = W > 1000 ? T.trailBoard.iy + 80 : stopBottom + 50;
+        Object.assign(el.style, { left: `${(x - w / 2) * s}px`, top: `${top * s}px`, width: `${w * s}px` });
+        const bottom = top + el.offsetHeight / s;
+        T.boxes.push([x - w / 2 - 12, top, x + w / 2 + 12, bottom + 12]);
+        stopBottom = Math.max(stopBottom, bottom);
+      }
       route.push([W * .15, T.trailBoard.ground + 25]);
       // New stops add actual world space; all later terrain, objects and copy move together.
-      shift += T.trailBoard.ih + t.trail.gap + Math.max(0, T.trailBoard.ground - requestedGround);
-      lastClearingBottom = T.trailBoard.ground;
+      shift += T.trailBoard.ih + t.trail.gap + Math.max(0, stopBottom - requestedGround);
+      lastClearingBottom = stopBottom;
       T.boxes.push(T.trailBoard.box);
     }
     return T;
@@ -723,5 +735,6 @@ const watch = new ResizeObserver(entries => {
   if (changed) { cancelAnimationFrame(pending); safeRender(); }
 });
 document.querySelectorAll('[data-copy]').forEach(el => watch.observe(el));
+watch.observe(document.querySelector('[data-track-signpost]'));
 safeRender();
 if (world.classList.contains('is-laid-out')) syncMotion();

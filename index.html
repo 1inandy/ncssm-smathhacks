@@ -28,7 +28,7 @@
   <link rel="stylesheet" href="hillside.css?v=framed-carousels">
   <link rel="stylesheet" href="loader.css">
   <link rel="stylesheet" href="sky-announcements.css">
-  <link rel="stylesheet" href="trail-boards.css?v=theme-logo">
+  <link rel="stylesheet" href="trail-boards.css?v=track-signpost">
   <link rel="stylesheet" href="photo-viewer.css">
   <link rel="stylesheet" href="navigation.css?v=speakers-tba">
 </head>
@@ -169,7 +169,17 @@
       <p class="theme-note">The overall theme will guide your hack. Although you will submit to a specific track, your hack must adhere to the larger theme.</p>
     </section>
 
-    <section class="copy" id="tracks" data-copy="societal-impact" aria-labelledby="societal-title">
+    <nav class="track-signpost" id="tracks" aria-labelledby="track-signpost-title" data-track-signpost>
+      <h2 id="track-signpost-title">Choose your track</h2>
+      <div class="track-signpost-arrows">
+        <a class="track-arrow track-arrow-right" href="#societal-impact"><span>Societal Impact</span></a>
+        <a class="track-arrow track-arrow-left" href="#hardware"><span>Hardware</span></a>
+        <a class="track-arrow track-arrow-right" href="#game-design"><span>Game Design</span></a>
+        <a class="track-arrow track-arrow-left" href="#ai-machine-learning"><span>AI &amp; Machine Learning</span></a>
+      </div>
+    </nav>
+
+    <section class="copy" id="societal-impact" data-copy="societal-impact" aria-labelledby="societal-title">
       <p class="eyebrow">Track 1</p>
       <h2 id="societal-title">Societal Impact</h2>
       <p>Build technology that helps people and communities. Address challenges in accessibility, education, sustainability, health, or everyday life, with a clear focus on who benefits and how.</p>
@@ -370,7 +380,7 @@
   </dialog>
 
   <script type="module" src="event.js?v=no-captions"></script>
-  <script type="module" src="hillside.js?v=no-spool-2"></script>
+  <script type="module" src="hillside.js?v=track-signpost"></script>
   <script type="module" src="faq.js"></script>
   <script type="module" src="navigation.js"></script>
   <script type="module" src="loader.js"></script>
